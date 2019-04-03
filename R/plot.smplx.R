@@ -38,6 +38,7 @@
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
 #'   plot(simplex = simplex2D)
 #' @importFrom graphics lines par plot segments title
+#' @method plot smplx
 #' @export
 # S3 method for smplx class object
 

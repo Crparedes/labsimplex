@@ -17,10 +17,11 @@
 #' @return A 'chsmplx' type object with the information of the simplex
 #'        including the conditions for the new experiment to be permormed.
 #' @examples
-#' simplex <- labimplex(N = 3)
+#' simplex <- labsimplex(N = 3)
 #' simplex <- generateVertex(simplex = simplex, qflv = rnorm(4))
 #' \dontrun{
-#' ## Optional form:#' ## After obtaining quality function for the last vertex generated:
+#' ## Optional form:
+#' ## After obtaining quality function for the last vertex generated:
 #' NV <- rnorm(1)
 #' generateVertex(simplex = simplex3D, qflv = NV, overwrite = TRUE)
 #' @export

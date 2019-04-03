@@ -63,7 +63,7 @@ labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
   if (!missing(usrdef)) {
     # If provided, usrdef must be an appropiate matrix
     if (ncol(usrdef) != nrow(usrdef) - 1) {
-      stop("Parameter usrdef must be a N x N+1 matrix containig in each column
+      stop("Parameter usrdef must be a N+1 x N matrix containig in each row
            the N coordinates for each vertex")
     }
     # If both provided, usrdef and N must match. If not provided,
@@ -77,7 +77,7 @@ labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
       N <- ncol(usrdef)
     }
     # Checking if points define a simplex
-    if (det(cbind(usrdef, rep(1, nrow(usrdef)))) == 0) {
+    if (abs(det(cbind(usrdef, rep(1, nrow(usrdef))))) < 1e-9) {
       stop("Given coordinates of vertex define hyperfaces that share at least one hyperplane!")
     } else {
       message("Provided points define a simplex:")

@@ -6,6 +6,7 @@
 #' @param extended    logical, if \code{TRUE}, the object is printed as a list containing all elements
 #' @param conventions logical, if \code{TRUE} (default), the conventions used are printed
 #'
+#' @method print smplx
 #' @export
 # S3 method for smplx class object
 
