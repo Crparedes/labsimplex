@@ -10,7 +10,7 @@
 #' the experiments under the conditions indicated for each variable at each
 #' vertex must be carried and the quality function evaluated. Those quality
 #' function values are assigned to the \code{smplx} object at the moment of
-#' generating the new vertex (see \code{\link{genVertex}}). The initial simplex
+#' generating the new vertex (see \code{\link{generateVertex}}). The initial simplex
 #' coordinates are generated following the
 #' \href{https://bit.ly/2u8HlYt}{general algorithm} for the cartesian
 #' coordinates for regular n-dimensional simplex.
@@ -27,7 +27,6 @@
 #' @param  var.name  vector containing the names for the variables.
 #' @return  A \code{smplx} type object with the information of the simplex.
 #' @examples
-#'   labsimplex()
 #'   labsimplex(N = 3)
 #'   labsimplex(N = 3, centroid = c(66, 1, 12), stepsize = c(10, 0.1, 2),
 #'              neg.con = TRUE, var.name = c('potential', 'pH', 'T'))
@@ -181,7 +180,7 @@ labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
   }
 
   if (!missing(start)) {
-    coords <- sweep(coords, 2, - abs(start - coords[1, ]))
+      coords <- sweep(coords, 2, - (start - coords[1, ]))
   }
 
   if (!missing(centroid)) {

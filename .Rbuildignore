@@ -1,2 +1,7 @@
+^labsimplex\.tar\.gz$
+^NEWS\.md$
+^README\.Rmd$
+^cran-comments\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+

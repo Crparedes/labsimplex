@@ -6,7 +6,7 @@
 #'
 #' For 3D representations of simplex with dimensionality higher than 2 use
 #' \code{\link{plotSimplex3D}}
-#' @param  simplex \code{smplx} class object containig the coordinates of
+#' @param  x \code{smplx} class object containig the coordinates of
 #'                 the vertexes.
 #' @param  sel.dim numeric or char vector for variables to be considered when
 #'                 simplex dimensionality is higher than 2. If \code{numeric}
@@ -18,37 +18,37 @@
 #'                 only last simplex.
 #' @param  expand  logical. Should the plot scales be expanded?
 #' @param  exp.fac expansion factor used when \code{expand = TRUE}.
-#' @param  ...     othee graphical parameters used in plot()
+#' @param  ...     other graphical parameters used in plot()
 #' @return 2D proyection of the simplex coordinates
 #' @examples
-#'   plot(simplex = labsimplex(N = 2))
-#'   plot(simplex = labsimplex(N = 2), expand = FALSE)
+#'   plot(x = labsimplex(N = 2))
+#'   plot(x = labsimplex(N = 2), expand = FALSE)
 #'
-#'   plot(simplex = labsimplex(N = 8))
-#'   plot(simplex = labsimplex(N = 8), sel.dim = c(3, 4))
+#'   plot(x = labsimplex(N = 8))
+#'   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
 #'
 #'   ## Simulation of the real proccess where a simplex is made and QF measured,
 #'   set.seed(12)
 #'   simplex2D <- labsimplex(N = 2)
-#'   plot(simplex = simplex2D)
+#'   plot(x = simplex2D)
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
-#'   plot(simplex = simplex2D)
+#'   plot(x = simplex2D)
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(simplex = simplex2D)
+#'   plot(x = simplex2D)
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(simplex = simplex2D)
+#'   plot(x = simplex2D)
 #' @importFrom graphics lines par plot segments title
 #' @method plot smplx
 #' @export
 # S3 method for smplx class object
 
-plot.smplx <- function(simplex, sel.dim = NULL, all.ver = TRUE,
+plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
                           all.lin = TRUE, expand = TRUE,
                           exp.fac = 1.5, ...){
 
   # Error handling
-  checkMain(simplex = simplex)
-  if (simplex$dim < 2){
+  checkMain(simplex = x)
+  if (x$dim < 2){
     stop("Simplex dimension must be at least 2")
   }
   if (!missing(sel.dim)) {
@@ -60,17 +60,17 @@ plot.smplx <- function(simplex, sel.dim = NULL, all.ver = TRUE,
     var.plt <- 1:2
   }
 
-  if (simplex$dim > 2) {
+  if (x$dim > 2) {
     if (missing(sel.dim)) {
       message("No selected dimensions for ploting. Default is the first two ones.")
     } else {
       if (is.numeric(sel.dim)) {
         var.plt <- sel.dim
-        if (any(var.plt > simplex$dim)){
+        if (any(var.plt > x$dim)){
           stop("At least one ingresed variable is not available in data")
         }
       } else {
-        var.plt <- (1:ncol(simplex$coords))[!is.na(match(colnames(simplex$coords), sel.dim))]
+        var.plt <- (1:ncol(x$coords))[!is.na(match(colnames(x$coords), sel.dim))]
       }
       if (length(var.plt) != 2) {
         stop("At least one ingresed variable is not available in data")
@@ -82,45 +82,45 @@ plot.smplx <- function(simplex, sel.dim = NULL, all.ver = TRUE,
   par(oma = c(5, 4, 0, 0) + 0.1, mar = c(0, 0, 1, 1) + 0.1)
 
   if (all.ver) {
-    plot(simplex$coord[, var.plt[1]], simplex$coord[, var.plt[2]], pch = 16)
+    plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16, ...)
     if (expand) {
       xexp <- c(par("usr")[1] - 0.5 * diff(par("usr")[1:2]) * exp.fac,
                 par("usr")[2] + 0.5 * diff(par("usr")[1:2]) * exp.fac)
       yexp <- c(par("usr")[3] - 0.5 * diff(par("usr")[3:4]) * exp.fac,
                 par("usr")[4] + 0.5 * diff(par("usr")[3:4]) * exp.fac)
-      plot(simplex$coord[, var.plt[1]], simplex$coord[, var.plt[2]], xlim = xexp, ylim = yexp, pch = 16)
+      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp, ylim = yexp, pch = 16)
     }
-    title(xlab = dimnames(simplex$coords)[[2]][var.plt[1]],
-          ylab = dimnames(simplex$coords)[[2]][var.plt[2]],
+    title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
+          ylab = dimnames(x$coords)[[2]][var.plt[2]],
           outer = TRUE, line = 3)
   } else {
-    plot(simplex$coord[(nrow(simplex$coords) - simplex$dim):nrow(simplex$coords), var.plt[1]],
-         simplex$coord[(nrow(simplex$coords) - simplex$dim):nrow(simplex$coords), var.plt[2]], pch = 16)
+    plot(x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[1]],
+         x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]], pch = 16, ...)
     if (expand) {
       xexp <- c(par("usr")[1] - 0.5 * diff(par("usr")[1:2]) * exp.fac,
                 par("usr")[2] + 0.5 * diff(par("usr")[1:2]) * exp.fac)
       yexp <- c(par("usr")[3] - 0.5 * diff(par("usr")[3:4]) * exp.fac,
                 par("usr")[4] + 0.5 * diff(par("usr")[3:4]) * exp.fac)
-      plot(simplex$coord[(nrow(simplex$coords) - simplex$dim):nrow(simplex$coords), var.plt[1]],
-           simplex$coord[(nrow(simplex$coords) - simplex$dim):nrow(simplex$coords), var.plt[2]],
-           xlim = xexp, ylim = yexp, pch = 16)
+      plot(x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[1]],
+           x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]],
+           xlim = xexp, ylim = yexp, pch = 16, ...)
     }
-    title(xlab = dimnames(simplex$coords)[[2]][var.plt[1]],
-          ylab = dimnames(simplex$coords)[[2]][var.plt[2]], outer = TRUE, line = 3)
+    title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
+          ylab = dimnames(x$coords)[[2]][var.plt[2]], outer = TRUE, line = 3)
   }
 
   if (all.lin) {
-    for (ii in 1:(nrow(simplex$coords) - simplex$dim)){
-      for (jj in (ii+1):(ii + simplex$dim)){
-        lines(simplex$coords[c(ii, jj),  var.plt[1]],
-              simplex$coords[c(ii, jj),  var.plt[2]], col = "grey")
+    for (ii in 1:(nrow(x$coords) - x$dim)){
+      for (jj in (ii+1):(ii + x$dim)){
+        lines(x$coords[c(ii, jj),  var.plt[1]],
+              x$coords[c(ii, jj),  var.plt[2]], col = "grey")
       }
     }
   }
-  for (ii in (nrow(simplex$coords) - simplex$dim):nrow(simplex$coords)){
-    for (jj in ii:nrow(simplex$coords)){
-      lines(simplex$coords[c(ii, jj),  var.plt[1]],
-            simplex$coords[c(ii, jj),  var.plt[2]], col = "blue")
+  for (ii in (nrow(x$coords) - x$dim):nrow(x$coords)){
+    for (jj in ii:nrow(x$coords)){
+      lines(x$coords[c(ii, jj),  var.plt[1]],
+            x$coords[c(ii, jj),  var.plt[2]], col = "blue")
     }
   }
 
