@@ -18,8 +18,21 @@ The goal of labsimplex is to implement in R the simplex algorithms (fixed size a
 
 ## Installation
 
-You can install the last version of labsimplex 
-released version of labsimplex from [CRAN](https://CRAN.R-project.org) with:
+You can install the last version of labsimplex by downloading the [source package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz) and installing it  with:
+``` r
+install.packages(path_to_file, repos = NULL, type="source")
+```
+Where `path_to_file` would represent the full path and file name:
+
+-On Windows it will look something like this: `"C:\Users\user\Downloads\labsimplex.tar.gz"`.
+
+-On UNIX it will look like this: `"/home/Downloads/labsimplex.tar.gz`"
+
+A better alternative is use `install_github()` function from `devtools` package:
+``` r
+devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
+``` 
+Coming soon the released version of labsimplex will be avilable from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("labsimplex")
@@ -27,24 +40,26 @@ install.packages("labsimplex")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to start an optimization procces:
 
-```{r example}
-## basic example code
+Suppose there is a reaction taking place in water at determinate pH and temperature. Both variables have shown to have effect on the yiel of the reaction and the purposse is to maximize it. Ussually the reaction is made at 350 °C and pH 5.5. This will be the starting point. Rational changes can be made in steps of 10°C and 0.5 units of pH for each variable.
+```{r example1}
+library(labsimplex)
+yield <- labsimplex(N = 2, start = c(350, 5.5), var.name = c('Temp', 'pH'),
+                    stepsize = c(10, 0.5))
+print(yield)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
+Is possible to plot the simplex object to visualize the coordinates of the vertexes:
+```{r example2}
+plot(yield)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+The experiments corresponding to the Temp. and pH values indicated for each vertex must be performed and the response must be recorded. Suppose the responses for vertexes 1 to 3 were 57\%, 65\% and 54\% respectively. The new vertex can be generated and the simplex movement can be visualized again ploting the simplex.
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r example3}
+generateVertex(simplex = yield, qflv = c(57, 65, 54), overwrite = TRUE)
+plot(yield)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+For more information read the package manuals and vignette.

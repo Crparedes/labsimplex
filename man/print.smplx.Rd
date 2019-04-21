@@ -4,14 +4,16 @@
 \alias{print.smplx}
 \title{Prints given simplex (a \code{smplx} class object)}
 \usage{
-\method{print}{smplx}(simplex, extended = FALSE, conventions = TRUE)
+\method{print}{smplx}(x, extended = FALSE, conventions = TRUE, ...)
 }
 \arguments{
-\item{simplex}{simplex object to be printed}
+\item{x}{simplex object to be printed}
 
 \item{extended}{logical, if \code{TRUE}, the object is printed as a list containing all elements}
 
 \item{conventions}{logical, if \code{TRUE} (default), the conventions used are printed}
+
+\item{...}{other arguments passed to print}
 }
 \description{
 Prints given simplex information.

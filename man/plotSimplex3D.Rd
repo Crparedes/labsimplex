@@ -5,7 +5,7 @@
 \title{Makes a three dimentional plot of a simplex object.}
 \usage{
 plotSimplex3D(simplex, sel.dim = NULL, all.ver = TRUE,
-  all.lin = TRUE, main = NULL, angle = 30)
+  all.lin = TRUE, main = NULL, angle = 30, ...)
 }
 \arguments{
 \item{simplex}{\code{smplx} class object containig the coordinates of
@@ -25,6 +25,8 @@ only last simplex.}
 \item{main}{title for the plot.}
 
 \item{angle}{angle for perspective between x and y axis.}
+
+\item{...}{other arguments passed to scatterplot3d::scatterplot3d}
 }
 \value{
 3D proyection of the simplex including optionally, the

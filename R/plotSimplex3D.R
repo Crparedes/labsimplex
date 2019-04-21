@@ -16,6 +16,7 @@
 #'                 only last simplex.
 #' @param  main    title for the plot.
 #' @param  angle   angle for perspective between x and y axis.
+#' @param  ...     other arguments passed to scatterplot3d::scatterplot3d
 #' @return 3D proyection of the simplex including optionally, the
 #'   information corresponding to the vertexes that were discarded.
 #' @examples
@@ -39,45 +40,48 @@
 #' @export
 
 plotSimplex3D <- function(simplex, sel.dim = NULL, all.ver = TRUE,
-                          all.lin = TRUE, main = NULL, angle = 30){
+                          all.lin = TRUE, main = NULL, angle = 30, ...){
+
   # Error handling
   checkMain(simplex = simplex)
   if (simplex$dim < 3){
     stop("Simplex dimension must be at least 3")
   }
+
+  var.plt <- 1:3
   if (!missing(sel.dim)) {
     if (length(sel.dim) != 3) {
       stop("Only 3 coordinates can be plotted. Length of sdim vector differs
            from 3: ", length(sel.dim))
       }
   } else {
-    var.plt <- 1:3
-  }
-  if (simplex$dim > 3) {
-    if (missing(sel.dim)) {
+    if (simplex$dim > 3) {
       message("No selected dimensions for ploting. Default is the first three ones.")
-    } else {
-      if (is.numeric(sel.dim)) {
-        var.plt <- sel.dim
-        if (any(var.plt > simplex$dim)){
-          stop("At least one ingresed variable is not available in data")
-        }
-      } else {
-        var.plt <- (1:ncol(simplex$coords))[!is.na(match(colnames(simplex$coords), sel.dim))]
-      }
-      if (length(var.plt) != 3) {
-        stop("At least one ingresed variable is not available in data")
-      }
     }
   }
 
+  if (!missing(sel.dim)) {
+    if (is.numeric(sel.dim)) {
+      var.plt <- sel.dim
+      if (any(var.plt > simplex$dim)){
+        stop("At least one ingresed variable is not available in data")
+      }
+    } else {
+      var.plt <- (1:ncol(simplex$coords))[match(sel.dim, colnames(simplex$coords))]
+    }
+    if (length(var.plt) != 3) {
+      stop("At least one ingresed variable is not available in data")
+    }
+  }
+
+
   if (all.ver) {
     s <- scatterplot3d::scatterplot3d(x = simplex$coord[, var.plt], type = 'p', pch = 16,
-                                      grid = FALSE, angle = angle, main = main, lty.hide = 3)
+                                      grid = FALSE, angle = angle, main = main, lty.hide = 3, ...)
   } else {
     s <- scatterplot3d::scatterplot3d(x = simplex$coord[(nrow(simplex$coords) -
              simplex$dim):nrow(simplex$coords), var.plt], type = 'p', pch = 16,
-             grid = FALSE, angle = angle, main = main, lty.hide = 3)
+             grid = FALSE, angle = angle, main = main, lty.hide = 3, ...)
   }
   vertex.xy <- cbind(s$xyz.convert(simplex$coord[, var.plt[1]],
                        simplex$coord[,var.plt[2]], simplex$coord[, var.plt[3]])$x,

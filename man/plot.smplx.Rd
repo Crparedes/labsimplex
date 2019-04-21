@@ -4,11 +4,11 @@
 \alias{plot.smplx}
 \title{Makes a two dimentional plot of a simplex object.}
 \usage{
-\method{plot}{smplx}(simplex, sel.dim = NULL, all.ver = TRUE,
+\method{plot}{smplx}(x, sel.dim = NULL, all.ver = TRUE,
   all.lin = TRUE, expand = TRUE, exp.fac = 1.5, ...)
 }
 \arguments{
-\item{simplex}{\code{smplx} class object containig the coordinates of
+\item{x}{\code{smplx} class object containig the coordinates of
 the vertexes.}
 
 \item{sel.dim}{numeric or char vector for variables to be considered when
@@ -26,7 +26,7 @@ only last simplex.}
 
 \item{exp.fac}{expansion factor used when \code{expand = TRUE}.}
 
-\item{...}{othee graphical parameters used in plot()}
+\item{...}{other graphical parameters used in plot()}
 }
 \value{
 2D proyection of the simplex coordinates
@@ -41,20 +41,20 @@ For 3D representations of simplex with dimensionality higher than 2 use
 \code{\link{plotSimplex3D}}
 }
 \examples{
-  plot(simplex = labsimplex(N = 2))
-  plot(simplex = labsimplex(N = 2), expand = FALSE)
+  plot(x = labsimplex(N = 2))
+  plot(x = labsimplex(N = 2), expand = FALSE)
 
-  plot(simplex = labsimplex(N = 8))
-  plot(simplex = labsimplex(N = 8), sel.dim = c(3, 4))
+  plot(x = labsimplex(N = 8))
+  plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
 
   ## Simulation of the real proccess where a simplex is made and QF measured,
   set.seed(12)
   simplex2D <- labsimplex(N = 2)
-  plot(simplex = simplex2D)
+  plot(x = simplex2D)
   generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
-  plot(simplex = simplex2D)
+  plot(x = simplex2D)
   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(simplex = simplex2D)
+  plot(x = simplex2D)
   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(simplex = simplex2D)
+  plot(x = simplex2D)
 }

@@ -82,13 +82,18 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
   par(oma = c(5, 4, 0, 0) + 0.1, mar = c(0, 0, 1, 1) + 0.1)
 
   if (all.ver) {
+    pdf(file = NULL)
     plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16, ...)
     if (expand) {
       xexp <- c(par("usr")[1] - 0.5 * diff(par("usr")[1:2]) * exp.fac,
                 par("usr")[2] + 0.5 * diff(par("usr")[1:2]) * exp.fac)
       yexp <- c(par("usr")[3] - 0.5 * diff(par("usr")[3:4]) * exp.fac,
                 par("usr")[4] + 0.5 * diff(par("usr")[3:4]) * exp.fac)
-      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp, ylim = yexp, pch = 16)
+      dev.off()
+      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp, ylim = yexp, pch = 16, ...)
+    } else {
+      dev.off()
+      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16, ...)
     }
     title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
           ylab = dimnames(x$coords)[[2]][var.plt[2]],
