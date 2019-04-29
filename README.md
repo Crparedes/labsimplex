@@ -9,8 +9,15 @@ optimizations.
 
 ## Installation
 
-You can install the last version of labsimplex by downloading the
-[source
+The best option for instaling the last versión of labsimplex is using
+`install_github()` function from `devtools` package:
+
+``` r
+devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
+```
+
+If devtools package is not avilable, you can install the last build
+version of labsimplex by downloading the [source
 package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz)
 and installing it with:
 
@@ -24,13 +31,6 @@ Where `path_to_file` would represent the full path and file name:
 `"C:\Users\user\Downloads\labsimplex.tar.gz"`.
 
 \-On UNIX it will look like this: `"/home/Downloads/labsimplex.tar.gz`"
-
-A better alternative is use `install_github()` function from `devtools`
-package:
-
-``` r
-devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
-```
 
 Coming soon the released version of labsimplex will be avilable from
 [CRAN](https://CRAN.R-project.org) with:
@@ -80,7 +80,7 @@ the vertexes:
 plot(yield)
 ```
 
-<img src="man/figures/README-example2-1.png" width="100%" />
+<img src="man/figures/README-example2-1.png" width="75%" />
 
 The experiments corresponding to the Temp. and pH values indicated for
 each vertex must be performed and the response must be recorded. Suppose
@@ -96,6 +96,6 @@ generateVertex(simplex = yield, qflv = c(57, 65, 54), overwrite = TRUE)
 plot(yield)
 ```
 
-<img src="man/figures/README-example3-1.png" width="100%" />
+<img src="man/figures/README-example3-1.png" width="75%" />
 
 For more information read the package manuals and vignette.

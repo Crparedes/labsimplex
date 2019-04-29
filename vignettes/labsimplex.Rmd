@@ -2,64 +2,221 @@
 title: "labsimplex package"
 author: "Jesús Ágreda and Cristhian Paredes"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{labsimplex package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+references:
+- id: Spendley
+  title: Sequential Application of Simplex Designs in Optimisation and Evolutionary Operation
+  author:
+    - family: Spendley
+      given: W.
+    - family: Hext
+      given: G. R. 
+    - family: Himsworth
+      given: F. R0.
+  container-title: Technometrics
+  volume: 4
+  URL: 'https://www.tandfonline.com/doi/abs/10.1080/00401706.1962.10490033'
+  DOI: 10.1080/00401706.1962.10490033
+  issue: 4
+  publisher: Taylor and Francis
+  page: 441-461
+  type: article-journal
+  issued:
+    year: 1962
+- id: Nelder
+  title: A Simplex Method for Function Minimization
+  author:
+    - family: Nelder 
+      given: J. A.
+    - family: Mead
+      given: R.
+  container-title: The Computer Journal
+  volume: 7
+  URL: 'https://doi.org/10.1093/comjnl/7.4.308'
+  DOI: 10.1093/comjnl/7.4.308
+  issue: 4
+  page: 308-313
+  type: article-journal
+  issued: 
+    year: 1965
+- id: devtools
+  title: devtools. Tools to Make Developing R Packages Easier
+  author:
+    - family: Wickham
+      given: Hadley
+    - family: Hester
+      given: Jim
+    - family: Chang
+      given: Winston
+  container-title: R package version 2.0.1
+  URL: 'https://CRAN.R-project.org/package=devtools'
+  issued:
+    year: 2018
+- id: XX
+  title: x 
+  author:
+    - family: x 
+      given: x  
+    - family: x 
+      given: x
+  container-title: x
+  volume: 0
+  URL: 'x'
+  DOI: x
+  issue: 0
+  publisher: x
+  page: 0
+  type: article-journal
+  issued:
+    year: 0000
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  out.width = "75%"
 )
+# Render html vignetes by using devtools::document(roclets = "vignette")
+require(labsimplex)
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+The R package labsimplex implements the simplex algorithms (fixed size and variable size) for laboratory and processes optimization. Tools for visualizing the coordinates of the experiments are also provided.
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+## Introduction
+Introduction introduction... The fixed size simplex algorithm [@Spendley]... The variable size simplex algorithm  [@Nelder]...
 
-## Vignette Info
+...The simplex dimensionality refers the number of variables to be optimized...
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+...Hyperface, hypervolume, hyperplane....
 
-## Styles
+## Installation
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+The best option for installing the last version of labsimplex is using `install_github()` function from `devtools` package [@devtools]:
+``` r
+devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
+``` 
+If devtools package is not available, you can install the last build version of labsimplex by downloading the [source package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz) and installing it with:
+``` r
+install.packages(path_to_file, repos = NULL, type="source")
+```
+Where `path_to_file` would represent the full path and file name:
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+*On Windows it will look something like this: `"C:\Users\user\Downloads\labsimplex.tar.gz"`.
 
-## Figures
+*On UNIX it will look like this: `"/home/Downloads/labsimplex.tar.gz`"
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+Coming soon the released version of labsimplex will be available from [CRAN](https://CRAN.R-project.org) with:
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+``` r
+install.packages("labsimplex")
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+## Using the package
+After the variables to optimize had been selected, the values that will be evaluated at the beginning of the experimentation and the initial stepsize for each variable are defined, the experimenter will be able to generate the starting simplex. The next sections will discus some particularities about generating the coordinates of the initial simplex. The optimization using labsimplex package involves the next steps that will be further discussed later:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+1. Generate the initial simplex.
+2. Export the simplex information to ensure information will not be lost if the R session is restarted.
+3. Perform the experiments defined in the vertexes of the initial vertex and evaluate their quality function.
+4. Import the previously exported file.
+5. Generate the new vertex based in the quality function for each vertex.
+6. Export the new simplex information (the one that includes the last generated vertex).
+7. Perform the new experiment and calculate the quality function.
+8. Repeat steps 4 to 6 until the quality function reaches the desired value.
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+If the experiments don't take much time the quality function can be quickly obtained and the process can be optimized in a single R session. In this case steps that include exporting and importing files are not necessary. The simplex coordinates can be plotted (or project for higher dimensions) before each new vertex is generated.
 
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+### Generating the initial simplex
+A new simplex objects is generated using the `labsimplex()` function. The only not optional parameter is `N` which relates to the dimensionality of the simplex. If only `N` is provided a regular simplex will be generated. This regular simplex is not of much utility since the coordinates reflect vertex positions in a dimensionless abstract space. To create a simplex object of three dimensions use:
+```{r Nprov}
+ExpSet <- labsimplex(N = 3)
+print(ExpSet)
+```
+Generating a simplex in the real variables space will require a positioning reference and a stepsize for each dimension. Two positioning references are possible, the first experiment coordinates or the centroid of the simplex. The stepsize and the first experiment or centroid coordinates are given as numeric vectors of length N in whose ordered positions the values for the respective variable are given. The stepsize is provided in the `stepsize` parameter. The start experiment and the centroid are incompatible parameters and just one must be provided at the parameters `start` or `centroid` respectively. The variable names can be specified as a character vector in the `var.name` parameter. The next example shows the usage of some of the mentioned parameters.
+```{r Startprov}
+ExpSet <- labsimplex(N = 3, start = c(7, 25, 0.15), stepsize = c(0.2, 5, 0.02), 
+                     var.name = c('pH', 'Temp', 'Conc'))
+print(ExpSet)
 ```
 
-Also a quote using `>`:
+##### Manually defining the initial vertexes coordinates
+If the experimenter wants to manually define all the coordinates for the vertexes in the initial simplex, those coordinates must be in a matrix containing the N coordinates of each vertex in N+1 rows. This matrix is used in the `usrdef` parameter in the `labsimplex()` function. This option is incompatible with the centroid, stepsize and the start experiment parameters definition.
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+Setting the vertex coordinates manually is prone to error due to the probability of setting two hyperfaces in the same hyperplane. A so defined *simplex* will not have hypervolume and would not be precisely a simplex. The probability of this issue grows up with the dimensionality. If given coordinates define a simplex with a non-zero hypervolume, the function will print `Provided points define a simplex`. If it is not the case, an error indicating the situation is obtained.
+
+```{r usrdef}
+ExpMtrx <- rbind(c(7.1, 25, 0.15), c(6.9, 28, 0.15), c(6.9, 23, 0.16), c(6.9, 23, 0.14))
+ManSet <- labsimplex(N = 3, usrdef = ExpMtrx, var.name = c('pH', 'Temp', 'Conc'))
+print(ManSet)
+```
+<span style="color:red">VERIFICAR ESTA SUPOSICIÓN!!! This approach is very practical when a low resolution fractional factorial design has already be performed. Those experimental designs usually studies N variables in N+1 experiments. The performed experiments can be used as the starting vertexes and the good part is that the experiments had already be performed and their quality function already evaluated. If some variables were of no statistical importance, or if the fractional experiment design had a resolution higher than three, there will be a surplus number of experiments and again we will have a non-zero probability of mischoosing the coordinates and it will led to an error.</span>
+
+##### Modifying vertex coordinates
+Sometimes it is impossible to set a particular value for a variable in some experiments (e.g. the mass of a high viscosity liquid that is used in very small amounts in a chemical reaction or the pH in an unbuffered solution).  The calculations to generate the following vertex may be preferred based on the real experiments performed rather than the proposed experiments. Most of the time this can be ignored but if this is not the case, vertex coordinates must be manually adjusted using the `modifyVertex()` function. The function allows modifying as many variables in as many vertex as needed but must be used before generating a new vertex.
+
+Suppose we need to change in the last simplex generated the pH of the first vertex to 7.15 and the temperature of second vertex to 29. The changes are given in a list containing numeric vectors of length N and the new values in the respective position of the correspondent variable. Other positions must have `NA` values.
+```{r changing}
+adjustVertex(simplex = ManSet, newcoords = list(Vertex.1 = c(7.15, NA, NA), 
+                                                Vertex.2 = c(NA, 29, NA)),
+             overwrite = TRUE)
+print(ManSet)
+```
+
+### Simplex graphical representation
+The simplex may be visualized in a 3d plot using `plotSimplex3D()` function. This function plots simplex coordinates when its dimensionality is at least three. Higher dimentionalities require the dimensions to be plotted as the function will only project three variables. Selected variables can be indicated as a character vector of length 3 using `sel.dim` parameter, the elements of the vector must coincide with three of the variables available in the simplex. A numeric vector indicating the columns of the selected variables is also accepted but not highly recommended. If no variables are indicated, the function will plot the first three ones.
+```{r plot3D, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center'}
+plotSimplex3D(ExpSet)
+```
+
+In a very similar way, a two dimensional protection of the simplex object may be plotted using `plot()` function. As the simplex dimentionality is in our case, higher than two, the dimensions to be represented can be specified and the projected image of the simplex will change depending on the selected variables.
+
+```{r plot2D, dpi = 300, fig.width = 12, fig.height = 5, out.width = '110%', fig.align = 'center'}
+par(mfrow = c(1, 3))
+plot(ExpSet, sel.dim = c('pH', 'Temp'))
+plot(ExpSet, sel.dim = c('pH', 'Conc'))
+plot(ExpSet, sel.dim = c('Temp', 'Conc'))
+```
+Here become obvious that different variables projection produces quite different images. Some of the variables combinations would have overlapping vertexes that may led confusion among researchers when reviewing the simplex graphical representation.
+  
+### Generation of new vertexes
+New vertexes are generated using the quality function values for each vertex of previous simplex, the optimization criteria and the algorithm to use. The function used is `generateVertex()`. Suppose the vertex 1 to 4 had quality functions of 65, 72, 54 and 78 respectively. In this example the fixed size simplex algorithm will be used and the purpose of the optimization is maximization. Those are the default settings of the `generateVertex()` function so it will not specified. The vertexes quality function for the first simplex must be supplied in ascendant order. The following generation processes will only need the quality function of the last generated vertex. 
+
+The function output is a simplex object containing all the information of the original one but adding the new vertex. The new vertex coordinates are printed and reploting the simplex will show the result of the movement.
+```{r genV1, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center'}
+generateVertex(simplex = ExpSet, qflv = c(65, 72, 54, 78), overwrite = TRUE)
+plotSimplex3D(ExpSet)
+```
+
+When generating a new vertex, the function can be used just for visualizing the new vertex to be evaluated coordinates. Since the new vertex coordinates integrate now one of the points of the new simplex, the recommended action is assign the function output to an object that could be completely new in the environment or may overwrite the original object. Usually while looking for a clean environment and considering that the new simplex object contents all the information of the previous, overwriting the original object is the best option. This is easily achieved by using `overwrite = TRUE` in the function parameters.
+
+The optimization criteria means the desired quality function value (i.e. which way is better). The `crit` parameter can be set to `'max'` (default), `'min'` or to a numerical value. The simplex will move in the direction in which the quality function grows, decreases or approach to the numerical value, respectively.
+
+The simplex optimization algorithm is flexible and the simplex can change between fixed size and variable size alternatives at any time. This is done by using `algor = 'fixed'` (default) and `algor = 'variable'` in the `generateVertex()` function. The next vertex to be evaluated is evaluated according to the selected algorithm.
+
+### Repeat until satisfied
+The simplex optimization may proceed until a maximum is achieved or a satisfactory quality function is reached. The former will depend on the algorithm that is being followed and the later may represent a very time-saving strategy as the simplex optimization algorithm may lose some relative power near the optimum and some other techniques may lead to a richer system information in that zone (e.g. response surface experimental designs).
+
+<span style="color:red">FUNCION PENDIENTE DE IMPLEMENTAR!!! The quality function value can be plotted against the vertex number using the function `plotResponse()`.</span>
+
+When the optimum zone in the fixed size simplex algorithm is reached, the simplex will start to *spin* around the vertex that had the better quality function. This may be easy to notice in low dimension simplex by looking at the graphical representation of the simplex. The simplex had found the optimal zone but there is no warranty about the best vertex being at the best possible coordinates since the optimal point may lay between the vertexes of one simplex. This would be a good moment for changing to the variable size variation but this option can be taken from the beginning of the optimization process. In the variable size algorithm the simplex will contract into the optimal point indefinitely until variations became so small that it is practically impossible to differentiate two vertexes.
+
+The constant contracting simplex may indicate the optimal point of the space but the obtained information may lack of a sense about how robust is the experiment in that zone. A highly focused^[Studying a small range for the variables.] surface response methodology could be of great utility in obtaining the predicted optimal point and giving information about the robustness of the response in that zone.
+
+### Exporting and importing simplex information
+As each experiment could take up to several days being performed, the optimization process information must be safely stored in case that the R session is finished without saving the workspace image. The `simplexExport()` function will create a plain text file with .smplx extension that contains all the simplex information. This file must not be edited by hand since it may translate in package functions wrong operation and the produced information may get lost. 
+
+```{r export}
+simplexExport(ExpSet)
+```
+The `simplexImport()` function creates a simplex object using the information contained in a .smplx file. The file extension must be included and the name of the created object may be specified.
+```{r import}
+simplexImport('ExpSet.smplx', name = 'importedSimplex')
+print(importedSimplex)
+```
+
+# References

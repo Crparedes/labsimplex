@@ -38,6 +38,7 @@
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
 #'   plot(x = simplex2D)
 #' @importFrom graphics lines par plot segments title
+#' @importFrom grDevices dev.off pdf
 #' @method plot smplx
 #' @export
 # S3 method for smplx class object
@@ -78,9 +79,10 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
     }
   }
 
-  opar <- par(oma = par()$oma, mar = par()$mar)
-  par(oma = c(5, 4, 0, 0) + 0.1, mar = c(0, 0, 1, 1) + 0.1)
-
+  #opar <- par(oma = par()$oma, mar = par()$mar)
+  #par(oma = c(5, 4, 0, 0) + 0.1, mar = c(0, 0, 1, 1) + 0.1)
+  xlab <- dimnames(x$coords)[[2]][var.plt[1]]
+  ylab <- dimnames(x$coords)[[2]][var.plt[2]]
   if (all.ver) {
     pdf(file = NULL)
     plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16, ...)
@@ -90,17 +92,20 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
       yexp <- c(par("usr")[3] - 0.5 * diff(par("usr")[3:4]) * exp.fac,
                 par("usr")[4] + 0.5 * diff(par("usr")[3:4]) * exp.fac)
       dev.off()
-      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp, ylim = yexp, pch = 16, ...)
+      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp, ylim = yexp, pch = 16,
+           xlab = xlab, ylab = ylab, ...)
     } else {
       dev.off()
-      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16, ...)
+      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16,
+           xlab = xlab, ylab = ylab, ...)
     }
-    title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
-          ylab = dimnames(x$coords)[[2]][var.plt[2]],
-          outer = TRUE, line = 3)
+    #title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
+    #      ylab = dimnames(x$coords)[[2]][var.plt[2]],
+    #      outer = TRUE, line = 3)
   } else {
     plot(x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[1]],
-         x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]], pch = 16, ...)
+         x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]], pch = 16,
+         xlab = xlab, ylab = ylab, ...)
     if (expand) {
       xexp <- c(par("usr")[1] - 0.5 * diff(par("usr")[1:2]) * exp.fac,
                 par("usr")[2] + 0.5 * diff(par("usr")[1:2]) * exp.fac)
@@ -108,10 +113,11 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
                 par("usr")[4] + 0.5 * diff(par("usr")[3:4]) * exp.fac)
       plot(x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[1]],
            x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]],
-           xlim = xexp, ylim = yexp, pch = 16, ...)
+           xlim = xexp, ylim = yexp, pch = 16,
+           xlab = xlab, ylab = ylab, ...)
     }
-    title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
-          ylab = dimnames(x$coords)[[2]][var.plt[2]], outer = TRUE, line = 3)
+    #title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
+    #      ylab = dimnames(x$coords)[[2]][var.plt[2]], outer = TRUE, line = 3)
   }
 
   if (all.lin) {
@@ -129,6 +135,6 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
     }
   }
 
-  par(opar)
+  #par(oma = opar$oma, mar = opar$mar)
 }
 

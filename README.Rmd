@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "75%"
 )
 ```
 # labsimplex
@@ -18,7 +18,11 @@ The goal of labsimplex is to implement in R the simplex algorithms (fixed size a
 
 ## Installation
 
-You can install the last version of labsimplex by downloading the [source package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz) and installing it  with:
+The best option for instaling the last versión of labsimplex is using `install_github()` function from `devtools` package:
+``` r
+devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
+``` 
+If devtools package is not avilable, you can install the last build version of labsimplex by downloading the [source package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz) and installing it with:
 ``` r
 install.packages(path_to_file, repos = NULL, type="source")
 ```
@@ -28,10 +32,6 @@ Where `path_to_file` would represent the full path and file name:
 
 -On UNIX it will look like this: `"/home/Downloads/labsimplex.tar.gz`"
 
-A better alternative is use `install_github()` function from `devtools` package:
-``` r
-devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
-``` 
 Coming soon the released version of labsimplex will be avilable from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
