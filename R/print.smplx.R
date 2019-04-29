@@ -52,7 +52,7 @@ print.smplx <- function(x, extended = FALSE, conventions = TRUE, ...){
                        Nature = nat[(FvertexAct - 1):1]))
     }
 
-    cat("\nConventions:")
+    cat("\nConventions:\n")
     cat("    Labels:                    Nature:
       W: Worst or Wastebasket    S:  Starting
       N: Next to the worst       R:  Reflected
