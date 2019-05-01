@@ -1,4 +1,4 @@
-#' Modify given coordinates of given vertexes of a simplex
+#' Modify given coordinates of given vertices of a simplex
 #'
 #' Changes the coordinates of generated vertices when slightly differences
 #' were impossible to avoid at the moment of setting the experiment
@@ -7,7 +7,7 @@
 #'
 #' @param  simplex   \code{'chsmplx'} type object containig most information
 #'                   of simplex.
-#' @param  newcoords List with elements named like the vertexes to be modified.
+#' @param  newcoords List with elements named like the vertices to be modified.
 #'                   Each element must have a vector with the (ordered) coordinates
 #'                   setted for the experiment. containig a dataframe in which the variables
 #'                   to be modified to that vertex are provided
@@ -35,7 +35,7 @@ adjustVertex <- function(simplex, newcoords, overwrite = FALSE) {
     stop("Only numeric (or NA's) values are allowed for the adjusted coordinates")
   }
 
-  # Vertexes to be adjusted:
+  # Vertices to be adjusted:
   VerTBA <- attr(summary(newcoords), "dimnames")[[1]]
   for (i in 1:length(VerTBA)) {
     pos.RM <- match(tolower(gsub('\\.', '', VerTBA[i])), tolower(gsub('\\.', '', attr(simplex$coords, "dimnames")[[1]])))

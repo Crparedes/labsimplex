@@ -5,20 +5,20 @@
 #' function plots a 3D proyection of selected dimensions.
 #'
 #' @param  simplex \code{smplx} class object containig the coordinates of
-#'                 the vertexes.
+#'                 the vertices.
 #' @param  sel.dim numeric or char vector for variables to be considered when
 #'                 simplex dimensionality is higher than 3. If \code{numeric}
 #'                 form it must contain dimensions ordinal number. If
 #'                 \code{char}, it must contain dimensions names.
 #' @param  all.ver logical. Should all vertex be plotted? If \code{FALSE}
-#'                 draws only vertexes corresponding to current simplex.
+#'                 draws only vertices corresponding to current simplex.
 #' @param  all.lin logical. Should all lines be drawn? If \code{FALSE} draws
 #'                 only last simplex.
 #' @param  main    title for the plot.
 #' @param  angle   angle for perspective between x and y axis.
 #' @param  ...     other arguments passed to scatterplot3d::scatterplot3d
 #' @return 3D proyection of the simplex including optionally, the
-#'   information corresponding to the vertexes that were discarded.
+#'   information corresponding to the vertices that were discarded.
 #' @examples
 #'   plotSimplex3D(simplex = labsimplex(N = 3))
 #'

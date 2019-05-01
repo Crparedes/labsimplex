@@ -1,5 +1,5 @@
 # No need for documentations since these options are not exported to users
-#----FUNCTIONS USED IN GENERATING NEW VERTEXES---------------------------------
+#----FUNCTIONS USED IN GENERATING NEW VERTICES---------------------------------
   #rf for remanent face and wv for wastebracket vertex
   reflect <- function(rf, wv){
     return((colSums(rf) / nrow(rf)) + ((colSums(rf) / nrow(rf)) - wv))
@@ -61,14 +61,14 @@
     return(x)
   }
 
-#----FUNCTION FOR ASSIGNING CUALITY FUNCTION TO VERTEXES-----------------------
+#----FUNCTION FOR ASSIGNING CUALITY FUNCTION TO VERTICES-----------------------
   AssignQF <- function(simplex, qflv){
     if (class(qflv) != "numeric") {
       stop("Argument qf must be numeric")
     }
     simplex$qual.fun <- c(simplex$qual.fun, qflv)
     if (length(simplex$qual.fun) > nrow(simplex$coords)) {
-      stop("The amount of vertexes can not be smaller than the size of response vector.")
+      stop("The amount of vertices can not be smaller than the size of response vector.")
     }
     return(simplex)
   }

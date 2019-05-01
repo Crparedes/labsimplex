@@ -7,13 +7,13 @@
 #' For 3D representations of simplex with dimensionality higher than 2 use
 #' \code{\link{plotSimplex3D}}
 #' @param  x \code{smplx} class object containig the coordinates of
-#'                 the vertexes.
+#'                 the vertices.
 #' @param  sel.dim numeric or char vector for variables to be considered when
 #'                 simplex dimensionality is higher than 2. If \code{numeric}
 #'                 form it must contain dimensions ordinal number. If
 #'                 \code{char}, it must contain dimensions names.
 #' @param  all.ver logical. Should all vertex be plotted? If \code{FALSE}
-#'                 draws only vertexes corresponding to current simplex.
+#'                 draws only vertices corresponding to current simplex.
 #' @param  all.lin logical. Should all lines be drawn? If \code{FALSE} draws
 #'                 only last simplex.
 #' @param  expand  logical. Should the plot scales be expanded?

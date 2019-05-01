@@ -1,6 +1,3 @@
-^vignettes/labsimplex\.R$
-^vignettes/labsimplex\.md$
-^vignettes/labsimplex_files$
 ^labsimplex\.tar\.gz$
 ^NEWS\.md$
 ^README\.Rmd$

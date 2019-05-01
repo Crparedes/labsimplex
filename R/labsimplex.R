@@ -1,57 +1,52 @@
-#' Generates simplex object with coordinates of starting vertexes.
+#' Generates simplex object with coordinates of starting vertices.
 #'
 #' Generates a \code{smplx} class object containing the coordinates
-#' of the N+1 vertexes of a simplex in a N-dimentional space.
+#' of the N+1 vertices of a simplex in a N-dimentional space.
 #' Addionally can check if faces for given coordinates of a used defined
 #' simplex are in different hyperplanes.
 #'
-#' All parameters are optional. If no parameters are provided a void
-#' \code{smplx} class object is generated. Once the simplex is genereated,
-#' the experiments under the conditions indicated for each variable at each
+#' The only non-optional parameter is \code{N} that relates the simplex
+#' dimensionality. All other parameters allows tunning the properties of
+#' generated simplex or define one using defined coordinates. Once the simplex
+#' is genereated, the experiments under the conditions indicated for each variable at each
 #' vertex must be carried and the quality function evaluated. Those quality
 #' function values are assigned to the \code{smplx} object at the moment of
-#' generating the new vertex (see \code{\link{generateVertex}}). The initial simplex
-#' coordinates are generated following the
-#' \href{https://bit.ly/2u8HlYt}{general algorithm} for the cartesian
-#' coordinates for regular n-dimensional simplex.
+#' generating the new vertex (see \code{\link{generateVertex}}).
 #'
-#' @param  N         number of dimentions in the space.
-#' @param  start     numeric vector of size \code{N} with initial coordinates for the first vertex.
-#' @param  centroid  coordinates of centroid for initial simplex.
-#' @param  stepsize  numeric vector of size \code{N} with the step size for each coordinate.
-#' @param  neg.con   logical argument indicating if there is a constraing for only non-negative coordinates.
-#' @param  zer.con   logical argument indicating if there is a constraing for zero values in the coordinates.
-#' @param  min.val   numeric vector of size \code{N} containing the minimal that a variable can
-#'                   approach zero if \code{zer.con = TRUE}.
-#' @param  usrdef    \code{(N+1)xN} matrix containig in (N+1) rows the N coordinates for each vertex.
-#' @param  var.name  vector containing the names for the variables.
+#' If the initial simplex is generated using the function, it will be the result
+#' of modifications made to a regular simplex centered at the origin. This regular simplex
+#' coordinates are generated following the general algorithm for the cartesian
+#' coordinates for regular n-dimensional simplex. The algorithm considerates that
+#' all vertices must be equal distanced from simplex centroid and all angles subtended between
+#' any two vertices and the centroid of a simplex are equal (with a value of arccos(-1/N)).
+#'
+#' @param  N         number of dimentions (variables) in the space
+#' @param  start     numeric vector of size \code{N} with initial coordinates for the first vertex
+#' @param  centroid  coordinates of centroid for initial simplex
+#' @param  stepsize  numeric vector of size \code{N} with the step size for each coordinate
+#' @param  usrdef    \code{(N+1)xN} matrix containig in (N+1) rows the N coordinates for each vertex
+#' @param  var.name  vector containing the names for the variables
 #' @return  A \code{smplx} type object with the information of the simplex.
 #' @examples
 #'   labsimplex(N = 3)
 #'   labsimplex(N = 3, centroid = c(66, 1, 12), stepsize = c(10, 0.1, 2),
-#'              neg.con = TRUE, var.name = c('potential', 'pH', 'T'))
+#'              var.name = c('potential', 'pH', 'T'))
 #'
-#'   labsimplex(usrdef = rbind(c(2, 0, 0), c(-0.5, 1, 0), c(-0.5, -0.7, 1),
+#'   labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 1, 0), c(-0.5, -0.7, 1),
 #'                             c(-0.5, -0.4, -0.6)))
 #' \dontrun{
 #' ## A user defined coordinates may define faces that rely on same hyperplane:
-#'   labsimplex(usrdef = rbind(c(2, 0, 0), c(-0.5, 0, 0), c(0, 0, 0), c(-0.5, -0.4, -0.6)))
+#'   labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 0, 0), c(0, 0, 0), c(-0.5, -0.4, -0.6)))
 #' }
 #' @export
 
-labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
-                       stepsize = NULL, neg.con = FALSE, zer.con = FALSE,
-                       min.val = NULL, usrdef = NULL, var.name = NULL){
+labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
+                       usrdef = NULL, var.name = NULL){
 
   main.list <- list(dim = N, coords = NULL, centroid = NULL,
                     qual.fun = NULL, vertex.label = NULL, tim.ret = NULL,
                     vertex.nat = NULL, P.eval = FALSE)
   class(main.list) <- 'smplx'
-
-  #Void output when no data are provided
-  if (missing(N) && missing(usrdef)) {
-    return(main.list)
-  }
 
   # Error handling
   # Checks for redundant parameters definition
@@ -82,8 +77,8 @@ labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
       message("Provided points define a simplex:")
     }
     # Some parameters must not be provided if the coordinates are explicitly given
-    if (!missing(stepsize) || !missing(start) || !missing(centroid) || !missing(min.val)) {
-      stop("Parameters such as start, centroid, stepsize and min.val must not
+    if (!missing(stepsize) || !missing(start) || !missing(centroid)) {
+      stop("Parameters such as start, centroid, and stepsize must not
            be provided when usrdef is defined")
     }
   }
@@ -129,22 +124,6 @@ labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
       stop("Vector containing names for variables does not coincide in length with dimensionality")
     }
   }
-  # If provided. min.val must have an addequate size
-  if (zer.con) {
-    if (missing(min.val)) {
-      message("Default minimal value for each dimension when zer.con = TRUE is 10% of
-              its maximal value ")
-    } else {
-      if (length(min.val) == 1) {
-        message("Vector min.val is length 1, the same value will be used in all dimensions")
-        min.val <- rep(min.val, N)
-      } else {
-        if (length(min.val) != N) {
-          stop("Vector min.val is expected to be of length 1 or equal to the dimensionality: ", N)
-        }
-      }
-    }
-  }
 
   # Start of functions --------------------------------------------------------
 
@@ -156,11 +135,9 @@ labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
   } else {
     V <- matrix(0, nrow = N, ncol = N + 1)
     for (nc in 1:N) {
-      suppressWarnings(
-        V[nc, nc] <- sqrt(1 - sum(rbind(V[1:nc, nc], V[nc:N, nc]) ** 2)))
+      V[nc, nc] <- sqrt(1 - sum(V[1:(nc - 1), nc] ** 2))
       for (nc1 in (nc + 1):(N + 1)) {
-        suppressWarnings(
-          V[nc, nc1] <- - (sum(V[1:nc, nc] * V[1:nc, nc1]) + 1 / N) / V[nc, nc])
+        V[nc, nc1] <- - (sum(V[1:nc, nc] * V[1:nc, nc1]) + 1 / N) / V[nc, nc]
       }
     }
   }
@@ -185,25 +162,6 @@ labsimplex <- function(N = NULL, start = NULL, centroid = NULL,
 
   if (!missing(centroid)) {
     coords <- sweep(coords, 2, - (centroid - (colSums(coords) / (N + 1))))
-  }
-
-  if (neg.con) {
-    if (any(coords < 0)) {
-      message("Centroid could get displaced due to a negative coordinates constraint")
-      coords[coords < 0] <- 0.01
-    }
-  }
-
-  if (zer.con) {
-    if (any(coords == 0)) {
-      message("Centroid could get displaced due to a non-zero coordinates constraint")
-      if (missing(min.val)) {
-        min.val <- 0.1 * apply(coords, 2, max)
-      }
-      for (ii in 1:ncol(main.list$coords)) {
-        coords[which(coords[, ii] == 0), ii] <- min.val[ii]
-      }
-    }
   }
 
   main.list$coords            <- coords

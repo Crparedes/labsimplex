@@ -24,8 +24,8 @@ A \code{.smplx} file containing all the information required to
 Creates a \code{.smplx} file (text file) that stores the information
 contained in the simplex (a \code{smplx} class object, see
 \code{\link{labsimplex}}). It allows to continue with the optimization
-proccess after experiment(s) indicated by a vertex(es) has been carried and
-a measurement has been obtained.
+proccess after experiment described by a vertex has been carried and
+a quality function value has been obtained.
 }
 \examples{
 \dontrun{

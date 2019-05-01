@@ -9,17 +9,17 @@ deleteVertex(simplex, vertex, overwrite = FALSE)
 \arguments{
 \item{simplex}{simplex object to be modified}
 
-\item{vertex}{numeric vector of integers as the identificators of the vertexes to be removed}
+\item{vertex}{numeric vector of integers as the identificators of the vertices to be removed}
 
-\item{overwrite}{logical. Should the simplex without the undesired vertexes replace the current simplex?}
+\item{overwrite}{logical. Should the simplex without the undesired vertices replace the current simplex?}
 }
 \description{
-Delete vertex (vertexes) of a simplex.
+Delete vertex (or vertices) of a simplex.
 }
 \details{
-If the object without the undesired vertex/vertexes is not pretended to replace the original simplex but
+If the object without the undesired vertex/vertices is not pretended to replace the original simplex but
 only to be visualized or assigned to a new object, overwrite = FALSE must be used.
-The manipulation of vertexes of the current simplex should be avoided since it may lead to anomalous behabiour.
+The manipulation of vertices of the current simplex should be avoided since it may lead to anomalous behabiour.
 For a vertex whose coordinates are not evaluable because of practical or security restrictions,
 an infinitevely bad response may be assigned in order to force the simplex moving in another direction.
 }

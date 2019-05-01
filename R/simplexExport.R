@@ -3,8 +3,8 @@
 #' Creates a \code{.smplx} file (text file) that stores the information
 #' contained in the simplex (a \code{smplx} class object, see
 #' \code{\link{labsimplex}}). It allows to continue with the optimization
-#' proccess after experiment(s) indicated by a vertex(es) has been carried and
-#' a measurement has been obtained.
+#' proccess after experiment described by a vertex has been carried and
+#' a quality function value has been obtained.
 #'
 #' @param  simplex     \code{smplx} class object containing the simplex to be stored.
 #' @param  filename    string with the name (without extention) of the file that will be created.

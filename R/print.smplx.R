@@ -40,7 +40,7 @@ print.smplx <- function(x, extended = FALSE, conventions = TRUE, ...){
                      Nature = nat[NvertexTot:FvertexAct]))
 
     if (FvertexAct > 1) {
-      cat("\nHistorical vertexes:\n")
+      cat("\nHistorical Vertices:\n")
       M <- x$coords[(FvertexAct - 1):1, ]
       if (FvertexAct == 2) {
         M <- t(M)

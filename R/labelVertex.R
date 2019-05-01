@@ -1,12 +1,12 @@
 # No need for documentation since the function is not exported and will not be aviliable to the user
 
 LabelVertex <- function(simplex, crit, algor) {
-  # Labels and orders the vertexes of the simplex object based on the
-  # quality function for vertexes on the current simplex and the optimization
+  # Labels and orders the vertices of the simplex object based on the
+  # quality function for vertices on the current simplex and the optimization
   # criteria
   #
   # Args:
-  #   simplex:   'chsmplx' type object containig the coordinates of the vertexes
+  #   simplex:   'chsmplx' type object containig the coordinates of the vertices
   #   crit:      Optimization criteria indicating if the goal is maximize
   #              ("max") or minimize the quality function. It can also be a
   #              numeric value that the quality function is supposed to approach
@@ -24,7 +24,7 @@ LabelVertex <- function(simplex, crit, algor) {
 
   if (length(simplex$qual.fun) != nrow(simplex$coords)) {
     stop("There must be a quality function value for each vertex:
-        Number of vertexes: ", nrow(simplex$coords),
+        Number of vertices: ", nrow(simplex$coords),
         ", Number of quality function values: ", length(simplex$qual.fun))
   }
 

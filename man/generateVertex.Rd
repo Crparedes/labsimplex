@@ -12,17 +12,17 @@ generateVertex(simplex, qflv = NULL, crit = "max", algor = "fixed",
 of simplex.}
 
 \item{qflv}{value of the quality function for the last vertex
-(or vertexes if it is the first simplex).}
+(or vertices if it is the first simplex).}
 
 \item{crit}{optimization criteria indicating if the goal is maximize
-\code{"max"}) or minimize (\code{"min"}) the quality
+(\code{"max"}) or minimize (\code{"min"}) the quality
 function. It can also be a numeric value to which the
 quality function is supposed to approach.}
 
 \item{algor}{algorithm to be followed in the vertex generation.
 \code{"fixed"} for a fixed size simplex following
 Spendley (1962) algorithm or \code{"variable"} for a
-variable size simplex following  Nelder and Mead (1965)
+variable size simplex following Nelder and Mead (1965)
 algorithm}
 
 \item{overwrite}{logical argument indicating if the simplex must be
@@ -34,7 +34,7 @@ A 'chsmplx' type object with the information of the simplex
 }
 \description{
 Gives the coordinates for the new vertex that must be experimented
-based on the quality function values for vertexes on the current simplex
+based on the quality function values for vertices on the current simplex
 and considering the optimization criteria.
 }
 \details{

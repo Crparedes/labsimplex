@@ -9,7 +9,7 @@ plotSimplex3D(simplex, sel.dim = NULL, all.ver = TRUE,
 }
 \arguments{
 \item{simplex}{\code{smplx} class object containig the coordinates of
-the vertexes.}
+the vertices.}
 
 \item{sel.dim}{numeric or char vector for variables to be considered when
 simplex dimensionality is higher than 3. If \code{numeric}
@@ -17,7 +17,7 @@ form it must contain dimensions ordinal number. If
 \code{char}, it must contain dimensions names.}
 
 \item{all.ver}{logical. Should all vertex be plotted? If \code{FALSE}
-draws only vertexes corresponding to current simplex.}
+draws only vertices corresponding to current simplex.}
 
 \item{all.lin}{logical. Should all lines be drawn? If \code{FALSE} draws
 only last simplex.}
@@ -30,7 +30,7 @@ only last simplex.}
 }
 \value{
 3D proyection of the simplex including optionally, the
-  information corresponding to the vertexes that were discarded.
+  information corresponding to the vertices that were discarded.
 }
 \description{
 The function generates a 3D plot for a \code{smplx} object having

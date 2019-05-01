@@ -1,7 +1,7 @@
 #' Generates the new vertex of a simplex
 #'
 #' Gives the coordinates for the new vertex that must be experimented
-#' based on the quality function values for vertexes on the current simplex
+#' based on the quality function values for vertices on the current simplex
 #' and considering the optimization criteria.
 #'
 #' When minimization is the criteria, the algorithm will tend to approach zero.
@@ -11,15 +11,15 @@
 #' @param  simplex   \code{'chsmplx'} type object containig most information
 #'                   of simplex.
 #' @param  qflv      value of the quality function for the last vertex
-#'                   (or vertexes if it is the first simplex).
+#'                   (or vertices if it is the first simplex).
 #' @param  crit      optimization criteria indicating if the goal is maximize
-#'                   \code{"max"}) or minimize (\code{"min"}) the quality
+#'                   (\code{"max"}) or minimize (\code{"min"}) the quality
 #'                   function. It can also be a numeric value to which the
 #'                   quality function is supposed to approach.
 #' @param  algor     algorithm to be followed in the vertex generation.
 #'                   \code{"fixed"} for a fixed size simplex following
 #'                   Spendley (1962) algorithm or \code{"variable"} for a
-#'                   variable size simplex following  Nelder and Mead (1965)
+#'                   variable size simplex following Nelder and Mead (1965)
 #'                   algorithm
 #' @param  overwrite logical argument indicating if the simplex must be
 #'                   automatically overwrited
@@ -50,8 +50,8 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
   }
 
   #--------------------------------
-  # Ordering the vertexes that compose current simplex
-  TNV  <- nrow(simplex$coords) #Total number of vertexes
+  # Ordering the vertices that compose current simplex
+  TNV  <- nrow(simplex$coords) #Total number of vertices
   rang <- (TNV - simplex$dim):TNV
 
   #First simplex
@@ -75,7 +75,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
       # Is there a pending evaluation of a expansion vertex?
       if (simplex$P.eval) {
         # This trick allows moving the disregarded vertex to the bottom of the matrix including its name.
-        # depending on the choice, the redundant vertexes must be deleted
+        # depending on the choice, the redundant vertices must be deleted
         simplex$coords  <- rbind(simplex$coords[(TNV - 1):TNV, ], simplex$coords[1:TNV, ])
 
         if (qft[TNV] >= qft[rang[(simplex$dim - 1)]]) { # Expansion is accepted

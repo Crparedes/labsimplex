@@ -136,7 +136,7 @@ After the variables to optimize had been selected, the values that will be evalu
 
 1. Generate the initial simplex.
 2. Export the simplex information to ensure information will not be lost if the R session is restarted.
-3. Perform the experiments defined in the vertexes of the initial vertex and evaluate their quality function.
+3. Perform the experiments defined in the vertices of the initial vertex and evaluate their quality function.
 4. Import the previously exported file.
 5. Generate the new vertex based in the quality function for each vertex.
 6. Export the new simplex information (the one that includes the last generated vertex).
@@ -152,7 +152,7 @@ ExpSet <- labsimplex(N = 3)
 print(ExpSet)
 ```
 
-The function output consist mainly of three sections. The first one contains the current simplex vertexes information, the second main section (not shown here) contains the *historical* vertexes information and the third section contains the conventions used in shown tables. The conventions printing may be disabled if desired. Vertexes information include its identificator (Vertex.#), the N coordinates in the N variables, the response or quality function of that vertex, the label (indicating if it correspond to the best, next to the worst and worst or wastebasket vertex) and the nature (indicating if the vertex was introduced as a corner in the initial simplex or generated as a reflection, expansion or contraction of the simplex.)
+The function output consist mainly of three sections. The first one contains the current simplex vertices information, the second main section (not shown here) contains the *historical* vertices information and the third section contains the conventions used in shown tables. The conventions printing may be disabled if desired. The vertices information include its identificator (Vertex.#), the N coordinates in the N variables, the response or quality function of that vertex, the label (indicating if it correspond to the best, next to the worst and worst or wastebasket vertex) and the nature (indicating if the vertex was introduced as a corner in the initial simplex or generated as a reflection, expansion or contraction of the simplex.)
 
 Generating a simplex in the real variables space will require a positioning reference and a stepsize for each dimension. Two positioning references are possible, the first experiment coordinates or the centroid of the simplex. The stepsize and the first experiment or centroid coordinates are given as numeric vectors of length N in whose ordered positions the values for the respective variable are given. The stepsize is provided in the `stepsize` parameter. The start experiment and the centroid are incompatible parameters and just one must be provided at the parameters `start` or `centroid` respectively. The variable names can be specified as a character vector in the `var.name` parameter. The next example shows the usage of some of the mentioned parameters.
 ```{r Startprov}
@@ -161,8 +161,8 @@ ExpSet <- labsimplex(N = 3, start = c(7, 25, 0.15), stepsize = c(0.2, 5, 0.02),
 print(ExpSet)
 ```
 
-##### Manually defining the initial vertexes coordinates
-If the experimenter wants to manually define all the coordinates for the vertexes in the initial simplex, those coordinates must be in a matrix containing the N coordinates of each vertex in N+1 rows. This matrix is used in the `usrdef` parameter in the `labsimplex()` function. This option is incompatible with the centroid, stepsize and the start experiment parameters definition.
+##### Manually defining the initial vertices coordinates
+If the experimenter wants to manually define all the coordinates for the vertices in the initial simplex, those coordinates must be in a matrix containing the N coordinates of each vertex in N+1 rows. This matrix is used in the `usrdef` parameter in the `labsimplex()` function. This option is incompatible with the centroid, stepsize and the start experiment parameters definition.
 
 Setting the vertex coordinates manually is prone to error due to the probability of setting two hyperfaces in the same hyperplane. A so defined *simplex* will not have hypervolume and would not be precisely a simplex. The probability of this issue grows up with the dimensionality. If given coordinates define a simplex with a non-zero hypervolume, the function will print `Provided points define a simplex`. If it is not the case, an error indicating the situation is obtained.
 
@@ -171,7 +171,10 @@ ExpMtrx <- rbind(c(7.1, 25, 0.15), c(6.9, 28, 0.15), c(6.9, 23, 0.16), c(6.9, 23
 ManSet <- labsimplex(N = 3, usrdef = ExpMtrx, var.name = c('pH', 'Temp', 'Conc'))
 print(ManSet)
 ```
-This approach is very practical when a two level fractional factorial design has already be performed in the variables screening. Those experimental designs are capable of studying N variables in N+1 experiments. The performed experiments can be used as the starting vertexes and the good part is that the experiments had already be performed and their quality function already evaluated. 
+
+###### Screening experimental desings integration
+
+This approach is of particular usefullness when a two level fractional factorial design has already be performed in the variables screening. Those experimental designs are capable of studying N variables in N+1 experiments. The performed experiments can be used as the starting vertices and the good part is that the experiments had already be performed and their quality function already evaluated. 
 
 For example suppose the pH, temperature and concentration variables in the previous example had been evaluated in a screening fashion using a two level fractional factorial design of resolution III. The R package `FrF2` [@FrF2] creates fractional factorial 2-level designs and will be used in the example. The low and high levels for the pH, the temperature and the concentration will be 6.9 and 7.1, 23 and 28°C and 0.14 and 0.16 mol/L respectively.
 ```{r frf2}
@@ -189,7 +192,7 @@ FrF2Set <- labsimplex(N = 3, usrdef = matrix(as.numeric(as.matrix(screening)), n
                       var.name = dimnames(screening)[[2]])
 print(FrF2Set)
 ```
-If some variables were of no statistical importance, or if the fractional experiment design had a resolution higher than three, there will be a surplus number of experiments and again, as we will have a non-zero probability of mischoosing the coordinates that would led to an error, the election must be carefully made.
+The *little* modifications will depend on the R-package used for the screening experimental desing. If some variables were of no statistical importance, or if the fractional experiment design had a resolution higher than three, there will be a surplus number of experiments and again, as we will have a non-zero probability of mischoosing the coordinates that would led to an error, the election must be carefully made.
 
 ##### Modifying vertex coordinates
 Sometimes it is impossible to set a particular value for a variable in some experiments (e.g. the mass of a high viscosity liquid that is used in very small amounts in a chemical reaction or the pH in an unbuffered solution).  The calculations to generate the following vertex may be preferred based on the real experiments performed rather than the proposed experiments. Most of the time this can be ignored but if this is not the case, vertex coordinates must be manually adjusted using the `modifyVertex()` function. The function allows modifying as many variables in as many vertex as needed but must be used before generating a new vertex.
@@ -216,10 +219,10 @@ plot(ExpSet, sel.dim = c('pH', 'Temp'))
 plot(ExpSet, sel.dim = c('pH', 'Conc'))
 plot(ExpSet, sel.dim = c('Temp', 'Conc'))
 ```
-Here become obvious that different variables projection produces quite different images. Some of the variables combinations would have overlapping vertexes that may led confusion among researchers when reviewing the simplex graphical representation.
+Here become obvious that different variables projection produces quite different images. Some of the variables combinations would have overlapping vertices that may led confusion among researchers when reviewing the simplex graphical representation.
   
-### Generation of new vertexes
-New vertexes are generated using the quality function values for each vertex of previous simplex, the optimization criteria and the algorithm to use. The function used is `generateVertex()`. Suppose the vertex 1 to 4 had quality functions of 65, 72, 54 and 78 respectively. In this example the fixed size simplex algorithm will be used and the purpose of the optimization is maximization. Those are the default settings of the `generateVertex()` function so it will not specified. The vertexes quality function for the first simplex must be supplied in ascendant order. The following generation processes will only need the quality function of the last generated vertex. 
+### Generation of new vertices
+New vertices are generated using the quality function values for each vertex of previous simplex, the optimization criteria and the algorithm to use. The function used is `generateVertex()`. Suppose the vertex 1 to 4 had quality functions of 65, 72, 54 and 78 respectively. In this example the fixed size simplex algorithm will be used and the purpose of the optimization is maximization. Those are the default settings of the `generateVertex()` function so it will not specified. The vertices quality function for the first simplex must be supplied in ascendant order. The following generation processes will only need the quality function of the last generated vertex. 
 
 The function output is a simplex object containing all the information of the original one but adding the new vertex. The new vertex coordinates are printed and reploting the simplex will show the result of the movement.
 ```{r genV1, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center'}
@@ -236,9 +239,9 @@ The simplex optimization algorithm is flexible and the simplex can change betwee
 ### Repeat until satisfied
 The simplex optimization may proceed until a maximum is achieved or a satisfactory quality function is reached. The former will depend on the algorithm that is being followed and the later may represent a very time-saving strategy as the simplex optimization algorithm may lose some relative power near the optimum and some other techniques may lead to a richer system information in that zone (e.g. response surface experimental designs).
 
-<span style="color:red">FUNCION PENDIENTE DE IMPLEMENTAR!!! The quality function value can be plotted against the vertex number using the function `plotResponse()`.</span>
+The quality function value can be plotted against the vertex number using the function `plotSimplexResponse()`.
 
-When the optimum zone in the fixed size simplex algorithm is reached, the simplex will start to *spin* around the vertex that had the better quality function. This may be easy to notice in low dimension simplex by looking at the graphical representation of the simplex. The simplex had found the optimal zone but there is no warranty about the best vertex being at the best possible coordinates since the optimal point may lay between the vertexes of one simplex. This would be a good moment for changing to the variable size variation but this option can be taken from the beginning of the optimization process. In the variable size algorithm the simplex will contract into the optimal point indefinitely until variations became so small that it is practically impossible to differentiate two vertexes.
+When the optimum zone in the fixed size simplex algorithm is reached, the simplex will start to *spin* around the vertex that had the better quality function. This may be easy to notice in low dimension simplex by looking at the graphical representation of the simplex. The simplex had found the optimal zone but there is no warranty about the best vertex being at the best possible coordinates since the optimal point may lay between the vertices of one simplex. This would be a good moment for changing to the variable size variation but this option can be taken from the beginning of the optimization process. In the variable size algorithm the simplex will contract into the optimal point indefinitely until variations became so small that it is practically impossible to differentiate two vertices.
 
 The constant contracting simplex may indicate the optimal point of the space but the obtained information may lack of a sense about how robust is the experiment in that zone. A highly focused^[Studying a small range for the variables.] surface response methodology could be of great utility in obtaining the predicted optimal point and giving information about the robustness of the response in that zone.
 

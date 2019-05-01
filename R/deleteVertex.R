@@ -1,16 +1,16 @@
 #' Delete vertex of a simplex (a \code{smplx} class object)
 #'
-#' Delete vertex (vertexes) of a simplex.
+#' Delete vertex (or vertices) of a simplex.
 #'
-#' If the object without the undesired vertex/vertexes is not pretended to replace the original simplex but
+#' If the object without the undesired vertex/vertices is not pretended to replace the original simplex but
 #' only to be visualized or assigned to a new object, overwrite = FALSE must be used.
-#' The manipulation of vertexes of the current simplex should be avoided since it may lead to anomalous behabiour.
+#' The manipulation of vertices of the current simplex should be avoided since it may lead to anomalous behabiour.
 #' For a vertex whose coordinates are not evaluable because of practical or security restrictions,
 #' an infinitevely bad response may be assigned in order to force the simplex moving in another direction.
 #'
 #' @param simplex    simplex object to be modified
-#' @param vertex     numeric vector of integers as the identificators of the vertexes to be removed
-#' @param overwrite  logical. Should the simplex without the undesired vertexes replace the current simplex?
+#' @param vertex     numeric vector of integers as the identificators of the vertices to be removed
+#' @param overwrite  logical. Should the simplex without the undesired vertices replace the current simplex?
 #'
 #' @export
 
@@ -34,7 +34,7 @@ deleteVertex <- function (simplex, vertex, overwrite = FALSE) {
   simplex$vertex.label <- simplex$vertex.label[-pos]
 
   if (any(pos >= (nrow(simplex$coords) - simplex$dim))) {
-    warning("At least one of the vertexes of the current simplex were deleted")
+    warning("At least one of the vertices of the current simplex were deleted")
   }
 
   if (overwrite) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/adjustVertex.R
 \name{adjustVertex}
 \alias{adjustVertex}
-\title{Modify given coordinates of given vertexes of a simplex}
+\title{Modify given coordinates of given vertices of a simplex}
 \usage{
 adjustVertex(simplex, newcoords, overwrite = FALSE)
 }
@@ -10,7 +10,7 @@ adjustVertex(simplex, newcoords, overwrite = FALSE)
 \item{simplex}{\code{'chsmplx'} type object containig most information
 of simplex.}
 
-\item{newcoords}{List with elements named like the vertexes to be modified.
+\item{newcoords}{List with elements named like the vertices to be modified.
 Each element must have a vector with the (ordered) coordinates
 setted for the experiment. containig a dataframe in which the variables
 to be modified to that vertex are provided}

@@ -21,5 +21,6 @@ RoxygenNote: 6.1.1
 Roxygen: list(wrap = FALSE)
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    FrF2
 VignetteBuilder: knitr
