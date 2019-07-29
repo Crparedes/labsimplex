@@ -33,6 +33,7 @@
 #' ## After obtaining quality function for the last vertex generated:
 #' NV <- rnorm(1)
 #' generateVertex(simplex = simplex3D, qflv = NV, overwrite = TRUE)
+#' }
 #' @export
 
 generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
