@@ -4,19 +4,15 @@
 #' dimensionality of at least 3. When dimensionality is higher than 3, the
 #' function plots a 3D proyection of selected dimensions.
 #'
-#' @param  simplex \code{smplx} class object containig the coordinates of
-#'                 the vertices.
 #' @param  sel.dim numeric or char vector for variables to be considered when
 #'                 simplex dimensionality is higher than 3. If \code{numeric}
 #'                 form it must contain dimensions ordinal number. If
 #'                 \code{char}, it must contain dimensions names.
-#' @param  all.ver logical. Should all vertex be plotted? If \code{FALSE}
-#'                 draws only vertices corresponding to current simplex.
-#' @param  all.lin logical. Should all lines be drawn? If \code{FALSE} draws
-#'                 only last simplex.
 #' @param  main    title for the plot.
 #' @param  angle   angle for perspective between x and y axis.
 #' @param  ...     other arguments passed to scatterplot3d::scatterplot3d
+#' @inheritParams generateVertex
+#' @inheritParams plot.smplx
 #' @return 3D proyection of the simplex including optionally, the
 #'   information corresponding to the vertices that were discarded.
 #' @examples
@@ -56,7 +52,8 @@ plotSimplex3D <- function(simplex, sel.dim = NULL, all.ver = TRUE,
       }
   } else {
     if (simplex$dim > 3) {
-      message("No selected dimensions for ploting. Default is the first three ones.")
+      message("No selected dimensions for ploting. Default is the first three
+              ones.")
     }
   }
 
@@ -67,7 +64,8 @@ plotSimplex3D <- function(simplex, sel.dim = NULL, all.ver = TRUE,
         stop("At least one ingresed variable is not available in data")
       }
     } else {
-      var.plt <- (1:ncol(simplex$coords))[match(sel.dim, colnames(simplex$coords))]
+      var.plt <- (1:ncol(simplex$coords))[match(sel.dim,
+                                                colnames(simplex$coords))]
     }
     if (length(var.plt) != 3) {
       stop("At least one ingresed variable is not available in data")
@@ -76,26 +74,33 @@ plotSimplex3D <- function(simplex, sel.dim = NULL, all.ver = TRUE,
 
 
   if (all.ver) {
-    s <- scatterplot3d::scatterplot3d(x = simplex$coord[, var.plt], type = 'p', pch = 16,
-                                      grid = FALSE, angle = angle, main = main, lty.hide = 3, ...)
+    s <- scatterplot3d::scatterplot3d(x = simplex$coord[, var.plt], type = 'p',
+                                      pch = 16, grid = FALSE, angle = angle,
+                                      main = main, lty.hide = 3, ...)
   } else {
     s <- scatterplot3d::scatterplot3d(x = simplex$coord[(nrow(simplex$coords) -
              simplex$dim):nrow(simplex$coords), var.plt], type = 'p', pch = 16,
              grid = FALSE, angle = angle, main = main, lty.hide = 3, ...)
   }
   vertex.xy <- cbind(s$xyz.convert(simplex$coord[, var.plt[1]],
-                       simplex$coord[,var.plt[2]], simplex$coord[, var.plt[3]])$x,
+                       simplex$coord[,var.plt[2]],
+                       simplex$coord[, var.plt[3]])$x,
                      s$xyz.convert(simplex$coord[, var.plt[1]],
-                       simplex$coord[, var.plt[2]], simplex$coord[, var.plt[3]])$y)
+                       simplex$coord[, var.plt[2]],
+                       simplex$coord[, var.plt[3]])$y)
   if (all.lin) {
     for (ii in 1:(nrow(simplex$coords) - simplex$dim)) {
       segments(x0 = vertex.xy[ii, 1], x1 = vertex.xy[(ii + 1):(ii + 3), 1],
-               y0 = vertex.xy[ii, 2], y1 = vertex.xy[(ii + 1):(ii + 3), 2], col = "grey", lwd = 0.7)
+               y0 = vertex.xy[ii, 2], y1 = vertex.xy[(ii + 1):(ii + 3), 2],
+               col = "grey", lwd = 0.7)
     }
   }
 
   for (ii in (nrow(simplex$coords) - simplex$dim):(nrow(simplex$coords) - 1)) {
-    segments(x0 = vertex.xy[ii, 1], x1 = vertex.xy[(ii + 1):nrow(simplex$coords), 1],
-             y0 = vertex.xy[ii, 2], y1 = vertex.xy[(ii + 1):nrow(simplex$coords), 2], col = "blue")
+    segments(x0 = vertex.xy[ii, 1], x1 = vertex.xy[(ii + 1):
+                                                     nrow(simplex$coords), 1],
+             y0 = vertex.xy[ii, 2], y1 = vertex.xy[(ii + 1):
+                                                     nrow(simplex$coords), 2],
+             col = "blue")
   }
 }

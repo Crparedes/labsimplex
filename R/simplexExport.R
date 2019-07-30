@@ -6,11 +6,13 @@
 #' proccess after experiment described by a vertex has been carried and
 #' a quality function value has been obtained.
 #'
-#' @param  simplex     \code{smplx} class object containing the simplex to be stored.
-#' @param  filename    string with the name (without extention) of the file that will be created.
-#'                     If not provided the name of the simplex provided will be used.
-#' @param  direc       directory in which the file will be saved. If not provided,
-#'                     the actual directory will be used.
+#' @param  simplex  \code{smplx} class object containing the simplex to be
+#'                   stored.
+#' @param  filename string with the name (without extention) of the file that
+#'                  will be created. If not provided, the name of the simplex
+#'                  object will be used.
+#' @param  direc    directory in which the file will be saved. If not provided,
+#'                  the current directory will be used.
 #' @return A \code{.smplx} file containing all the information required to
 #'         continue with the optimization process once all vertex experiments
 #'         have been carried.
@@ -41,11 +43,15 @@ simplexExport <- function(simplex, filename = NULL, direc = NULL){
   }
 
   class(simplex) <- "list"
-  op.ms <- "\n IMPORTANT: \n\n This file contains all the information required to continue with the optimization process.
+  op.ms <- "\n IMPORTANT: \n\n This file contains all the information required
+            to continue with the optimization process.
             DO NOT EDIT BY HAND!
             \n\n\n"
-  utils::capture.output(cat(op.ms), file = paste0(direc, "/", filename, ".smplx"))
-  utils::capture.output(cat(paste0("ID: ", ID, "\n\n")), file = paste0(direc, "/", filename, ".smplx"),
+  utils::capture.output(cat(op.ms),
+                        file = paste0(direc, "/", filename, ".smplx"))
+  utils::capture.output(cat(paste0("ID: ", ID, "\n\n")),
+                        file = paste0(direc, "/", filename, ".smplx"),
                         append = TRUE)
-  utils::capture.output(simplex, file = paste0(direc, "/", filename, ".smplx"), append = TRUE)
+  utils::capture.output(simplex, file = paste0(direc, "/", filename, ".smplx"),
+                        append = TRUE)
 }

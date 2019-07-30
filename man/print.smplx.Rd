@@ -9,9 +9,11 @@
 \arguments{
 \item{x}{simplex object to be printed}
 
-\item{extended}{logical, if \code{TRUE}, the object is printed as a list containing all elements}
+\item{extended}{logical, if \code{TRUE}, the object is printed as a
+list containing all hiden elements}
 
-\item{conventions}{logical, if \code{TRUE} (default), the conventions used are printed}
+\item{conventions}{logical, if \code{TRUE} (default), the conventions
+used are printed}
 
 \item{...}{other arguments passed to print}
 }

@@ -11,34 +11,45 @@ generateVertex(simplex, qflv = NULL, crit = "max", algor = "fixed",
 \item{simplex}{\code{'chsmplx'} type object containig most information
 of simplex.}
 
-\item{qflv}{value of the quality function for the last vertex
+\item{qflv}{value of the response for the last vertex
 (or vertices if it is the first simplex).}
 
 \item{crit}{optimization criteria indicating if the goal is maximize
-(\code{"max"}) or minimize (\code{"min"}) the quality
-function. It can also be a numeric value to which the
-quality function is supposed to approach.}
+(\code{"max"}) or minimize (\code{"min"}) the response.
+It can also be a numeric value to which the
+response is supposed to approach.}
 
 \item{algor}{algorithm to be followed in the vertex generation.
-\code{"fixed"} for a fixed size simplex following
+\code{"fixed"} for a fixed-size simplex following
 Spendley (1962) algorithm or \code{"variable"} for a
-variable size simplex following Nelder and Mead (1965)
+variable-size simplex following Nelder and Mead (1965)
 algorithm}
 
-\item{overwrite}{logical argument indicating if the simplex must be
-automatically overwrited}
+\item{overwrite}{logical argument. If \code{TRUE} the output simplex will
+replace the provided one in the \code{simplex} parameter.
+Defauklt \code{overwrite = TRUE}}
 }
 \value{
 A 'chsmplx' type object with the information of the simplex
        including the conditions for the new experiment to be permormed.
 }
 \description{
-Gives the coordinates for the new vertex that must be experimented
-based on the quality function values for vertices on the current simplex
+Gives the coordinates for the new vertex that must be performed
+based on the response values for vertices on the current simplex
 and considering the optimization criteria.
 }
 \details{
 When minimization is the criteria, the algorithm will tend to approach zero.
 If negative responses are possible and the most negative value is desired,
-response values sign must be changed manually before entering the information.
+a very large negative number must be provided in \code{crit} parameter.
+}
+\examples{
+simplex3D <- labsimplex(N = 3)
+simplex3D <- generateVertex(simplex = simplex3D, qflv = rnorm(4))
+\dontrun{
+## Optional form:
+## After obtaining the response for the last vertex generated:
+NV <- rnorm(1)
+generateVertex(simplex = simplex3D, qflv = NV, overwrite = TRUE)
+}
 }

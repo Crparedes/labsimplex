@@ -1,9 +1,9 @@
 #' Plots the response versus the vertex number of a simplex optimization.
 #'
 #' The function generates a plot for a \code{smplx} class object whose vertices
-#' must have a quality function value assigned. The quality function is plotted
-#' against the vertex number. The only vertex allowed to not having quality
-#' function value is the last generated one.
+#' must have a response value assigned. The response is plotted
+#' against the vertex number. The only vertex allowed to not having response
+#' assigned is the last one.
 #'
 #' If the simplex object being ploted was obtained using a variable size
 #' algorithm, some experimental points could be disregarded and will be
@@ -13,16 +13,17 @@
 #' better values as more vertices are evaluated.
 #'
 #' @param  x \code{smplx} class object containig the coordinates of
-#'                 the vertices and their quality function values.
+#'                 the vertices and their response values.
 #' @param  ...     other graphical parameters used in plot()
 #' @return Plot of quiality function against vertex number
 #' @examples
 #' set.seed(1)
 #' # Generate a simplex and add some responses to the vertices
 #' simplex <- labsimplex(N = 3)
-#' generateVertex(simplex, qflv = rnorm(4), algor = 'variable', overwrite = TRUE)
+#' generateVertex(simplex, qflv = rnorm(4), algor = 'variable',
+#'   overwrite = TRUE)
 #' generateVertex(simplex, qflv = 2.75, algor = 'variable', overwrite = TRUE)
-#' generateVertex(simplex, qflv = 0.8, algor = 'variable', overwrite = TRUE)
+#' generateVertex(simplex, qflv = 0.8,  algor = 'variable', overwrite = TRUE)
 #' generateVertex(simplex, qflv = 2.94, algor = 'variable', overwrite = TRUE)
 #' generateVertex(simplex, qflv = 3.14, algor = 'variable', overwrite = TRUE)
 #'
@@ -38,11 +39,11 @@ plotSimplexResponse <- function(x, ...){
   checkMain(simplex = x)
   if (length(x$qual.fun) < (nrow(x$coords) - 1)) {
     if (all(x$vertex.nat == 'S')) {
-      stop("All starting vertices must have quality function values assigned
-            before ploting the responses")
+      stop("All starting vertices must have response values assigned
+           before ploting the responses")
     } else {
       stop("Only the last generated vertex is allowed to not having a
-           quality function value assignedSimplex dimension must be at least 2")
+           response assigned")
     }
   }
 

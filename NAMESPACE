@@ -3,7 +3,6 @@
 S3method(plot,smplx)
 S3method(print,smplx)
 export(adjustVertex)
-export(deleteVertex)
 export(generateVertex)
 export(labsimplex)
 export(plotSimplex3D)

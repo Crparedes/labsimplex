@@ -6,12 +6,13 @@
 #'
 #' For 3D representations of simplex with dimensionality higher than 2 use
 #' \code{\link{plotSimplex3D}}
+#'
 #' @param  x \code{smplx} class object containig the coordinates of
 #'                 the vertices.
 #' @param  sel.dim numeric or char vector for variables to be considered when
 #'                 simplex dimensionality is higher than 2. If \code{numeric}
 #'                 form it must contain dimensions ordinal number. If
-#'                 \code{char}, it must contain dimensions names.
+#'                 \code{char}, it must contain desired dimensions names.
 #' @param  all.ver logical. Should all vertex be plotted? If \code{FALSE}
 #'                 draws only vertices corresponding to current simplex.
 #' @param  all.lin logical. Should all lines be drawn? If \code{FALSE} draws
@@ -27,7 +28,7 @@
 #'   plot(x = labsimplex(N = 8))
 #'   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
 #'
-#'   ## Simulation of the real proccess where a simplex is made and QF measured,
+#'   ## Simulation of the real proccess where a simplex is made and evaluated
 #'   set.seed(12)
 #'   simplex2D <- labsimplex(N = 2)
 #'   plot(x = simplex2D)
@@ -54,8 +55,8 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
   }
   if (!missing(sel.dim)) {
     if (length(sel.dim) != 2) {
-      stop("Only 2 coordinates can be plotted. Length of sdim vector differs from 2: ",
-             length(sel.dim))
+      stop("Only 2 coordinates can be plotted. Length of sdim vector differs
+           from 2: ", length(sel.dim))
       }
   } else {
     var.plt <- 1:2
@@ -63,7 +64,8 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
 
   if (x$dim > 2) {
     if (missing(sel.dim)) {
-      message("No selected dimensions for ploting. Default is the first two ones.")
+      message("No selected dimensions for ploting. Default is the first two
+              ones.")
     } else {
       if (is.numeric(sel.dim)) {
         var.plt <- sel.dim
@@ -71,7 +73,8 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
           stop("At least one ingresed variable is not available in data")
         }
       } else {
-        var.plt <- (1:ncol(x$coords))[!is.na(match(colnames(x$coords), sel.dim))]
+        var.plt <- (1:ncol(x$coords))[!is.na(match(colnames(x$coords),
+                                                   sel.dim))]
       }
       if (length(var.plt) != 2) {
         stop("At least one ingresed variable is not available in data")
@@ -92,8 +95,8 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
       yexp <- c(par("usr")[3] - 0.5 * diff(par("usr")[3:4]) * exp.fac,
                 par("usr")[4] + 0.5 * diff(par("usr")[3:4]) * exp.fac)
       dev.off()
-      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp, ylim = yexp, pch = 16,
-           xlab = xlab, ylab = ylab, ...)
+      plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp,
+           ylim = yexp, pch = 16, xlab = xlab, ylab = ylab, ...)
     } else {
       dev.off()
       plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16,
@@ -104,8 +107,8 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
     #      outer = TRUE, line = 3)
   } else {
     plot(x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[1]],
-         x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]], pch = 16,
-         xlab = xlab, ylab = ylab, ...)
+         x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]],
+         pch = 16, xlab = xlab, ylab = ylab, ...)
     if (expand) {
       xexp <- c(par("usr")[1] - 0.5 * diff(par("usr")[1:2]) * exp.fac,
                 par("usr")[2] + 0.5 * diff(par("usr")[1:2]) * exp.fac)
@@ -134,7 +137,6 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
             x$coords[c(ii, jj),  var.plt[2]], col = "blue")
     }
   }
-
   #par(oma = opar$oma, mar = opar$mar)
 }
 

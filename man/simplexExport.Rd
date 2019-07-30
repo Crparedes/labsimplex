@@ -7,13 +7,15 @@
 simplexExport(simplex, filename = NULL, direc = NULL)
 }
 \arguments{
-\item{simplex}{\code{smplx} class object containing the simplex to be stored.}
+\item{simplex}{\code{smplx} class object containing the simplex to be
+stored.}
 
-\item{filename}{string with the name (without extention) of the file that will be created.
-If not provided the name of the simplex provided will be used.}
+\item{filename}{string with the name (without extention) of the file that
+will be created. If not provided, the name of the simplex
+object will be used.}
 
 \item{direc}{directory in which the file will be saved. If not provided,
-the actual directory will be used.}
+the current directory will be used.}
 }
 \value{
 A \code{.smplx} file containing all the information required to

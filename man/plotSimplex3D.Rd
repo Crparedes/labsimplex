@@ -8,8 +8,8 @@ plotSimplex3D(simplex, sel.dim = NULL, all.ver = TRUE,
   all.lin = TRUE, main = NULL, angle = 30, ...)
 }
 \arguments{
-\item{simplex}{\code{smplx} class object containig the coordinates of
-the vertices.}
+\item{simplex}{\code{'chsmplx'} type object containig most information
+of simplex.}
 
 \item{sel.dim}{numeric or char vector for variables to be considered when
 simplex dimensionality is higher than 3. If \code{numeric}

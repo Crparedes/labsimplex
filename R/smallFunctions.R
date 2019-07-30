@@ -20,8 +20,9 @@
 #----FUNCTIONS USED IN ERROR MANAGING------------------------------------------
   checkMain <- function(simplex) {
     if (class(simplex) != 'smplx') {
-      stop("Argument simplex is expected to be 'smplx' class. Provided: ", class(simplex), ". ",
-           "Use labsimplex() to generate a 'smplx' class object")
+      stop("Argument simplex is expected to be 'smplx' class. Provided: ",
+           class(simplex), ". ", "Use labsimplex() to generate a 'smplx'
+           class object")
     }
   }
 
@@ -32,7 +33,7 @@
         qft <- lastQF
       } else {
         if (crit == "min") {
-          pos <- order(lastQF ^ 2, decreasing = TRUE)  # Better at the last position
+          pos <- order(lastQF ^ 2, decreasing = TRUE)
           qft <- 1 / (lastQF ^ 2)
         } else {
           stop("If criteria is not numeric, only 'max' or min' are accepted")
@@ -68,16 +69,13 @@
     }
     simplex$qual.fun <- c(simplex$qual.fun, qflv)
     if (length(simplex$qual.fun) > nrow(simplex$coords)) {
-      stop("The amount of vertices can not be smaller than the size of response vector.")
+      stop("The amount of vertices can not be smaller than the size of response
+           vector.")
     }
     return(simplex)
   }
 
-
-
-
-
-
+#------------------------------------------------------------------------------
   redundant <- function(simplex, NV, counter) {
 
   }

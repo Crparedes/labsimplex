@@ -14,7 +14,7 @@ the vertices.}
 \item{sel.dim}{numeric or char vector for variables to be considered when
 simplex dimensionality is higher than 2. If \code{numeric}
 form it must contain dimensions ordinal number. If
-\code{char}, it must contain dimensions names.}
+\code{char}, it must contain desired dimensions names.}
 
 \item{all.ver}{logical. Should all vertex be plotted? If \code{FALSE}
 draws only vertices corresponding to current simplex.}
@@ -47,7 +47,7 @@ For 3D representations of simplex with dimensionality higher than 2 use
   plot(x = labsimplex(N = 8))
   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
 
-  ## Simulation of the real proccess where a simplex is made and QF measured,
+  ## Simulation of the real proccess where a simplex is made and evaluated
   set.seed(12)
   simplex2D <- labsimplex(N = 2)
   plot(x = simplex2D)

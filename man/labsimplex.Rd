@@ -13,13 +13,16 @@ labsimplex(N, start = NULL, centroid = NULL, stepsize = NULL,
 \arguments{
 \item{N}{number of dimentions (variables) in the space}
 
-\item{start}{numeric vector of size \code{N} with initial coordinates for the first vertex}
+\item{start}{numeric vector of size \code{N} with initial coordinates
+for the first vertex}
 
 \item{centroid}{coordinates of centroid for initial simplex}
 
-\item{stepsize}{numeric vector of size \code{N} with the step size for each coordinate}
+\item{stepsize}{numeric vector of size \code{N} with the step size for each
+coordinate}
 
-\item{usrdef}{\code{(N+1)xN} matrix containig in (N+1) rows the N coordinates for each vertex}
+\item{usrdef}{\code{(N+1)xN} matrix containig in (N+1) rows the N
+coordinates for each vertex}
 
 \item{var.name}{vector containing the names for the variables}
 }
@@ -28,7 +31,7 @@ A \code{smplx} type object with the information of the simplex.
 }
 \description{
 Generates a \code{smplx} class object containing the coordinates
-of the N+1 vertices of a simplex in a N-dimentional space.
+of the N+1 vertices of a simplex in a N-dimensional space.
 Addionally can check if faces for given coordinates of a used defined
 simplex are in different hyperplanes.
 }
@@ -36,17 +39,18 @@ simplex are in different hyperplanes.
 The only non-optional parameter is \code{N} that relates the simplex
 dimensionality. All other parameters allows tunning the properties of
 generated simplex or define one using defined coordinates. Once the simplex
-is genereated, the experiments under the conditions indicated for each variable at each
-vertex must be carried and the quality function evaluated. Those quality
-function values are assigned to the \code{smplx} object at the moment of
+is genereated, the experiments under the conditions indicated for each
+variable at each vertex must be carried and the response obtained.
+Those responses are assigned to the \code{smplx} object at the moment of
 generating the new vertex (see \code{\link{generateVertex}}).
 
-If the initial simplex is generated using the function, it will be the result
-of modifications made to a regular simplex centered at the origin. This regular simplex
-coordinates are generated following the general algorithm for the cartesian
-coordinates for regular n-dimensional simplex. The algorithm considerates that
-all vertices must be equal distanced from simplex centroid and all angles subtended between
-any two vertices and the centroid of a simplex are equal (with a value of arccos(-1/N)).
+If the initial simplex is generated using the function, it will be the
+result of modifications made to a regular simplex centered at the origin.
+This regular simplex coordinates are generated following the general
+algorithm for the cartesian coordinates for regular n-dimensional simplex.
+The algorithm considerates that all vertices must be equal distanced from
+simplex centroid and all angles subtended between any two vertices and the
+centroid of a simplex are equal (with a value of arccos(-1/N)).
 }
 \section{labsimplex functions}{
 
@@ -58,10 +62,11 @@ The labsimplex functions...
   labsimplex(N = 3, centroid = c(66, 1, 12), stepsize = c(10, 0.1, 2),
              var.name = c('potential', 'pH', 'T'))
 
-  labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 1, 0), c(-0.5, -0.7, 1),
-                            c(-0.5, -0.4, -0.6)))
+  labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 1, 0),
+                                   c(-0.5, -0.7, 1), c(-0.5, -0.4, -0.6)))
 \dontrun{
 ## A user defined coordinates may define faces that rely on same hyperplane:
-  labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 0, 0), c(0, 0, 0), c(-0.5, -0.4, -0.6)))
+  labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 0, 0), c(0, 0, 0),
+                                   c(-0.5, -0.4, -0.6)))
 }
 }

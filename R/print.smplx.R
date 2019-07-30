@@ -3,8 +3,10 @@
 #' Prints given simplex information.
 #'
 #' @param x           simplex object to be printed
-#' @param extended    logical, if \code{TRUE}, the object is printed as a list containing all elements
-#' @param conventions logical, if \code{TRUE} (default), the conventions used are printed
+#' @param extended    logical, if \code{TRUE}, the object is printed as a
+#'                    list containing all hiden elements
+#' @param conventions logical, if \code{TRUE} (default), the conventions
+#'                    used are printed
 #' @param ...         other arguments passed to print
 #'
 #' @method print smplx
@@ -52,15 +54,16 @@ print.smplx <- function(x, extended = FALSE, conventions = TRUE, ...){
                        Nature = nat[(FvertexAct - 1):1]))
     }
 
-    cat("\nConventions:\n")
-    cat("    Labels:                    Nature:
-      W: Worst or Wastebasket    S:  Starting
-      N: Next to the worst       R:  Reflected
-      B: Best                    E:  Expanded
-                                 Cr: Contraction on the reflection side
-      D: Disregarded             Cw: Contraction on the worst side
+    if (conventions) {
+      cat("\nConventions:\n")
+      cat("    Labels:                    Nature:
+       W: Worst or Wastebasket    S:  Starting
+       N: Next to the worst       R:  Reflected
+       B: Best                    E:  Expanded
+                                  Cr: Contraction on the reflection side
+       D: Disregarded             Cw: Contraction on the worst side
 
-  Use print(..., conventions = FALSE) to disable conventions printing. \n")
-
+      Use print(..., conventions = FALSE) to disable conventions printing. \n")
     }
+  }
 }

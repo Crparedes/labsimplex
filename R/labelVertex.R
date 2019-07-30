@@ -1,26 +1,10 @@
-# No need for documentation since the function is not exported and will not be aviliable to the user
+# No need for documentation since the function is not exported and will
+#   not be aviliable to the user
 
 LabelVertex <- function(simplex, crit, algor) {
   # Labels and orders the vertices of the simplex object based on the
   # quality function for vertices on the current simplex and the optimization
   # criteria
-  #
-  # Args:
-  #   simplex:   'chsmplx' type object containig the coordinates of the vertices
-  #   crit:      Optimization criteria indicating if the goal is maximize
-  #              ("max") or minimize the quality function. It can also be a
-  #              numeric value that the quality function is supposed to approach
-  #   algor:     Algorithm to be followed in the vertex generation. "fixed" means
-  #              a fixed size simplex following the Spendley (1962) algorithm.
-  #              "variable" means a variable size simplex following  Nelder and
-  #              Mead (1965) algorithm
-  #   overwrite: Logical argument indicating if the simplex must be
-  #              automatically overwrited
-  # Returns:
-  #   A 'chsmplx' type object with the information of the simplex including
-  #   the conditions for the new experiment to be permormed
-
-  # Error handling
 
   if (length(simplex$qual.fun) != nrow(simplex$coords)) {
     stop("There must be a quality function value for each vertex:
@@ -67,7 +51,8 @@ LabelVertex <- function(simplex, crit, algor) {
     simplex$coords <- coords
 
     # Trimming the vector to make room for the new labels
-    length(simplex$vertex.label) <- length(simplex$vertex.label) - simplex$dim + 1
+    length(simplex$vertex.label) <- length(simplex$vertex.label) -
+      simplex$dim + 1
     # Moving the previous 'N' to waste
     simplex$vertex.label[length(simplex$vertex.label)] <- 'W'
 
@@ -77,9 +62,10 @@ LabelVertex <- function(simplex, crit, algor) {
     simplex$vertex.label <- c(simplex$vertex.label, ver.lab2[order(ver.lab)])
 
     lsqf <- length(simplex$qual.fun)
-    simplex$qual.fun[(lsqf -  simplex$dim + 1):lsqf] <- simplex$qual.fun[(lsqf -  simplex$dim + 1):lsqf][order(ver.lab)]
-    simplex$vertex.nat[(lsqf -  simplex$dim + 1):lsqf] <- simplex$vertex.nat[(lsqf -  simplex$dim + 1):lsqf][order(ver.lab)]
-
+    simplex$qual.fun[(lsqf -  simplex$dim + 1):lsqf] <-
+      simplex$qual.fun[(lsqf -  simplex$dim + 1):lsqf][order(ver.lab)]
+    simplex$vertex.nat[(lsqf -  simplex$dim + 1):lsqf] <-
+      simplex$vertex.nat[(lsqf -  simplex$dim + 1):lsqf][order(ver.lab)]
   }
   return(simplex)
 }

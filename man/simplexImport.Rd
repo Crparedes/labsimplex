@@ -7,9 +7,10 @@
 simplexImport(filename, auth.ld = TRUE, name = NULL)
 }
 \arguments{
-\item{filename}{string with the name of the file (with extension) to be imported.
-The file must be generated using \code{\link{simplexExport}}. It may
-include path if the file is not in the working directory.}
+\item{filename}{string with the name of the file (with extension) to
+be imported. The file must be generated using
+\code{\link{simplexExport}}. It may include path if the
+file is not in the current directory.}
 
 \item{auth.ld}{logical. Should the imported simplex object be directly
 loaded on the Environment? Default to TRUE.}
@@ -19,7 +20,8 @@ loaded on the Environment? Default to TRUE.}
 file will be used.}
 }
 \value{
-A \code{smplx} class object with the complete information of the simplex
+A \code{smplx} class object with the complete information of the
+        simplex
 }
 \description{
 Imports the information contained in a \code{.smplx} file and creates a
