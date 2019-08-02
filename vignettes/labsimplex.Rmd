@@ -3,9 +3,9 @@ title: "labsimplex package"
 author: "Cristhian Paredes and Jesús Ágreda"
 date: "`r Sys.Date()`"
 output: 
-  rmarkdown::html_vignette
+  rmarkdown::pdf_document
 vignette: >
-  %\VignetteIndexEntry{labsimplex package}
+  %\VignetteIndexEntry{labsimplex}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 references:
@@ -132,9 +132,9 @@ require(labsimplex)
 The R package labsimplex implements the simplex optimization algorithms (fixed size and variable size) useful for laboratory and production process optimization. Tools for visualizing the coordinates of the experiments and the evolution in the response as the experiments are performed are also provided. This package is not intended for linear programming applications, for this purpose see `optimsimplex` package from [@optimsimplex]. The simplex optimization algorithm provides a powerful way to enhance almost any process whose output depends on tunable variables.
 
 ## Introduction
-To easily understand simplex algorithm a geometric abstraction is made necessary. The *n* input variables that may affect the result of a given process are seen as dimensions in a *n*-dimensional space. The set of *n* values that define the coordinates of each variable in a given experiment defines a *vertex*. A vertex represents an experiment that must be performed in the conditions described for its coordinates to get a response. 
+A simplex is the simplest polyhedron than can be built in a *n*-dimensional space (e.g. in two and three-dimensional spaces, the simplices are the well-known triangle and tetrahedron, respectively). To easily understand simplex algorithm a geometric abstraction is made necessary. The *n* input variables that may affect the result of a given process are seen as dimensions in a *n*-dimensional space. The set of *n* values that define the coordinates of each variable in a given experiment defines a *vertex*. A vertex represents an experiment that must be performed in the conditions described for its coordinates to get a response. 
 
-A simplex is the simplest polyhedron than can be built in a *n*-dimensional space (e.g. in two and three-dimensional spaces, the simplices are the well-known triangle and tetrahedron, respectively). Every simplex in a *n*-dimensional space must have *n+1* vertices. If the object only has *n* vertices in a *n*-dimensional, it will describe a subspace called hyperplane. For example, while in three-dimensional spaces a hyperplane is a traditional plane, in a two-dimensional space, a hyperplane will be defined by a (one-dimensional) line. By definition, a simplex must have a non-zero hypervolume (*n*-dimensional generalization of the space occupied by a body in the space). Given the restriction concerning the number of vertexes in a simplex, all the hyperfaces (*n*-dimensional generalization of a face) defined by any subset of *n* vertices must rely on differents hyperplanes.
+Every simplex in a *n*-dimensional space must have *n+1* vertices. If an object only has *n* vertices in a *n*-dimensional space, it will describe a subspace called hyperplane. For example, while in three-dimensional spaces a hyperplane is a *normal* plane, in a two-dimensional space, a hyperplane will be defined by a (one-dimensional) line. For the simplex algorithms to wors properly,  used simplices must have a non-zero hypervolume (*n*-dimensional generalization of the space occupied by a body in a space *n*-dimensional). Given the restriction concerning the number of vertexes in a simplex, all the hyperfaces (*n*-dimensional generalization of a face) defined by any subset of *n* vertices must rely on differents hyperplanes.
 
 The fixed size simplex algorithm first introduced by [@Spendley] is based on the idea that getting away from the zone that yields the worst results will provide a close up to the optimal zone. An initial simplex is defined and the experiments are performed to obtain a response for each vertex. After the responses have been obtained a new vertex is proposed based on the reflection of the simplex and this reflection is made based on the performance of the performed experiments. This new vertex provides a new experiment that must be performed and is likely to yield a better response as it is supposed to be closer to the optimum zone. Once the optimum zone is reached, the simplex reflection movements will start to sistematically give vertex coordinates that coincide with already performed experiments (i.e. the simplex starts to spin). For a better understanding of the principles and the calculations behind the algorithm, see [@simplexbook].
 

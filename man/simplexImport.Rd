@@ -33,3 +33,8 @@ Imports the information contained in a \code{.smplx} file and creates a
   simplexImport("simplex4D.smplx")
 }
 }
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
+}

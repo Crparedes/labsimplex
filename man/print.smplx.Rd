@@ -20,3 +20,8 @@ used are printed}
 \description{
 Prints given simplex information.
 }
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
+}

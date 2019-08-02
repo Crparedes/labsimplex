@@ -10,6 +10,8 @@
 #' @param ...         other arguments passed to print
 #'
 #' @method print smplx
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 # S3 method for smplx class object
 

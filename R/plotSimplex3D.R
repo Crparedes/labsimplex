@@ -13,8 +13,7 @@
 #' @param  ...     other arguments passed to scatterplot3d::scatterplot3d
 #' @inheritParams generateVertex
 #' @inheritParams plot.smplx
-#' @return 3D proyection of the simplex including optionally, the
-#'   information corresponding to the vertices that were discarded.
+#' @return 3D proyection of the simplex coordinates.
 #' @examples
 #'   plotSimplex3D(simplex = labsimplex(N = 3))
 #'
@@ -33,6 +32,9 @@
 #'   generateVertex(simplex = simplex3D, qflv = rnorm(1), overwrite = TRUE)
 #'   plotSimplex3D(simplex = simplex3D)
 #' @importFrom graphics lines par plot segments title
+#'
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 
 plotSimplex3D <- function(simplex, sel.dim = NULL, all.ver = TRUE,

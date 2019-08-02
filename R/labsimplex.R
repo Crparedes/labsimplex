@@ -30,7 +30,7 @@
 #' @param  usrdef    \code{(N+1)xN} matrix containig in (N+1) rows the N
 #'                   coordinates for each vertex
 #' @param  var.name  vector containing the names for the variables
-#' @return  A \code{smplx} type object with the information of the simplex.
+#' @return  A \code{smplx} type object with the brand new simplex information.
 #' @examples
 #'   labsimplex(N = 3)
 #'   labsimplex(N = 3, centroid = c(66, 1, 12), stepsize = c(10, 0.1, 2),
@@ -43,6 +43,13 @@
 #'   labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 0, 0), c(0, 0, 0),
 #'                                    c(-0.5, -0.4, -0.6)))
 #' }
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
+#' @references Nelder, J. A., and R. Mead. 1965. “A Simplex Method for Function
+#' Minimization.” The Computer Journal 7 (4): 308–13.
+#' @references Spendley, W., G. R. Hext, and F. R0. Himsworth. 1962. “Sequential
+#' Application of Simplex Designs in Optimization and Evolutionary Operation.”
+#' Technometrics 4 (4): 441–61.
 #' @export
 
 labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,

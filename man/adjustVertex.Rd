@@ -7,8 +7,7 @@
 adjustVertex(simplex, newcoords, overwrite = FALSE)
 }
 \arguments{
-\item{simplex}{\code{'chsmplx'} type object containig most information
-of simplex.}
+\item{simplex}{\code{'smplx'} type object containig simplex information}
 
 \item{newcoords}{List with elements named like the vertices to be modified.
 Each element must have a vector with the actual (ordered)
@@ -20,8 +19,7 @@ replace the provided one in the \code{simplex} parameter.
 Defauklt \code{overwrite = TRUE}}
 }
 \value{
-A 'chsmplx' type object with the information of the simplex
-       including the conditions for the new experiment to be permormed.
+A 'smplx' type object with the modified simplex information.
 }
 \description{
 Changes the coordinates of generated vertices when slightly differences
@@ -34,4 +32,9 @@ simplex <- labsimplex(N = 3, start = c(7, 25, 0.15),
 adjustVertex(simplex = simplex, newcoords = list(Vertex.1 = c(7, NA, NA),
                                                  Vertex.3 = c(7.2, NA, NA)),
              overwrite = TRUE)
+}
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
 }

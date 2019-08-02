@@ -8,8 +8,7 @@ plotSimplex3D(simplex, sel.dim = NULL, all.ver = TRUE,
   all.lin = TRUE, main = NULL, angle = 30, ...)
 }
 \arguments{
-\item{simplex}{\code{'chsmplx'} type object containig most information
-of simplex.}
+\item{simplex}{\code{'smplx'} type object containig simplex information}
 
 \item{sel.dim}{numeric or char vector for variables to be considered when
 simplex dimensionality is higher than 3. If \code{numeric}
@@ -29,8 +28,7 @@ only last simplex.}
 \item{...}{other arguments passed to scatterplot3d::scatterplot3d}
 }
 \value{
-3D proyection of the simplex including optionally, the
-  information corresponding to the vertices that were discarded.
+3D proyection of the simplex coordinates.
 }
 \description{
 The function generates a 3D plot for a \code{smplx} object having
@@ -54,4 +52,9 @@ function plots a 3D proyection of selected dimensions.
   plotSimplex3D(simplex = simplex3D)
   generateVertex(simplex = simplex3D, qflv = rnorm(1), overwrite = TRUE)
   plotSimplex3D(simplex = simplex3D)
+}
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
 }

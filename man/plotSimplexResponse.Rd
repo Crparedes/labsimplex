@@ -13,7 +13,7 @@ the vertices and their response values.}
 \item{...}{other graphical parameters used in plot()}
 }
 \value{
-Plot of quiality function against vertex number
+Plot of response against vertex number.
 }
 \description{
 The function generates a plot for a \code{smplx} class object whose vertices
@@ -42,4 +42,9 @@ generateVertex(simplex, qflv = 3.14, algor = 'variable', overwrite = TRUE)
 
 # Plot the response versus the vertex function
 plotSimplexResponse(simplex)
+}
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
 }

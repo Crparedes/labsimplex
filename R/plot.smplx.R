@@ -7,8 +7,7 @@
 #' For 3D representations of simplex with dimensionality higher than 2 use
 #' \code{\link{plotSimplex3D}}
 #'
-#' @param  x \code{smplx} class object containig the coordinates of
-#'                 the vertices.
+#' @param  x \code{smplx} class object containing the vertices coordinates.
 #' @param  sel.dim numeric or char vector for variables to be considered when
 #'                 simplex dimensionality is higher than 2. If \code{numeric}
 #'                 form it must contain dimensions ordinal number. If
@@ -41,6 +40,8 @@
 #' @importFrom graphics lines par plot segments title
 #' @importFrom grDevices dev.off pdf
 #' @method plot smplx
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 # S3 method for smplx class object
 

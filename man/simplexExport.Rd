@@ -35,3 +35,8 @@ a quality function value has been obtained.
   simplexExport(simplex = simplex)
 }
 }
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
+}

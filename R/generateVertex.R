@@ -8,10 +8,9 @@
 #' If negative responses are possible and the most negative value is desired,
 #' a very large negative number must be provided in \code{crit} parameter.
 #'
-#' @param  simplex   \code{'chsmplx'} type object containig most information
-#'                   of simplex.
+#' @param  simplex   \code{'smplx'} type object containig simplex information
 #' @param  qflv      value of the response for the last vertex
-#'                   (or vertices if it is the first simplex).
+#'                   (or last vertices if it is the first simplex).
 #' @param  crit      optimization criteria indicating if the goal is maximize
 #'                   (\code{"max"}) or minimize (\code{"min"}) the response.
 #'                   It can also be a numeric value to which the
@@ -25,7 +24,7 @@
 #'                   replace the provided one in the \code{simplex} parameter.
 #'                   Defauklt \code{overwrite = TRUE}
 #'
-#' @return A 'chsmplx' type object with the information of the simplex
+#' @return A 'smplx' type object with the new simplex information
 #'        including the conditions for the new experiment to be permormed.
 #' @examples
 #' simplex3D <- labsimplex(N = 3)
@@ -36,6 +35,8 @@
 #' NV <- rnorm(1)
 #' generateVertex(simplex = simplex3D, qflv = NV, overwrite = TRUE)
 #' }
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 
 generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",

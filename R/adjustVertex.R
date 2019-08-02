@@ -11,14 +11,15 @@
 #'                   to indicate coordinates that were unchanged.
 #' @inheritParams generateVertex
 #'
-#' @return A 'chsmplx' type object with the information of the simplex
-#'        including the conditions for the new experiment to be permormed.
+#' @return A 'smplx' type object with the modified simplex information.
 #' @examples
 #' simplex <- labsimplex(N = 3, start = c(7, 25, 0.15),
 #'                       stepsize = c(0.2, 5, 0.02))
 #' adjustVertex(simplex = simplex, newcoords = list(Vertex.1 = c(7, NA, NA),
 #'                                                  Vertex.3 = c(7.2, NA, NA)),
 #'              overwrite = TRUE)
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 
 adjustVertex <- function(simplex, newcoords, overwrite = FALSE) {

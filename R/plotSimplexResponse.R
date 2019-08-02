@@ -15,7 +15,7 @@
 #' @param  x \code{smplx} class object containig the coordinates of
 #'                 the vertices and their response values.
 #' @param  ...     other graphical parameters used in plot()
-#' @return Plot of quiality function against vertex number
+#' @return Plot of response against vertex number.
 #' @examples
 #' set.seed(1)
 #' # Generate a simplex and add some responses to the vertices
@@ -30,6 +30,8 @@
 #' # Plot the response versus the vertex function
 #' plotSimplexResponse(simplex)
 #' @importFrom graphics lines points plot segments title
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 
 

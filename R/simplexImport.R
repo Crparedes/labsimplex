@@ -19,6 +19,8 @@
 #'   simplexExport(labsimplex(N = 4), name = "simplex4D")
 #'   simplexImport("simplex4D.smplx")
 #' }
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 
 simplexImport <- function(filename, auth.ld = TRUE, name = NULL){

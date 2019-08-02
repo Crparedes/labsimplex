@@ -8,8 +8,7 @@
   all.lin = TRUE, expand = TRUE, exp.fac = 1.5, ...)
 }
 \arguments{
-\item{x}{\code{smplx} class object containig the coordinates of
-the vertices.}
+\item{x}{\code{smplx} class object containing the vertices coordinates.}
 
 \item{sel.dim}{numeric or char vector for variables to be considered when
 simplex dimensionality is higher than 2. If \code{numeric}
@@ -57,4 +56,9 @@ For 3D representations of simplex with dimensionality higher than 2 use
   plot(x = simplex2D)
   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
   plot(x = simplex2D)
+}
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
 }

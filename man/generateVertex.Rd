@@ -8,11 +8,10 @@ generateVertex(simplex, qflv = NULL, crit = "max", algor = "fixed",
   overwrite = FALSE)
 }
 \arguments{
-\item{simplex}{\code{'chsmplx'} type object containig most information
-of simplex.}
+\item{simplex}{\code{'smplx'} type object containig simplex information}
 
 \item{qflv}{value of the response for the last vertex
-(or vertices if it is the first simplex).}
+(or last vertices if it is the first simplex).}
 
 \item{crit}{optimization criteria indicating if the goal is maximize
 (\code{"max"}) or minimize (\code{"min"}) the response.
@@ -30,7 +29,7 @@ replace the provided one in the \code{simplex} parameter.
 Defauklt \code{overwrite = TRUE}}
 }
 \value{
-A 'chsmplx' type object with the information of the simplex
+A 'smplx' type object with the new simplex information
        including the conditions for the new experiment to be permormed.
 }
 \description{
@@ -52,4 +51,9 @@ simplex3D <- generateVertex(simplex = simplex3D, qflv = rnorm(4))
 NV <- rnorm(1)
 generateVertex(simplex = simplex3D, qflv = NV, overwrite = TRUE)
 }
+}
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
 }

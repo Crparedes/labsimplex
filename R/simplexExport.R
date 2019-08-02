@@ -21,6 +21,8 @@
 #'   simplex <- labsimplex(N = 5, qual.fun = rnorm(6, 2, 1))
 #'   simplexExport(simplex = simplex)
 #' }
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 
 simplexExport <- function(simplex, filename = NULL, direc = NULL){

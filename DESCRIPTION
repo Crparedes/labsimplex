@@ -1,18 +1,21 @@
 Package: labsimplex
-Version: 0.1.0
+Version: 0.1.2
 Date: 2018-11-11
 Title: Implementation of simplex optimization algorithms for laboratory
 Authors@R: c(
-    person("Jesús", "Ágreda", email = "jagreda@unal.edu.co", 
-    role = "aut"),
     person("Cristhian", "Paredes", email = "craparedesca@unal.edu.co",
-    role = c("aut", "cre")))
-Author: Jesús Ágreda [aut],
-    Cristhian Paredes [aut, cre]
+    role = c("aut", "cre")),
+    person("Jesús", "Ágreda", email = "jagreda@unal.edu.co", 
+    role = "aut"))
+Author: Cristhian Paredes [aut, cre]
+    Jesús Ágreda [aut],
 Maintainer: Cristhian Paredes <craparedesca@unal.edu.co>
 Description: Implementation of simplex algorithms for optimizing 
-    experimental conditions. It includes fixed size and variable size
-    algorithms as.........
+    experimental conditions. It includes fixed-size algorithm
+    reported by Spendley et al. (1962) 
+    <doi:10.1080/00401706.1962.10490033> and variable-size
+    algorithm reported by Nelder and Mead (1965)
+    <doi:10.1093/comjnl/7.4.308>. 
 License: GPL (>= 2)
 Encoding: UTF-8
 Imports: 
