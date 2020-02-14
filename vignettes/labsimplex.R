@@ -14,6 +14,8 @@ print(ExpSet)
 ## ----Startprov-----------------------------------------------------------
 ExpSet <- labsimplex(N = 3, start = c(7, 25, 0.15), stepsize = c(0.2, 5, 0.02), 
                      var.name = c('pH', 'Temp', 'Conc'))
+ExpSet <- labsimplex(N = 3, centroid = c(6.85, 25, 0.15), stepsize = c(0.2, 5, 0.02), 
+                     var.name = c('pH', 'Temp', 'Conc'))
 print(ExpSet)
 
 ## ----usrdef--------------------------------------------------------------
@@ -41,16 +43,16 @@ adjustVertex(simplex = ManSet, newcoords = list(Vertex.1 = c(7.15, NA, NA),
              overwrite = TRUE)
 print(ManSet)
 
-## ----plot3D, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center'----
+## ----plot3D, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center', fig.cap = '**Figure 1.** Initial simplex representation in a 3D space'----
 plotSimplex3D(ExpSet)
 
-## ----plot2D, dpi = 300, fig.width = 12, fig.height = 5, out.width = '110%', fig.align = 'center'----
+## ----plot2D, dpi = 300, fig.width = 12, fig.height = 5, out.width = '110%', fig.align = 'center', fig.cap = '**Figure 2.** Two-dimensional proyections of simplex shown in Figure 1'----
 par(mfrow = c(1, 3))
 plot(ExpSet, sel.dim = c('pH', 'Temp'))
 plot(ExpSet, sel.dim = c('pH', 'Conc'))
 plot(ExpSet, sel.dim = c('Temp', 'Conc'))
 
-## ----genV1, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center'----
+## ----genV1, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center', fig.cap = '**Figure 3.** Movement of the simplex after first reflection'----
 generateVertex(simplex = ExpSet, qflv = c(65, 72, 54, 78), overwrite = TRUE)
 plotSimplex3D(ExpSet)
 

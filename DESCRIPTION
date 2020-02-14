@@ -7,7 +7,7 @@ Authors@R: c(
     role = c("aut", "cre")),
     person("Jesús", "Ágreda", email = "jagreda@unal.edu.co", 
     role = "aut"))
-Author: Cristhian Paredes [aut, cre]
+Author: Cristhian Paredes [aut, cre],
     Jesús Ágreda [aut],
 Maintainer: Cristhian Paredes <craparedesca@unal.edu.co>
 Description: Implementation of simplex algorithms for optimizing 

@@ -32,6 +32,7 @@
 #'   generateVertex(simplex = simplex3D, qflv = rnorm(1), overwrite = TRUE)
 #'   plotSimplex3D(simplex = simplex3D)
 #' @importFrom graphics lines par plot segments title
+#' @import scatterplot3d
 #'
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
