@@ -157,17 +157,8 @@ install.packages("labsimplex")
 
 For installing the last built version of labsimplex, use `install_github()` function from `devtools` package [@devtools]:
 ``` r
-devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
+devtools:install_github("Crparedes/labsimplex")
 ``` 
-If devtools package is not available, you can install the last build version of labsimplex by downloading the [source package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz) and installing it with:
-``` r
-install.packages(path_to_file, repos = NULL, type="source")
-```
-Where `path_to_file` would represent the full path and file name:
-
-*On Windows it will look something like this: `"C:\Users\user\Downloads\labsimplex.tar.gz"`.
-
-*On UNIX it will look like this: `"/home/Downloads/labsimplex.tar.gz`"
 
 ## Using the package
 As in many optimization processes and experimental designs, the first step is to define the response (or responses) to optimize, the variables to study, and the initial values for those variables. Also, an adequated stepsize (i.e. initial range) for each variable must be defined. One of the advantages of the simplex algorithm over more widespread optimization protocols (e.g. fractional factorial designs), is that the inclusion of more variables to study does not significantly increase the number of experiments to be performed, making the initial variable screening process usually unnecessary. Once those decisions had been made, the experimenter will be able to generate the initial simplex coordinates and perform the experiments. The optimization using `labsimplex` package involves the following steps that will be further discussed:
