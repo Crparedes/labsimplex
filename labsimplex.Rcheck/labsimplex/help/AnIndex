@@ -1,0 +1,10 @@
+labsimplex-package	labsimplex-package
+adjustVertex	adjustVertex
+generateVertex	generateVertex
+labsimplex	labsimplex
+plot.smplx	plot.smplx
+plotSimplex3D	plotSimplex3D
+plotSimplexResponse	plotSimplexResponse
+print.smplx	print.smplx
+simplexExport	simplexExport
+simplexImport	simplexImport

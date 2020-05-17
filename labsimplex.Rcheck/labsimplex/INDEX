@@ -1,0 +1,19 @@
+adjustVertex            Modify given coordinates of given vertices of a
+                        simplex
+generateVertex          Generates the new vertex of a simplex
+labsimplex              Generates simplex object with coordinates of
+                        starting vertices.
+labsimplex-package      labsimplex: Implementation of simplex
+                        optimization algorithms for laboratory
+                        applications.
+plot.smplx              Makes a two dimentional plot of a simplex
+                        object.
+plotSimplex3D           Makes a three dimentional plot of a simplex
+                        object.
+plotSimplexResponse     Plots the response versus the vertex number of
+                        a simplex optimization.
+print.smplx             Prints given simplex (a 'smplx' class object)
+simplexExport           Exports the information contained on a 'smplx'
+                        class object.
+simplexImport           Imports the information contained in a '.smplx'
+                        file.

@@ -7,7 +7,7 @@ Authors@R: c(
     role = c("aut", "cre")),
     person("Jesús", "Ágreda", email = "jagreda@unal.edu.co", 
     role = "aut"))
-Author: Cristhian Paredes [aut, cre],
+Author: Cristhian Paredes [aut, cre]
     Jesús Ágreda [aut],
 Maintainer: Cristhian Paredes <craparedesca@unal.edu.co>
 Description: Implementation of simplex algorithms for optimizing 
@@ -18,11 +18,10 @@ Description: Implementation of simplex algorithms for optimizing
     <doi:10.1093/comjnl/7.4.308>. 
 License: GPL (>= 2)
 Encoding: UTF-8
-Imports: 
-    scatterplot3d (>= 0.3-41)
-RoxygenNote: 7.0.2.9000
-Suggests: 
-    knitr,
-    rmarkdown,
-    FrF2
+Imports: scatterplot3d (>= 0.3-41)
+RoxygenNote: 6.1.1
+Roxygen: list(wrap = FALSE)
+Suggests: knitr, rmarkdown, FrF2
 VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2019-08-02 22:11:21 UTC; cris

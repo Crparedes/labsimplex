@@ -1,0 +1,367 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "labsimplex"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "labsimplex-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('labsimplex')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("adjustVertex")
+> ### * adjustVertex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: adjustVertex
+> ### Title: Modify given coordinates of given vertices of a simplex
+> ### Aliases: adjustVertex
+> 
+> ### ** Examples
+> 
+> simplex <- labsimplex(N = 3, start = c(7, 25, 0.15),
++                       stepsize = c(0.2, 5, 0.02))
+> adjustVertex(simplex = simplex, newcoords = list(Vertex.1 = c(7, NA, NA),
++                                                  Vertex.3 = c(7.2, NA, NA)),
++              overwrite = TRUE)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("adjustVertex", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("generateVertex")
+> ### * generateVertex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: generateVertex
+> ### Title: Generates the new vertex of a simplex
+> ### Aliases: generateVertex
+> 
+> ### ** Examples
+> 
+> simplex3D <- labsimplex(N = 3)
+> simplex3D <- generateVertex(simplex = simplex3D, qflv = rnorm(4))
+New vertex to be evaluated: 
+     Var.1      Var.2      Var.3 
+ 0.5555556  0.7856742 -1.3608276 
+
+> ## Not run: 
+> ##D ## Optional form:
+> ##D ## After obtaining the response for the last vertex generated:
+> ##D NV <- rnorm(1)
+> ##D generateVertex(simplex = simplex3D, qflv = NV, overwrite = TRUE)
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("generateVertex", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("labsimplex")
+> ### * labsimplex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: labsimplex
+> ### Title: Generates simplex object with coordinates of starting vertices.
+> ### Aliases: labsimplex
+> 
+> ### ** Examples
+> 
+>   labsimplex(N = 3)
+
+Current simplex:
+               Var.1      Var.2      Var.3 . Response Label Nature
+Vertex.4: -0.3333333 -0.4714045 -0.8164966 |       NA    NA      S
+Vertex.3: -0.3333333 -0.4714045  0.8164966 |       NA    NA      S
+Vertex.2: -0.3333333  0.9428090  0.0000000 |       NA    NA      S
+Vertex.1:  1.0000000  0.0000000  0.0000000 |       NA    NA      S
+
+Conventions:
+    Labels:                    Nature:
+       W: Worst or Wastebasket    S:  Starting
+       N: Next to the worst       R:  Reflected
+       B: Best                    E:  Expanded
+                                  Cr: Contraction on the reflection side
+       D: Disregarded             Cw: Contraction on the worst side
+
+      Use print(..., conventions = FALSE) to disable conventions printing. 
+>   labsimplex(N = 3, centroid = c(66, 1, 12), stepsize = c(10, 0.1, 2),
++              var.name = c('potential', 'pH', 'T'))
+
+Current simplex:
+          potential        pH  T . Response Label Nature
+Vertex.4:      63.5 0.9666667 11 |       NA    NA      S
+Vertex.3:      63.5 0.9666667 13 |       NA    NA      S
+Vertex.2:      63.5 1.0666667 12 |       NA    NA      S
+Vertex.1:      73.5 1.0000000 12 |       NA    NA      S
+
+Conventions:
+    Labels:                    Nature:
+       W: Worst or Wastebasket    S:  Starting
+       N: Next to the worst       R:  Reflected
+       B: Best                    E:  Expanded
+                                  Cr: Contraction on the reflection side
+       D: Disregarded             Cw: Contraction on the worst side
+
+      Use print(..., conventions = FALSE) to disable conventions printing. 
+> 
+>   labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 1, 0),
++                                    c(-0.5, -0.7, 1), c(-0.5, -0.4, -0.6)))
+Provided points define a simplex:
+
+Current simplex:
+          Var.1 Var.2 Var.3 . Response Label Nature
+Vertex.4:  -0.5  -0.4  -0.6 |       NA    NA      S
+Vertex.3:  -0.5  -0.7   1.0 |       NA    NA      S
+Vertex.2:  -0.5   1.0   0.0 |       NA    NA      S
+Vertex.1:   2.0   0.0   0.0 |       NA    NA      S
+
+Conventions:
+    Labels:                    Nature:
+       W: Worst or Wastebasket    S:  Starting
+       N: Next to the worst       R:  Reflected
+       B: Best                    E:  Expanded
+                                  Cr: Contraction on the reflection side
+       D: Disregarded             Cw: Contraction on the worst side
+
+      Use print(..., conventions = FALSE) to disable conventions printing. 
+> ## Not run: 
+> ##D ## A user defined coordinates may define faces that rely on same hyperplane:
+> ##D   labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 0, 0), c(0, 0, 0),
+> ##D                                    c(-0.5, -0.4, -0.6)))
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("labsimplex", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plot.smplx")
+> ### * plot.smplx
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plot.smplx
+> ### Title: Makes a two dimentional plot of a simplex object.
+> ### Aliases: plot.smplx
+> 
+> ### ** Examples
+> 
+>   plot(x = labsimplex(N = 2))
+>   plot(x = labsimplex(N = 2), expand = FALSE)
+> 
+>   plot(x = labsimplex(N = 8))
+No selected dimensions for ploting. Default is the first two
+              ones.
+>   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
+> 
+>   ## Simulation of the real proccess where a simplex is made and evaluated
+>   set.seed(12)
+>   simplex2D <- labsimplex(N = 2)
+>   plot(x = simplex2D)
+>   generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
+New vertex to be evaluated: 
+        Var.1         Var.2 
+-2.000000e+00 -1.110223e-16 
+>   plot(x = simplex2D)
+>   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
+New vertex to be evaluated: 
+    Var.1     Var.2 
+-2.000000  1.732051 
+>   plot(x = simplex2D)
+>   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
+New vertex to be evaluated: 
+    Var.1     Var.2 
+-0.500000  2.598076 
+>   plot(x = simplex2D)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot.smplx", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plotSimplex3D")
+> ### * plotSimplex3D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plotSimplex3D
+> ### Title: Makes a three dimentional plot of a simplex object.
+> ### Aliases: plotSimplex3D
+> 
+> ### ** Examples
+> 
+>   plotSimplex3D(simplex = labsimplex(N = 3))
+> 
+>   plotSimplex3D(simplex = labsimplex(N = 8))
+No selected dimensions for ploting. Default is the first three
+              ones.
+>   plotSimplex3D(simplex = labsimplex(N = 8), sel.dim = c(4, 6, 8))
+> 
+>   ## Simulation of the real proccess where a simplex is made and measured,
+>   ## plotted nad the new vertex is measuresd after it is generated.
+>   set.seed(12)
+>   simplex3D <- labsimplex(N = 3)
+>   plotSimplex3D(simplex = simplex3D)
+>   generateVertex(simplex = simplex3D, qflv = rnorm(4), overwrite = TRUE)
+New vertex to be evaluated: 
+    Var.1     Var.2     Var.3 
+-1.666667  0.000000  0.000000 
+>   plotSimplex3D(simplex = simplex3D)
+>   generateVertex(simplex = simplex3D, qflv = rnorm(1), overwrite = TRUE)
+New vertex to be evaluated: 
+     Var.1      Var.2      Var.3 
+-1.2222222  0.7856742 -1.3608276 
+>   plotSimplex3D(simplex = simplex3D)
+>   generateVertex(simplex = simplex3D, qflv = rnorm(1), overwrite = TRUE)
+New vertex to be evaluated: 
+     Var.1      Var.2      Var.3 
+ 0.4074074  0.8380525 -1.4515495 
+>   plotSimplex3D(simplex = simplex3D)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plotSimplex3D", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plotSimplexResponse")
+> ### * plotSimplexResponse
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plotSimplexResponse
+> ### Title: Plots the response versus the vertex number of a simplex
+> ###   optimization.
+> ### Aliases: plotSimplexResponse
+> 
+> ### ** Examples
+> 
+> set.seed(1)
+> # Generate a simplex and add some responses to the vertices
+> simplex <- labsimplex(N = 3)
+> generateVertex(simplex, qflv = rnorm(4), algor = 'variable',
++   overwrite = TRUE)
+New vertex to be evaluated: 
+     Var.1      Var.2      Var.3 
+ 0.5555556  0.7856742 -1.3608276 
+> generateVertex(simplex, qflv = 2.75, algor = 'variable', overwrite = TRUE)
+New vertex to be evaluated: 
+    Var.1     Var.2     Var.3 
+ 1.000000  1.414214 -2.449490 
+> generateVertex(simplex, qflv = 0.8,  algor = 'variable', overwrite = TRUE)
+New vertex to be evaluated: 
+     Var.1      Var.2      Var.3 
+-1.0740741  0.8380525 -1.4515495 
+> generateVertex(simplex, qflv = 2.94, algor = 'variable', overwrite = TRUE)
+New vertex to be evaluated: 
+    Var.1     Var.2     Var.3 
+-2.111111  1.257079 -2.177324 
+> generateVertex(simplex, qflv = 3.14, algor = 'variable', overwrite = TRUE)
+New vertex to be evaluated: 
+     Var.1      Var.2      Var.3 
+-0.9259259  0.1047566 -2.9030990 
+> 
+> # Plot the response versus the vertex function
+> plotSimplexResponse(simplex)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plotSimplexResponse", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("simplexExport")
+> ### * simplexExport
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: simplexExport
+> ### Title: Exports the information contained on a 'smplx' class object.
+> ### Aliases: simplexExport
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D   simplex <- labsimplex(N = 5, qual.fun = rnorm(6, 2, 1))
+> ##D   simplexExport(simplex = simplex)
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("simplexExport", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("simplexImport")
+> ### * simplexImport
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: simplexImport
+> ### Title: Imports the information contained in a '.smplx' file.
+> ### Aliases: simplexImport
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D   simplexExport(labsimplex(N = 4), name = "simplex4D")
+> ##D   simplexImport("simplex4D.smplx")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("simplexImport", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.54 0.036 0.773 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

@@ -4,13 +4,8 @@
 \alias{generateVertex}
 \title{Generates the new vertex of a simplex}
 \usage{
-generateVertex(
-  simplex,
-  qflv = NULL,
-  crit = "max",
-  algor = "fixed",
-  overwrite = FALSE
-)
+generateVertex(simplex, qflv = NULL, crit = "max", algor = "fixed",
+  overwrite = FALSE)
 }
 \arguments{
 \item{simplex}{\code{'smplx'} type object containig simplex information}

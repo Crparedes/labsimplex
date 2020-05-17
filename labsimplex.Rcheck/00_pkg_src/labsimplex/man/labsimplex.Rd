@@ -4,14 +4,8 @@
 \alias{labsimplex}
 \title{Generates simplex object with coordinates of starting vertices.}
 \usage{
-labsimplex(
-  N,
-  start = NULL,
-  centroid = NULL,
-  stepsize = NULL,
-  usrdef = NULL,
-  var.name = NULL
-)
+labsimplex(N, start = NULL, centroid = NULL, stepsize = NULL,
+  usrdef = NULL, var.name = NULL)
 }
 \arguments{
 \item{N}{number of dimentions (variables) in the space}
