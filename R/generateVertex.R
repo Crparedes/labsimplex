@@ -58,6 +58,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
   TNV  <- nrow(simplex$coords) #Total number of vertices
   rang <- (TNV - simplex$dim):TNV
 
+
   #First simplex
   if (max(simplex$tim.ret) == 1) {
     simplex <- LabelVertex(simplex = simplex, crit = crit, algor = algor)
@@ -191,6 +192,11 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
     row.names(simplex$coords)[nrow(simplex$coords)] <-
       paste0("Vertex.", nrow(simplex$coords))
   }
+
+  AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[(rang + 1)]
+  simplex$families <- rbind(simplex$families, AcVertexes)
+
+
 
   message("New vertex to be evaluated: ")
   print(simplex$coords[nrow(simplex$coords), ])

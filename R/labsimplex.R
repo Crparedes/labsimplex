@@ -191,6 +191,7 @@ labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
   main.list$vertex.nat        <- rep("S", nrow(coords))
   main.list$vertex.his        <- rep("1.", nrow(coords))
 
+    main.list$families <- 1:(N + 1)
 
   main.list$centroid <- colSums(main.list$coords) / (N + 1)
   main.list$tim.ret  <- rep(1, (N+1))

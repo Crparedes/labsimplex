@@ -28,8 +28,9 @@
 #'   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
 #'
 #'   ## Simulation of the real proccess where a simplex is made and evaluated
-#'   set.seed(12)
+#'   set.seed(10)
 #'   simplex2D <- labsimplex(N = 2)
+
 #'   plot(x = simplex2D)
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
 #'   plot(x = simplex2D)
@@ -37,6 +38,17 @@
 #'   plot(x = simplex2D)
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
 #'   plot(x = simplex2D)
+#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
+#'   plot(x = simplex2D)
+#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
+#'   plot(x = simplex2D)
+#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
+#'   plot(x = simplex2D)
+#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
+#'   plot(x = simplex2D)
+#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
+#'   plot(x = simplex2D)
+#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
 #' @importFrom graphics lines par plot segments title
 #' @importFrom grDevices dev.off pdf
 #' @method plot smplx
@@ -125,10 +137,17 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
   }
 
   if (all.lin) {
-    for (ii in 1:(nrow(x$coords) - x$dim)){
-      for (jj in (ii+1):(ii + x$dim)){
-        lines(x$coords[c(ii, jj),  var.plt[1]],
-              x$coords[c(ii, jj),  var.plt[2]], col = "grey")
+    V.pos <- as.numeric(gsub("Vertex.", "", row.names(x$coords)))
+    if (!is.null(nrow(x$families))) {
+      for (ii in 1:nrow(x$families)) {
+        for (jj in 1:(ncol(x$families) - 1)) {
+          for (kk in (jj + 1):ncol(x$families)) {
+            jj. <- which(x$families[ii, jj] == V.pos)
+            kk. <- which(x$families[ii, kk] == V.pos)
+            lines(x$coords[c(jj., kk.),  var.plt[1]],
+                  x$coords[c(jj., kk.),  var.plt[2]], col = "grey")
+          }
+        }
       }
     }
   }
