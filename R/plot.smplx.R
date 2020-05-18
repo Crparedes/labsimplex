@@ -134,18 +134,18 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
 
   if (all.lin) {
     V.pos <- as.numeric(gsub("Vertex.", "", row.names(x$coords)))
-    if (!is.null(nrow(x$families))) {
-      for (ii in 1:nrow(x$families)) {
-        for (jj in 1:(ncol(x$families) - 1)) {
-          for (kk in (jj + 1):ncol(x$families)) {
-            jj. <- which(x$families[ii, jj] == V.pos)
-            kk. <- which(x$families[ii, kk] == V.pos)
+    #if (!is.null(nrow(x$families))) {
+      for (ii in 1:length(x$families)) {
+        for (jj in 1:(length(x$families[[ii]]) - 1)) {
+          for (kk in (jj + 1):length(x$families[[ii]])) {
+            jj. <- which(x$families[[ii]][jj] == V.pos)
+            kk. <- which(x$families[[ii]][kk] == V.pos)
             lines(x$coords[c(jj., kk.),  var.plt[1]],
                   x$coords[c(jj., kk.),  var.plt[2]], col = "grey")
           }
         }
       }
-    }
+    #}
   }
   for (ii in (nrow(x$coords) - x$dim):nrow(x$coords)){
     for (jj in ii:nrow(x$coords)){

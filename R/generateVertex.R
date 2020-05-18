@@ -194,7 +194,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
   }
 
   AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[(rang + 1)]
-  simplex$families <- rbind(simplex$families, AcVertexes)
+  simplex$families[[(length(simplex$families) + 1)]] <- AcVertexes
 
 
 
