@@ -84,18 +84,18 @@ completeOptimization <- function (centroid, stepsize = c(0.6, 10), algor = 'fixe
   p <- cntr(length = length, noise = noise) + geom_point(data = data.frame(x = simplex$coords[, 2], y = simplex$coords[, 1]))
   V.pos <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))
   x <- xend <- y <- yend <- vector()
-  #for (ii in 1:length(simplex$families)) {
-  #  for (jj in 1:(length(simplex$families[[ii]]) - 1)) {
-  #    for (kk in (jj + 1):length(simplex$families[[ii]])) {
-  #      jj. <- which(simplex$families[[ii]][jj] == V.pos)
-  #      kk. <- which(simplex$families[[ii]][kk] == V.pos)
-  #      x    <- c(x, simplex$coords[jj., 2])
-  #      xend <- c(xend, simplex$coords[kk., 2])
-  #      y    <- c(y, simplex$coords[jj., 1])
-  #      yend <- c(yend, simplex$coords[kk., 1])
-  #    }
-  #  }
-  #}
+  for (ii in 1:length(simplex$families)) {
+    for (jj in 1:(length(simplex$families[[ii]]) - 1)) {
+      for (kk in (jj + 1):length(simplex$families[[ii]])) {
+        jj. <- which(simplex$families[[ii]][jj] == V.pos)
+        kk. <- which(simplex$families[[ii]][kk] == V.pos)
+        x    <- c(x, simplex$coords[jj., 2])
+        xend <- c(xend, simplex$coords[kk., 2])
+        y    <- c(y, simplex$coords[jj., 1])
+        yend <- c(yend, simplex$coords[kk., 1])
+      }
+    }
+  }
   p <- p + geom_segment(data = data.frame(x = x, xend = xend, y = y, yend = yend),
                         aes(x = x, xend = xend, y = y, yend = yend))
   print(p)

@@ -58,7 +58,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
   TNV  <- nrow(simplex$coords) #Total number of vertices
   rang <- (TNV - simplex$dim):TNV
 
-
+  P.evalInv <- TRUE
   #First simplex
   if (max(simplex$tim.ret) == 1) {
     simplex <- LabelVertex(simplex = simplex, crit = crit, algor = algor)
@@ -82,6 +82,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
 
       # Is there a pending evaluation of a expansion vertex?
       if (simplex$P.eval) {
+        P.evalInv <- FALSE
         # This trick allows moving the disregarded vertex to the bottom of
         #  the matrix including its name.
         simplex$coords  <- rbind(simplex$coords[(TNV - 1):TNV, ],
@@ -193,7 +194,12 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
       paste0("Vertex.", nrow(simplex$coords))
   }
 
-  AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[(rang + 1)]
+  if (P.evalInv) {
+    AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[(rang + 1)]
+  } else {
+    AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[c(rang, rang[length(rang)] + 1)]
+  }
+
   simplex$families[[(length(simplex$families) + 1)]] <- AcVertexes
 
 
