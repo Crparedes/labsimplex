@@ -54,7 +54,7 @@ For 3D representations of simplex with dimensionality higher than 2 use
   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
 
   ## Simulation of the real proccess where a simplex is made and evaluated
-  set.seed(10)
+  set.seed(1)
   simplex2D <- labsimplex(N = 2)
   plot(x = simplex2D)
   generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
@@ -71,9 +71,6 @@ For 3D representations of simplex with dimensionality higher than 2 use
   plot(x = simplex2D)
   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
   plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

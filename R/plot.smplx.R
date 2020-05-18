@@ -28,9 +28,8 @@
 #'   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
 #'
 #'   ## Simulation of the real proccess where a simplex is made and evaluated
-#'   set.seed(10)
+#'   set.seed(1)
 #'   simplex2D <- labsimplex(N = 2)
-
 #'   plot(x = simplex2D)
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
 #'   plot(x = simplex2D)
@@ -46,9 +45,6 @@
 #'   plot(x = simplex2D)
 #'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
 #'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
 #' @importFrom graphics lines par plot segments title
 #' @importFrom grDevices dev.off pdf
 #' @method plot smplx
