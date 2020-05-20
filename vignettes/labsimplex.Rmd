@@ -13,128 +13,92 @@ vignette: >
   %\VignetteIndexEntry{labsimplex}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-references:
-- id: Spendley
-  title: Sequential Application of Simplex Designs in Optimization and Evolutionary Operation
-  author:
-    - family: Spendley
-      given: W.
-    - family: Hext
-      given: G. R. 
-    - family: Himsworth
-      given: F. R0.
-  container-title: Technometrics
-  volume: 4
-  URL: 'https://www.tandfonline.com/doi/abs/10.1080/00401706.1962.10490033'
-  DOI: 10.1080/00401706.1962.10490033
-  issue: 4
-  publisher: Taylor and Francis
-  page: 441-461
-  type: article-journal
-  issued:
-    year: 1962
-- id: Nelder
-  title: A Simplex Method for Function Minimization
-  author:
-    - family: Nelder 
-      given: J. A.
-    - family: Mead
-      given: R.
-  container-title: The Computer Journal
-  volume: 7
-  URL: 'https://doi.org/10.1093/comjnl/7.4.308'
-  DOI: 10.1093/comjnl/7.4.308
-  issue: 4
-  page: 308-313
-  type: article-journal
-  issued: 
-    year: 1965
-- id: devtools
-  title: devtools. Tools to Make Developing R Packages Easier
-  author:
-    - family: Wickham
-      given: Hadley
-    - family: Hester
-      given: Jim
-    - family: Chang
-      given: Winston
-  container-title: R package version 2.0.1
-  URL: 'https://CRAN.R-project.org/package=devtools'
-  issued:
-    year: 2018
-- id: FrF2
-  title: R Package FrF2 for Creating and Analyzing Fractional Factorial 2-Level Designs
-  author:
-    - family: Grömping 
-      given: Ulrike
-  container-title: Journal of Statistical Software
-  volume: 56
-  URL: 'http://www.jstatsoft.org/v56/i01/'
-  DOI: 
-  issue: 1
-  page: 1 - 56
-  type: article-journal
-  issued:
-    year: 2014
-- id: optimsimplex
-  title: "optimsimplex: R Port of the 'Scilab' Optimsimplex Module"
-  author:
-    - family: Bihorel 
-      given: Sebastien
-    - family: Baudin
-      given: Michael
-  container-title: R package version 1.0-7
-  URL: 'https://CRAN.R-project.org/package=optimsimplex'
-  issued:
-    year: 2018
-- id: simplexbook
-  title: 'Sequential simplex optimization: a technique for improving 
-      quality and productivity in research, development, and manufacturing'
-  author:
-    - family: Walters 
-      given: Frederick
-    - family: Parker
-      given: Lloyd
-    - family: Morgan
-      given: Stephen
-    - family: Deming
-      given: Stanley
-  isbn: '9780849358944'
-  URL: 'https://books.google.com.mx/books?id=hpxTAAAAMAAJ'
-  publisher: CRC Press LLC
-  type: book
-  issued:
-    year: 1991
-- id: XX
-  title: x 
-  author:
-    - family: x 
-      given: x  
-    - family: x 
-      given: x
-  container-title: x
-  volume: 0
-  URL: 'x'
-  DOI: x
-  issue: 0
-  publisher: x
-  page: 0
-  type: article-journal
-  issued:
-    year: 0000
+bibliography: bibliography.bib
+
 ---
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "75%"
+  out.width = "48%"
 )
 # Render html vignetes by using devtools::document(roclets = "vignette")
 # Render also pdf vignetes by using rmarkdown::render("vignettes/labsimplex.Rmd", "all")
 require(labsimplex)
+require(ggplot2)
+```
+```{r functions, echo = FALSE}
+prspctv <- function (length, noise) {
+  temp <- x <- seq(278, 365, length = length)
+  pH <- y <- seq(0, 14, length = length)
+  z <- outer(x, y, exampleSurfaceR2.2pks, noise = noise)
+  
+  colors  <- colorRampPalette(c("grey30", "white"))(100)
+  z.facet.center <- (z[-1, -1] + z[-1, -ncol(z)] + z[-nrow(z), -1] + z[-nrow(z), -ncol(z)])/4
+  z.facet.range  <- cut(z.facet.center, 200)
+  par(mar = c(1.2, 1, 0, 0))
+  persp(x, y, z, theta = 22, phi = 15, ticktype = "detailed", col = colors[z.facet.range], lwd = 0.3,
+        ltheta = -120, shade = 0.2, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
+}
+cntr <- function (length, noise) {
+  x <- seq(278, 365, length = length)
+  y <- seq(0, 14, length = length)
+  gg <- expand.grid(x = x, y = y)
+  gg$z <- with(gg, exampleSurfaceR2.2pks(x, y, noise = noise))
+    
+  #brks <- cut(gg$z, breaks = seq(0, 100, len = 10))
+  brks <- cut(gg$z, breaks = c(-20, seq(10, 90, 10)))
+  brks <- gsub(",", " - ", brks, fixed = TRUE)
+  gg$brks <- gsub("\\(|\\]", "", brks)  # reformat guide labels
+  p <- ggplot(gg, aes(x, y)) + theme_bw() +
+         geom_tile(aes(fill = brks)) + scale_fill_manual("Z", values = colorRampPalette(c("grey30", "white"))(11)) +
+         scale_x_continuous(expand = c(0, 0), limits = c(278, 365)) + scale_y_continuous(expand = c(0, 0), limits = c(0, 14)) +
+         theme(legend.position = 'none', axis.text = element_text(size = 12, color = 'black'),
+               axis.title = element_text(size = 12, color = 'black'), plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"),
+               panel.border = element_blank(), panel.grid.major = element_blank(),
+               panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) + 
+         labs(x = 'Temperature (K)', y = 'pH')
+  return(p)
+}
+completeOptimization <- function (centroid, stepsize = c(0.6, 10), algor = 'fixed', experiments = 17,
+                                  length = 200, noise = 0) {
+  simplex <- labsimplex(N = 2, centroid = centroid, stepsize = stepsize, var.name = c('pH', 'Temperature'))
+  for (ii in 1:experiments){
+    if (ii == 1) {
+      simplex <- generateVertex(simplex = simplex, algor = algor,
+                                qflv = exampleSurfaceR2.2pks(temp = simplex$coords[, 2],
+                                                             pH = simplex$coords[, 1], noise = noise))
+    } else {
+      simplex <- generateVertex(simplex = simplex, algor = algor,
+                                qflv = exampleSurfaceR2.2pks(temp = simplex$coords[nrow(simplex$coords), 2], 
+                                                     pH = simplex$coords[nrow(simplex$coords), 1], noise = noise))
+    }
+  }
+  p <- cntr(length = length, noise = noise) + geom_point(data = data.frame(x = simplex$coords[, 2], y = simplex$coords[, 1]))
+  V.pos <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))
+  x <- xend <- y <- yend <- vector()
+  for (ii in 1:length(simplex$families)) {
+    for (jj in 1:(length(simplex$families[[ii]]) - 1)) {
+      for (kk in (jj + 1):length(simplex$families[[ii]])) {
+        jj. <- which(simplex$families[[ii]][jj] == V.pos)
+        kk. <- which(simplex$families[[ii]][kk] == V.pos)
+        x    <- c(x, simplex$coords[jj., 2])
+        xend <- c(xend, simplex$coords[kk., 2])
+        y    <- c(y, simplex$coords[jj., 1])
+        yend <- c(yend, simplex$coords[kk., 1])
+      }
+    }
+  }
+  p <- p + geom_segment(data = data.frame(x = x, xend = xend, y = y, yend = yend),
+                        aes(x = x, xend = xend, y = y, yend = yend))
+  print(p)
+  return(simplex)
+}
 ```
 
-The R package `labsimplex` implements the two main simplex optimization algorithms (fixed and variable step size) useful for laboratory and production process optimization. Some tools for visualizing the coordinates of the experimental variables and the evolution in the response, as the experiments are performed, are provided. This package is not intended for linear programming applications, for that purpose see `optimsimplex` package [@optimsimplex]. The simplex optimization algorithm provides a powerful way to enhance almost any process whose output depends on tunable variables.
+
+
+The R package `labsimplex` implements the simplex optimization algorithms initially proposed by @Spendley1962 and later modified by @Nelder1965 for laboratory and processes optimizations. Tools for visualizing the coordinates of the experimental variables and the evolution in the response are provided. This package is not intended for linear programming applications (see `optimsimplex` package [@optimsimplex]).
 
 ## Introduction
 A simplex is the simplest polyhedron than can be built in a *n*-dimensional space (e.g. in two and three-dimensional spaces, the simplices are the well-known triangle and tetrahedron, respectively). To easily understand simplex algorithm a geometric abstraction is made necessary. The *n* input variables that may affect the result of a given process are seen as dimensions in a *n*-dimensional space. The set of *n* values that define the variables in a given experiment defines a *vertex*. A vertex represents an experiment that must be performed in the conditions described for its coordinates to get a response. 
@@ -279,6 +243,41 @@ The response value can be plotted against the vertex number using the function `
 When the optimum zone in the fixed-size simplex algorithm is reached, the simplex will start to *spin* around the vertex that had a better response. This may be easy to notice in low dimension simplex by looking at the graphical representation of the simplex. The simplex had found the optimal zone but there is no warranty that the best vertex sits at the best possible coordinates since the optimal point may lay between the vertices of the spinning simplices. This would be a good moment for changing to the variable-size option.
 
 In the variable size algorithm, the simplex will contract into the optimal point indefinitely until variations became so small that it is practically impossible (or simply inconvenient from a practical point of view) to experimentally differentiate two vertices. The constant contracting simplex may indicate the optimal point of the space but the obtained responses may lack information about how robust is the experiment in that zone. A highly focused (studying a small range for the variables) surface response methodology could be of great utility in obtaining the predicted optimal point plus giving information about the robustness of the system in that zone.
+
+## Response surface studied
+The response surface below is 
+
+```{r plotsWOnoise, echo = FALSE}
+  prspctv(length = 45, noise = 0)
+  print(cntr(length = 350, noise = 0))
+```
+
+## Finding the *nearest* local optima
+```{r LocalOptima, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
+completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12)
+completeOptimization(centroid = c(1.5, 310), stepsize = c(1.5, 15), experiments = 12)
+completeOptimization(centroid = c(3, 290), stepsize = c(1.5, 15), experiments = 15)
+completeOptimization(centroid = c(12, 335), stepsize = c(1.5, 15), experiments = 12)
+
+completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 15, algor = 'variable')
+completeOptimization(centroid = c(1.5, 310), stepsize = c(1.5, 15), experiments = 15, algor = 'variable')
+completeOptimization(centroid = c(3, 290), stepsize = c(1.5, 15), experiments = 18, algor = 'variable')
+completeOptimization(centroid = c(12, 335), stepsize = c(1.5, 15), experiments = 18, algor = 'variable')
+```
+
+## Noisy response surfaces
+```{r plotsW2noise, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
+set.seed(10)
+  prspctv(length = 45, noise = 2)
+  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
+                       length = 100, noise = 2)
+  prspctv(length = 45, noise = 8)
+  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
+                       length = 100, noise = 8)
+  prspctv(length = 45, noise = 14)
+  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
+                       length = 100, noise = 14)
+```
 
 ### Exporting and importing simplex information
 In some cases, each experiment could take up to several days being performed. The optimization information must be safely stored in the case that the R session is finished without saving the workspace image. Using scripts with the complete process may be a good alternative but for those wanting a more secure way or those who use a simplex algorithm as a never-ending evolutive optimization, the `simplexExport()` function will create a plain text file with `.smplx` extension. This file contains all the simplex information. The file must not be edited by hand since it may produce misoperation of some package functions and in the worst case, the information may get lost. 
