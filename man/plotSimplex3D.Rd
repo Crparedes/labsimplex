@@ -32,7 +32,7 @@ only last simplex.}
 
 \item{angle}{angle for perspective between x and y axis.}
 
-\item{...}{other arguments passed to scatterplot3d::scatterplot3d}
+\item{...}{other arguments passed to \code{scatterplot3d::scatterplot3d}}
 }
 \value{
 3D proyection of the simplex coordinates.

@@ -3,34 +3,17 @@
 
 # labsimplex
 
-The goal of labsimplex is to implement in R the simplex algorithms
-(fixed size and variable size) for laboratory and proccess
-optimizations.
+This package implements the simplex algorithms (fixed and variable
+step-size) for laboratory and proccess optimizations.
 
 ## Installation
 
-The best option for instaling the last versión of labsimplex is using
+The development versión of labsimplex can be installed using
 `install_github()` function from `devtools` package:
 
 ``` r
 devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
 ```
-
-If devtools package is not avilable, you can install the last build
-version of labsimplex by downloading the [source
-package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz)
-and installing it with:
-
-``` r
-install.packages(path_to_file, repos = NULL, type="source")
-```
-
-Where `path_to_file` would represent the full path and file name:
-
-\-On Windows it will look something like this:
-`"C:\Users\user\Downloads\labsimplex.tar.gz"`.
-
-\-On UNIX it will look like this: `"/home/Downloads/labsimplex.tar.gz`"
 
 Coming soon the released version of labsimplex will be avilable from
 [CRAN](https://CRAN.R-project.org) with:
@@ -63,14 +46,15 @@ print(yield)
 #> Vertex.2:  340 5.75 |       NA    NA      S
 #> Vertex.1:  350 5.50 |       NA    NA      S
 #> 
-#> Conventions:    Labels:                    Nature:
-#>       W: Worst or Wastebasket    S:  Starting
-#>       N: Next to the worst       R:  Reflected
-#>       B: Best                    E:  Expanded
-#>                                  Cr: Contraction on the reflection side
-#>       D: Disregarded             Cw: Contraction on the worst side
+#> Conventions:
+#>     Labels:                    Nature:
+#>        W: Worst or Wastebasket    S:  Starting
+#>        N: Next to the worst       R:  Reflected
+#>        B: Best                    E:  Expanded
+#>                                   Cr: Contraction on the reflection side
+#>        D: Disregarded             Cw: Contraction on the worst side
 #> 
-#>   Use print(..., conventions = FALSE) to disable conventions printing.
+#>       Use print(..., conventions = FALSE) to disable conventions printing.
 ```
 
 Is possible to plot the simplex object to visualize the coordinates of

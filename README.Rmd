@@ -14,24 +14,14 @@ knitr::opts_chunk$set(
 ```
 # labsimplex
 
-The goal of labsimplex is to implement in R the simplex algorithms (fixed size and variable size) for laboratory and proccess optimizations.
+This package implements the simplex algorithms (fixed and variable step-size) for laboratory and proccess optimizations.
 
 ## Installation
 
-The best option for instaling the last versión of labsimplex is using `install_github()` function from `devtools` package:
+The development versión of labsimplex can be installed using `install_github()` function from `devtools` package:
 ``` r
 devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
 ``` 
-If devtools package is not avilable, you can install the last build version of labsimplex by downloading the [source package](https://github.com/Crparedes/labsimplex/blob/master/labsimplex.tar.gz) and installing it with:
-``` r
-install.packages(path_to_file, repos = NULL, type="source")
-```
-Where `path_to_file` would represent the full path and file name:
-
--On Windows it will look something like this: `"C:\Users\user\Downloads\labsimplex.tar.gz"`.
-
--On UNIX it will look like this: `"/home/Downloads/labsimplex.tar.gz`"
-
 Coming soon the released version of labsimplex will be avilable from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r

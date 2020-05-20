@@ -10,7 +10,7 @@
 #'                 \code{char}, it must contain dimensions names.
 #' @param  main    title for the plot.
 #' @param  angle   angle for perspective between x and y axis.
-#' @param  ...     other arguments passed to scatterplot3d::scatterplot3d
+#' @param  ...     other arguments passed to \code{scatterplot3d::scatterplot3d}
 #' @inheritParams generateVertex
 #' @inheritParams plot.smplx
 #' @return 3D proyection of the simplex coordinates.
