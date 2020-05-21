@@ -57,6 +57,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
   # Ordering the vertices that compose current simplex
   TNV  <- nrow(simplex$coords) #Total number of vertices
   rang <- (TNV - simplex$dim):TNV
+  wVertex <- FALSE #Families anomalities
 
   P.evalInv <- TRUE
   #First simplex
@@ -148,9 +149,11 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
             simplex$vertex.label[(TNV - 1):TNV] <- "pending"
             simplex$P.eval <- TRUE
             form <- 0 #Normal ordering of vertex coordinates
+            wVertex <- TRUE
           }
           # R < N, Case 3
           if (qft[TNV] < qft[rang[1]]) {
+            wVertex <- TRUE
             form <- 1 #Anormal ordering of vertex coordinates
             if (qft[TNV] >= qft[(rang[1] - 1)]) {
               NewVert <- contrRS(rf = simplex$coords[rang[-(simplex$dim + 1)], ],
@@ -194,11 +197,9 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
       paste0("Vertex.", nrow(simplex$coords))
   }
 
-  if (P.evalInv) {
-    AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[(rang + 1)]
-  } else {
-    AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[c(rang, rang[length(rang)] + 1)]
-  }
+  if (simplex$P.eval) rang[(length(rang) - 1)] <- rang[(length(rang) - simplex$dim)] - 1
+
+  AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[(rang + 1)]
 
   simplex$families[[(length(simplex$families) + 1)]] <- AcVertexes
 
