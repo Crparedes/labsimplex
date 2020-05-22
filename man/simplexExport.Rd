@@ -35,6 +35,9 @@ a quality function value has been obtained.
   simplexExport(simplex = simplex)
 }
 }
+\seealso{
+\code{\link{simplexImport}}
+}
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}
 

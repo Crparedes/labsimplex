@@ -205,7 +205,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
 
 
 
-  message("New vertex to be evaluated: ")
+  cat("New vertex to be evaluated: \n")
   print(simplex$coords[nrow(simplex$coords), ])
   if (overwrite) {
     assign(name, simplex, envir = parent.frame())

@@ -4,15 +4,8 @@
 \alias{plot.smplx}
 \title{Makes a two dimentional plot of a simplex object.}
 \usage{
-\method{plot}{smplx}(
-  x,
-  sel.dim = NULL,
-  all.ver = TRUE,
-  all.lin = TRUE,
-  expand = TRUE,
-  exp.fac = 1.5,
-  ...
-)
+\method{plot}{smplx}(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
+  expand = TRUE, exp.fac = 1.5, ...)
 }
 \arguments{
 \item{x}{\code{smplx} class object containing the vertices coordinates.}

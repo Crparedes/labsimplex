@@ -13,7 +13,7 @@
 
 <meta name="author" content="Cristhian Paredes and Jesús Ágreda" />
 
-<meta name="date" content="2020-05-20" />
+<meta name="date" content="2020-05-22" />
 
 <title>labsimplex package</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">labsimplex package</h1>
 <h4 class="author">Cristhian Paredes and Jesús Ágreda</h4>
-<h4 class="date">2020-05-20</h4>
+<h4 class="date">2020-05-22</h4>
 
 
 <div id="TOC">
@@ -365,7 +365,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </ul>
 </div>
 
-<p>The R package <code>labsimplex</code> implements the simplex optimization algorithms initially proposed by <span class="citation">Spendley, Hext, and Himsworth (1962)</span> and later modified by <span class="citation">Nelder and Mead (1965)</span> for laboratory and processes optimizations. Tools for visualizing the coordinates of the experimental variables and the evolution in the response are provided. This package is not intended for linear programming applications (see <code>optimsimplex</code> package <span class="citation">(<span class="citeproc-not-found" data-reference-id="optimsimplex"><strong>???</strong></span>)</span>).</p>
+<p>The R package <code>labsimplex</code> implements the simplex optimization algorithms firstly proposed by <span class="citation">Spendley, Hext, and Himsworth (1962)</span> and later modified by <span class="citation">Nelder and Mead (1965)</span> for laboratory and production processes improvement. Tools for visualizing the coordinates of the experimental variables and the evolution in the response are provided. This package is not intended for linear programming applications (you can use <code>optimsimplex</code> package <span class="citation">(<span class="citeproc-not-found" data-reference-id="optimsimplex"><strong>???</strong></span>)</span> for this purpuse).</p>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>A simplex is the simplest polyhedron than can be built in a <em>n</em>-dimensional space (e.g. in two and three-dimensional spaces, the simplices are the well-known triangle and tetrahedron, respectively). To easily understand simplex algorithm a geometric abstraction is made necessary. The <em>n</em> input variables that may affect the result of a given process are seen as dimensions in a <em>n</em>-dimensional space. The set of <em>n</em> values that define the variables in a given experiment defines a <em>vertex</em>. A vertex represents an experiment that must be performed in the conditions described for its coordinates to get a response.</p>

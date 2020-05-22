@@ -2,13 +2,8 @@ Package: labsimplex
 Version: 0.1.2
 Date: 2020-05-18
 Title: Simplex Optimization Algorithms for Laboratory and Processes Applications
-Authors@R: c(
-    person("Cristhian", "Paredes", email = "craparedesca@unal.edu.co",
-    role = c("aut", "cre")),
-    person("Jes\\'us", "\\'Agreda", email = "jagreda@unal.edu.co", 
-    role = "aut"))
 Author: Cristhian Paredes [aut, cre],
-    Jes\'us \'Agreda [aut]
+    Jesús Ágreda [aut]
 Maintainer: Cristhian Paredes <craparedesca@unal.edu.co>
 Description: Implementation of the simplex optimization algorithms firstly 
     proposed by Spendley et al. (1962) <doi:10.1080/00401706.1962.10490033>
@@ -20,6 +15,7 @@ Encoding: UTF-8
 Imports: 
     scatterplot3d (>= 0.3-41),
     ggplot2
+Roxygen: list(old_usage = TRUE)
 RoxygenNote: 7.0.2.9000
 Suggests: 
     knitr,

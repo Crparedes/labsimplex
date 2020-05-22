@@ -27,78 +27,9 @@ knitr::opts_chunk$set(
 require(labsimplex)
 require(ggplot2)
 ```
-```{r functions, echo = FALSE}
-prspctv <- function (length, noise) {
-  temp <- x <- seq(278, 365, length = length)
-  pH <- y <- seq(0, 14, length = length)
-  z <- outer(x, y, exampleSurfaceR2.2pks, noise = noise)
-  
-  colors  <- colorRampPalette(c("grey30", "white"))(100)
-  z.facet.center <- (z[-1, -1] + z[-1, -ncol(z)] + z[-nrow(z), -1] + z[-nrow(z), -ncol(z)])/4
-  z.facet.range  <- cut(z.facet.center, 200)
-  par(mar = c(1.2, 1, 0, 0))
-  persp(x, y, z, theta = 22, phi = 15, ticktype = "detailed", col = colors[z.facet.range], lwd = 0.3,
-        ltheta = -120, shade = 0.2, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
-}
-cntr <- function (length, noise) {
-  x <- seq(278, 365, length = length)
-  y <- seq(0, 14, length = length)
-  gg <- expand.grid(x = x, y = y)
-  gg$z <- with(gg, exampleSurfaceR2.2pks(x, y, noise = noise))
-    
-  #brks <- cut(gg$z, breaks = seq(0, 100, len = 10))
-  brks <- cut(gg$z, breaks = c(-20, seq(10, 90, 10)))
-  brks <- gsub(",", " - ", brks, fixed = TRUE)
-  gg$brks <- gsub("\\(|\\]", "", brks)  # reformat guide labels
-  p <- ggplot(gg, aes(x, y)) + theme_bw() +
-         geom_tile(aes(fill = brks)) + scale_fill_manual("Z", values = colorRampPalette(c("grey30", "white"))(11)) +
-         scale_x_continuous(expand = c(0, 0), limits = c(278, 365)) + scale_y_continuous(expand = c(0, 0), limits = c(0, 14)) +
-         theme(legend.position = 'none', axis.text = element_text(size = 12, color = 'black'),
-               axis.title = element_text(size = 12, color = 'black'), plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"),
-               panel.border = element_blank(), panel.grid.major = element_blank(),
-               panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) + 
-         labs(x = 'Temperature (K)', y = 'pH')
-  return(p)
-}
-completeOptimization <- function (centroid, stepsize = c(0.6, 10), algor = 'fixed', experiments = 17,
-                                  length = 200, noise = 0) {
-  simplex <- labsimplex(N = 2, centroid = centroid, stepsize = stepsize, var.name = c('pH', 'Temperature'))
-  for (ii in 1:experiments){
-    if (ii == 1) {
-      simplex <- generateVertex(simplex = simplex, algor = algor,
-                                qflv = exampleSurfaceR2.2pks(temp = simplex$coords[, 2],
-                                                             pH = simplex$coords[, 1], noise = noise))
-    } else {
-      simplex <- generateVertex(simplex = simplex, algor = algor,
-                                qflv = exampleSurfaceR2.2pks(temp = simplex$coords[nrow(simplex$coords), 2], 
-                                                     pH = simplex$coords[nrow(simplex$coords), 1], noise = noise))
-    }
-  }
-  p <- cntr(length = length, noise = noise) + geom_point(data = data.frame(x = simplex$coords[, 2], y = simplex$coords[, 1]))
-  V.pos <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))
-  x <- xend <- y <- yend <- vector()
-  for (ii in 1:length(simplex$families)) {
-    for (jj in 1:(length(simplex$families[[ii]]) - 1)) {
-      for (kk in (jj + 1):length(simplex$families[[ii]])) {
-        jj. <- which(simplex$families[[ii]][jj] == V.pos)
-        kk. <- which(simplex$families[[ii]][kk] == V.pos)
-        x    <- c(x, simplex$coords[jj., 2])
-        xend <- c(xend, simplex$coords[kk., 2])
-        y    <- c(y, simplex$coords[jj., 1])
-        yend <- c(yend, simplex$coords[kk., 1])
-      }
-    }
-  }
-  p <- p + geom_segment(data = data.frame(x = x, xend = xend, y = y, yend = yend),
-                        aes(x = x, xend = xend, y = y, yend = yend))
-  print(p)
-  return(simplex)
-}
-```
 
 
-
-The R package `labsimplex` implements the simplex optimization algorithms initially proposed by @Spendley1962 and later modified by @Nelder1965 for laboratory and processes optimizations. Tools for visualizing the coordinates of the experimental variables and the evolution in the response are provided. This package is not intended for linear programming applications (see `optimsimplex` package [@optimsimplex]).
+The R package `labsimplex` implements the simplex optimization algorithms firstly proposed by @Spendley1962 and later modified by @Nelder1965 for laboratory and production processes improvement. Tools for visualizing the coordinates of the experimental variables and the evolution in the response are provided. This package is not intended for linear programming applications (you can use `optimsimplex` package [@optimsimplex] for this purpuse).
 
 ## Introduction
 A simplex is the simplest polyhedron than can be built in a *n*-dimensional space (e.g. in two and three-dimensional spaces, the simplices are the well-known triangle and tetrahedron, respectively). To easily understand simplex algorithm a geometric abstraction is made necessary. The *n* input variables that may affect the result of a given process are seen as dimensions in a *n*-dimensional space. The set of *n* values that define the variables in a given experiment defines a *vertex*. A vertex represents an experiment that must be performed in the conditions described for its coordinates to get a response. 

@@ -4,15 +4,8 @@
 \alias{plotSimplex3D}
 \title{Makes a three dimentional plot of a simplex object.}
 \usage{
-plotSimplex3D(
-  simplex,
-  sel.dim = NULL,
-  all.ver = TRUE,
-  all.lin = TRUE,
-  main = NULL,
-  angle = 30,
-  ...
-)
+plotSimplex3D(simplex, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
+  main = NULL, angle = 30, ...)
 }
 \arguments{
 \item{simplex}{\code{'smplx'} type object containig simplex information}

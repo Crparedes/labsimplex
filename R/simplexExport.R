@@ -16,6 +16,7 @@
 #' @return A \code{.smplx} file containing all the information required to
 #'         continue with the optimization process once all vertex experiments
 #'         have been carried.
+#' @seealso \code{\link{simplexImport}}
 #' @examples
 #' \dontrun{
 #'   simplex <- labsimplex(N = 5, qual.fun = rnorm(6, 2, 1))
