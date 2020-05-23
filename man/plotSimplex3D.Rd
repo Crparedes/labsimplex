@@ -2,18 +2,20 @@
 % Please edit documentation in R/plotSimplex3D.R
 \name{plotSimplex3D}
 \alias{plotSimplex3D}
-\title{Makes a three dimentional plot of a simplex object.}
+\title{Draws a three dimentional plot of the vertexes in a simplex}
 \usage{
 plotSimplex3D(simplex, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
   main = NULL, angle = 30, ...)
 }
 \arguments{
-\item{simplex}{\code{'smplx'} type object containig simplex information}
+\item{simplex}{object of class \code{smplx} with the simplex
+information. See \code{\link{labsimplex}}}
 
-\item{sel.dim}{numeric or char vector for variables to be considered when
-simplex dimensionality is higher than 3. If \code{numeric}
-form it must contain dimensions ordinal number. If
-\code{char}, it must contain dimensions names.}
+\item{sel.dim}{numeric or char vector for the variables to be considered
+when simplex dimensionality is higher than 3. If it is in
+\code{numeric} format, must contain the ordinal number of
+the variables. If the format is in \code{char} vector,
+must contain variable names.}
 
 \item{all.ver}{logical. Should all vertex be plotted? If \code{FALSE}
 draws only vertices corresponding to current simplex.}
@@ -25,33 +27,37 @@ only last simplex.}
 
 \item{angle}{angle for perspective between x and y axis.}
 
-\item{...}{other arguments passed to \code{scatterplot3d::scatterplot3d}}
+\item{...}{other arguments passed to
+\code{\link[scatterplot3d]{scatterplot3d}}}
 }
 \value{
 3D proyection of the simplex coordinates.
 }
 \description{
-The function generates a 3D plot for a \code{smplx} object having
-dimensionality of at least 3. When dimensionality is higher than 3, the
-function plots a 3D proyection of selected dimensions.
+The function generates a 3D plot of the vertexes in a simplex optimization
+when simplex dimensionality is at least 3. When dimensionality is higher
+than 3, the plot produced is a proyection of the selected variables.
 }
 \examples{
-  plotSimplex3D(simplex = labsimplex(N = 3))
+  plotSimplex3D(simplex = labsimplex(N = 3, centroid = c(350, 11, 0.7),
+                                     stepsize = c(10, 0.5, 0.1),
+                                     var.name = c('temperature', 'pH',
+                                                  'concentration')))
 
+  ## Several options are posible when visualizing higher order simplexes
   plotSimplex3D(simplex = labsimplex(N = 8))
   plotSimplex3D(simplex = labsimplex(N = 8), sel.dim = c(4, 6, 8))
 
-  ## Simulation of the real proccess where a simplex is made and measured,
-  ## plotted nad the new vertex is measuresd after it is generated.
-  set.seed(12)
-  simplex3D <- labsimplex(N = 3)
-  plotSimplex3D(simplex = simplex3D)
-  generateVertex(simplex = simplex3D, qflv = rnorm(4), overwrite = TRUE)
-  plotSimplex3D(simplex = simplex3D)
-  generateVertex(simplex = simplex3D, qflv = rnorm(1), overwrite = TRUE)
-  plotSimplex3D(simplex = simplex3D)
-  generateVertex(simplex = simplex3D, qflv = rnorm(1), overwrite = TRUE)
-  plotSimplex3D(simplex = simplex3D)
+  ## Simplex movements can be visualized after some experiments has been
+  ## performed
+  simplex <- exampleOptimization(surface = exampleSurfaceR3,
+                                 centroid = c(350, 11, 0.7),
+                                 stepsize = c(10, 0.5, 0.1),
+                                 experiments = 15)
+  plotSimplex3D(simplex = simplex)
+}
+\seealso{
+\code{\list{plot.smplx}}
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}
