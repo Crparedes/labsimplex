@@ -1,28 +1,30 @@
+#' Multivariated functions thad define hypotetical response surfaces.
+#'
+#' The functions in this section simulate the yield of chemical
+#' reactions as a function of temperature, pH and concentration (the latter
+#' only in \code{exampleSurfaceR3()}). Those functions are useful to
+#' illustrate most concepts of the simplex optimization algorithms
+#' implemented in \code{labsimplex} package as shown in the package's
+#' vignette that can be visualized by running \code{vignette('labsimplex')}.
+#'
+#' Parameters \code{x1}, \code{x2} and \code{x3} may be supplied as
+#' vectors in which case all must have the same length. \cr
+#' Boundary values are proposed consistenly with real life limitations
+#' in aqueous media. If such boundaries are violated in the variables
+#' input a negative result without physical meaning is returned. This
+#' negative value represents an \emph{infinitively bad response} that will
+#' force the simplex to move in another direction.
+#'
 #' @name ExampleSurfaces
 #' @aliases exampleSurfaceR2.2pks
 #' @aliases exampleSurfaceR2
 #' @aliases exampleSurfaceR3
-#' @title Multivariated functions thad define hypotetical response surfaces.
-#' @description The functions in this section simulate the yield of chemical
-#'   reactions as a function of temperature, pH and concentration (the latter
-#'   only in \code{exampleSurfaceR3()}). Those functions are useful to
-#'   illustrate most concepts of the simplex optimization algorithms
-#'   implemented in \code{labsimplex} package as shown in the package's
-#'   vignette that can be visualized by running \code{vignette('labsimplex')}.
-#'
 #' @param  x1    temperature in Kelvin. Numeric between 278 and 365.
 #' @param  x2    pH. Numeric between 0 and 14.
 #' @param  x3    concentration in arbitrary units. Numeric between 0 and 1.
-#'   Only used in \code{exampleSurfaceR3()}.
+#'               Only used in \code{exampleSurfaceR3()}.
 #' @param  noise absolute noise included in the response surface result.
-#'   Default to zero.
-#' @details Parameters \code{x1}, \code{x2} and \code{x3} may be supplied as
-#'   vectors in which case all must have the same length. \cr
-#'   Boundary values are proposed consistenly with real life limitations
-#'   in aqueous media. If such boundaries are violated in the variables
-#'   input a negative result without physical meaning is returned. This
-#'   negative value represents an \emph{infinitively bad response} that will
-#'   force the simplex to move in another direction.
+#'               Default to zero.
 #' @seealso \code{\link{cntr}}, \code{\link{prspctv}} and
 #' \code{\link{exampleOptimization}}
 #' @rdname ExampleSurfaces
@@ -76,7 +78,6 @@ exampleSurfaceR3 <- function (x1, x2, x3, noise = 0) {
   if (length(x1) != length(x2) || length(x3) != length(x2)) {
     stop('Vector parameters x1, x2 and x3 must have same length')
   }
-
   if (any(any(x1 > 365), any(x1 < 278), any(x2 > 14), any(x2 < 0),
           any(x3 < 0), any(x3 > 1))) return(-1)
   return(94 * (exp(-(0.035*(x2 - 10)^2 + 0.002 * (x1 - 300)^2 +

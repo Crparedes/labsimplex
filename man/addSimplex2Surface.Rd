@@ -2,26 +2,40 @@
 % Please edit documentation in R/exampleOptim.R
 \name{addSimplex2Surface}
 \alias{addSimplex2Surface}
-\title{Adds simplex movements to a response surface contour}
+\title{Adds the simplex movements to a response surface contour}
 \usage{
 addSimplex2Surface(p, simplex)
 }
 \arguments{
-\item{p}{asdsdf}
+\item{p}{contour plot produced by using \code{\link{cntr}} function}
 
-\item{simplex}{simplex}
+\item{simplex}{simplex object generally produced automathically by using
+\code{\link{exampleOptimization}}}
+}
+\value{
+a \code{\link[ggplot2]{ggplot}} object with the optimization
+  path over the contour plot provided.
 }
 \description{
-The function complements the
+The function complements the contour plot produced by using
+\code{\link{cntr}} function. Given a contour plot and a simplex
+(an object of class \code{smplx}) the functions adds the simplex
+movements to the contour plot to illustrate the optimization process
+and the path that was followed.
 }
 \examples{
 simplex <- exampleOptimization(surface = exampleSurfaceR2,
                                centroid = c(7, 340),
                                stepsize = c(1.2, 15))
-(p <- cntr(surface = exampleSurfaceR2))
+p <- cntr(surface = exampleSurfaceR2)
 p <- addSimplex2Surface(p = p, simplex = simplex)
 print(p)
 }
 \seealso{
 \code{\link{cntr}} \code{\link{exampleOptimization}}
+}
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
 }

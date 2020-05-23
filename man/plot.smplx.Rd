@@ -2,13 +2,13 @@
 % Please edit documentation in R/plot.smplx.R
 \name{plot.smplx}
 \alias{plot.smplx}
-\title{Makes a two dimentional plot of a simplex object.}
+\title{Draws a two dimentional plot of the vertexes in a simplex}
 \usage{
 \method{plot}{smplx}(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
   expand = TRUE, exp.fac = 1.5, ...)
 }
 \arguments{
-\item{x}{\code{smplx} class object containing the vertices coordinates.}
+\item{x}{object of class \code{smplx}.}
 
 \item{sel.dim}{numeric or char vector for variables to be considered when
 simplex dimensionality is higher than 2. If \code{numeric}
@@ -25,45 +25,37 @@ only last simplex.}
 
 \item{exp.fac}{expansion factor used when \code{expand = TRUE}.}
 
-\item{...}{other graphical parameters used in plot()}
+\item{...}{other graphical parameters used in
+\code{\link[graphics]{plot}}}
 }
 \value{
-2D proyection of the simplex coordinates
+2D proyection of the simplex coordinates.
 }
 \description{
-The function generates a 2D plot for a \code{smplx} class object having
-dimensionality of at least 2. When dimensionality is higher than 2, the
-function plots a 2D proyection of selected dimensions.
+The function generates a 2D plot of the vertexes in a simplex optimization
+when simplex dimensionality is at least 2. When dimensionality is higher
+than 2, the plot produced is a proyection of the selected variables.
 }
 \details{
-For 3D representations of simplex with dimensionality higher than 2 use
-\code{\link{plotSimplex3D}}
+For 3D representations of simplexes with dimensionality higher than 2 you
+can use \code{\link{plotSimplex3D}}.
 }
 \examples{
-  plot(x = labsimplex(N = 2))
-  plot(x = labsimplex(N = 2), expand = FALSE)
+  plot(x = labsimplex(N = 2, centroid = c(7, 340), stepsize = c(1.2, 15)))
 
-  plot(x = labsimplex(N = 8))
-  plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
+  ## Several options are posible when visualizing higher order simplexes
+  plot(x = labsimplex(N = 3))
+  plot(x = labsimplex(N = 3), sel.dim = c(2, 3))
 
-  ## Simulation of the real proccess where a simplex is made and evaluated
-  set.seed(1)
-  simplex2D <- labsimplex(N = 2)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(x = simplex2D)
-  generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-  plot(x = simplex2D)
+  ## Simplex movements can be visualized after some experiments has been
+  ## performed
+  simplex <- exampleOptimization(surface = exampleSurfaceR2,
+                                 centroid = c(7, 340),
+                                 stepsize = c(1.2, 15), experiments = 16)
+  plot(x = simplex)
+}
+\seealso{
+\code{\link{plotSimplex3D}}
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

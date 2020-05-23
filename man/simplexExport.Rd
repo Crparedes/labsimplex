@@ -2,13 +2,13 @@
 % Please edit documentation in R/simplexExport.R
 \name{simplexExport}
 \alias{simplexExport}
-\title{Exports the information contained on a \code{smplx} class object.}
+\title{Exports the information contained in an object of class \code{smplx}.}
 \usage{
 simplexExport(simplex, filename = NULL, direc = NULL)
 }
 \arguments{
-\item{simplex}{\code{smplx} class object containing the simplex to be
-stored.}
+\item{simplex}{object of class \code{smplx} containing the simplex to be
+exported}
 
 \item{filename}{string with the name (without extention) of the file that
 will be created. If not provided, the name of the simplex
@@ -18,16 +18,18 @@ object will be used.}
 the current directory will be used.}
 }
 \value{
-A \code{.smplx} file containing all the information required to
-        continue with the optimization process once all vertex experiments
-        have been carried.
+Generates a \code{.smplx} file containing all the information
+        required to continue with the optimization process after the
+        experiments have been carried.
 }
 \description{
-Creates a \code{.smplx} file (text file) that stores the information
-contained in the simplex (a \code{smplx} class object, see
-\code{\link{labsimplex}}). It allows to continue with the optimization
-proccess after experiment described by a vertex has been carried and
-a quality function value has been obtained.
+Creates a text file with extension \code{.smplx} that contains the complete
+information contained in a simplex (an object with class \code{smplx},
+see \code{\link{labsimplex}}). This file allows the continuation of an
+optimization proccess when the experiments take too long and multiple
+\code{R} sessions are required. The file produced is also useful to share
+the information of the optimization process. The exportd simplex can be later
+imported with \code{\link{simplexImport}}.
 }
 \examples{
 \dontrun{

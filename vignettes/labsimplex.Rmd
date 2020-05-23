@@ -210,7 +210,7 @@ simplexExport(ExpSet)
 ```
 The `simplexImport()` function creates a simplex object using the information contained into a `.smplx` file. The file extension must be included and the name of the created object may be specified or automatically created.
 ```{r import}
-simplexImport('ExpSet.smplx', name = 'importedSimplex')
+simplexImport('ExpSet', name = 'importedSimplex')
 print(importedSimplex)
 ```
 

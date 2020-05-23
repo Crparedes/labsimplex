@@ -4,15 +4,15 @@
 \alias{simplexImport}
 \title{Imports the information contained in a \code{.smplx} file.}
 \usage{
-simplexImport(filename, auth.ld = TRUE, name = NULL)
+simplexImport(filename, aut.load = TRUE, name = NULL)
 }
 \arguments{
-\item{filename}{string with the name of the file (with extension) to
-be imported. The file must be generated using
-\code{\link{simplexExport}}. It may include path if the
-file is not in the current directory.}
+\item{filename}{string with the name of the file (without extension) to
+be imported. This file must be generated using
+\code{\link{simplexExport}}. The path must be included if
+the file is not in the current directory.}
 
-\item{auth.ld}{logical. Should the imported simplex object be directly
+\item{aut.load}{logical. Should the imported simplex object be directly
 loaded on the Environment? Default to TRUE.}
 
 \item{name}{name for the simplex object to be created if
@@ -24,14 +24,20 @@ A \code{smplx} class object with the complete information of the
         simplex
 }
 \description{
-Imports the information contained in a \code{.smplx} file and creates a
-\code{'smplx'} class object.
+The function reads and (optionally) loads into the environment the simplex
+(object of class \code{smplx}) contained in a \code{.smplx} file previously
+created using \code{\link{simplexExport}}.
 }
 \examples{
 \dontrun{
   simplexExport(labsimplex(N = 4), name = "simplex4D")
   simplexImport("simplex4D.smplx")
+  # Other way:
+  simplex4D <- simplexImport("simplex4D.smplx", aut.load = FALSE)
 }
+}
+\seealso{
+\code{\link{simplexImport}}
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

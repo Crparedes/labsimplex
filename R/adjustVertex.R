@@ -1,9 +1,8 @@
-#' Modify given coordinates of given vertices of a simplex
+#' Modify the coordinates of given vertices of a simplex
 #'
-#' Changes the coordinates of generated vertices when slightly differences
-#' were impossible to avoid at the moment of setting the experiment
-#' (e.g. small differences in mass components when preparing a mixture).
-#'
+#' Changes the coordinates of previously generated vertices when slightly
+#' differences were impossible to avoid at the moment of setting the experiment
+#' variables (e.g. small differences in mass components when preparing a mixture).
 #'
 #' @param  newcoords List with elements named like the vertices to be modified.
 #'                   Each element must have a vector with the actual (ordered)
@@ -11,7 +10,7 @@
 #'                   to indicate coordinates that were unchanged.
 #' @inheritParams generateVertex
 #'
-#' @return A 'smplx' type object with the modified simplex information.
+#' @return An object of class \code{smplx} with the modified simplex information.
 #' @examples
 #' simplex <- labsimplex(N = 3, start = c(7, 25, 0.15),
 #'                       stepsize = c(0.2, 5, 0.02))
@@ -38,8 +37,8 @@ adjustVertex <- function(simplex, newcoords, overwrite = FALSE) {
                     tolower(gsub('\\.', '', attr(simplex$coords,
                                                  "dimnames")[[1]])))
     if (is.na(pos.RM)) {
-      stop("At least one of submited vertex (list elements names) is not in the
-         simplex object to be adjusted")
+      stop("At least one of submited vertex (list elements names) is not in ",
+           "the simplex object to be adjusted")
     }
     VerTBA[i] <- pos.RM
   }

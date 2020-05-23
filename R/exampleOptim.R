@@ -1,22 +1,84 @@
+#' Performs a complete simplex optimization over a response surface
+#'
+#' The function uses the information in a simplex or creates a
+#' new one by using the defined centroid and step-size to perform a simplex
+#' optimization using the responses produced in the example response
+#' surfaces included in the package.
+#'
+#' @inheritParams prspctv
+#' @inheritParams labsimplex
+#' @inheritParams generateVertex
+#' @param experiments number of vertexes to evaluate
+#' @return An object with class \code{smplx} with the simplex optimization
+#'   data.
+#' @import ggplot2
+#' @importFrom utils capture.output
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
+#' @export
+exampleOptimization <- function (surface, simplex = NULL,
+                                 centroid = c(7, 340),
+                                 stepsize = c(0.6, 10), algor = 'fixed',
+                                 experiments = 17, noise = 0) {
+  newSmplx <- FALSE
+  n = 0
+  N <- length(centroid)
+  if (missing(simplex)) {
+    newSmplx <- TRUE
+    simplex <- labsimplex(N = N, centroid = centroid, stepsize = stepsize)
+    n = 2 + 1
+  }
+  invisible(capture.output(
+    for (ii in 1:(experiments - n)){
+      if (ii == 1 && newSmplx) {
+        if (N == 2) {
+          res <- surface(x1 = simplex$coords[, 2], x2 = simplex$coords[, 1],
+                         noise = noise)
+        } else {
+          res <- surface(x1 = simplex$coords[, 1], x2 = simplex$coords[, 2],
+                         x3 = simplex$coords[, 3], noise = noise)
+        }
+        simplex <- generateVertex(simplex = simplex, algor = algor, qflv = res)
+      } else {
+        if (N == 2) {
+          res <- surface(x1 = simplex$coords[nrow(simplex$coords), 2],
+                         x2 = simplex$coords[nrow(simplex$coords), 1],
+                         noise = noise)
+        } else {
+          res <- surface(x1 = simplex$coords[nrow(simplex$coords), 1],
+                         x2 = simplex$coords[nrow(simplex$coords), 2],
+                         x3 = simplex$coords[nrow(simplex$coords), 3],
+                         noise = noise)
+        }
+        simplex <- generateVertex(simplex = simplex, algor = algor, qflv = res)
+      }
+    }
+  ))
+  return(simplex)
+}
+
 #' 3D perspective plot of example response surfaces
 #'
-#' @description Plots a \code{\link[graphics]{persp}} plot of the bivariated
-#'   example response surfaces included in the package.
+#' Plots a \code{\link[graphics]{persp}} plot of the bivariated
+#' example response surfaces included in the package.
+#'
 #' @param surface example response surface to be used. See
 #'   \code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}}.
 #' @param length  number of levels to use in each explanatory variables
 #' @param noise   absolute noise to be included in the results
 #' @param par     list with graphical parameters (\code{\link[graphics]{par}}).
 #' @param x1lim   limits for the first variable (temperature in
-#'   \code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}})
+#'                \code{\link{exampleSurfaceR2}} and
+#'                \code{\link{exampleSurfaceR2.2pks}})
 #' @param x2lim   limits for the second variable (pH in
-#'   \code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}})
+#'                \code{\link{exampleSurfaceR2}} and \
+#'                code{\link{exampleSurfaceR2.2pks}})
 #' @inheritParams graphics::persp
 #' @examples
-#' prspctv(surface = exampleSurfaceR2.2pks)
-#' prspctv(surface = exampleSurfaceR2.2pks, theta = 35, phi = 25,
-#'         expand = 0.75, xlab = 'Temperature (K)', ylab = 'pH',
-#'         zlab = 'Yield (%)')
+#'   prspctv(surface = exampleSurfaceR2.2pks)
+#'   prspctv(surface = exampleSurfaceR2.2pks, theta = 35, phi = 25,
+#'           expand = 0.75, xlab = 'Temperature (K)', ylab = 'pH',
+#'           zlab = 'Yield (%)')
 #' @importFrom graphics persp
 #' @importFrom grDevices colorRampPalette
 #' @importFrom stats rnorm
@@ -43,15 +105,18 @@ prspctv <- function (surface, length = 45, noise = 0, x1lim = c(278, 365),
 
 #' Contour plot of example response surfaces
 #'
-#' @description Plots a \code{\link[ggplot2]{ggplot}} with the contour of the
-#'   bivariated example response surfaces included in the package.
+#' Plots a \code{\link[ggplot2]{ggplot}} with the contour of the
+#' bivariated example response surfaces included in the package.
+#'
 #' @inheritParams prspctv
 #' @examples
-#' p <- cntr(surface = exampleSurfaceR2, length = 200)
-#' print(p)
+#'   p <- cntr(surface = exampleSurfaceR2, length = 200)
+#'   print(p)
 #' @import ggplot2
 #' @importFrom grDevices colorRampPalette
 #' @importFrom stats rnorm
+#' @references H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+#'   Springer-Verlag New York, 2016.
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
@@ -82,64 +147,32 @@ cntr <- function (surface, length = 150, noise = 0, x1lim = c(278, 365),
   return(p)
 }
 
-#' Performs a complete simplex optimization
+#' Adds the simplex movements to a response surface contour
 #'
-#' @description The function plots a perspective 3D plot for the example response surfaces included in the package
-#' @inheritParams prspctv
-#' @inheritParams labsimplex
-#' @inheritParams generateVertex
-#' @param experiments number of vertexes to evaluate
-#' @import ggplot2
-#' @importFrom utils capture.output
-#' @export
-
-exampleOptimization <- function (surface, simplex = NULL, centroid = c(7, 3.40),
-                                 stepsize = c(0.6, 10), algor = 'fixed',
-                                 experiments = 17, noise = 0) {
-  ii1 <- FALSE
-  n = 0
-  if (missing(simplex)) {
-    ii1 <- TRUE
-    simplex <- labsimplex(N = 2, centroid = centroid, stepsize = stepsize)
-    n = 2 + 1
-  }
-  invisible(capture.output(
-    for (ii in 1:(experiments - n)){
-      if (ii == 1 && ii1) {
-        simplex <- generateVertex(simplex = simplex, algor = algor,
-                                  qflv = surface(x1 = simplex$coords[, 2],
-                                                 x2 = simplex$coords[, 1],
-                                                 noise = noise))
-      } else {
-        simplex <- generateVertex(simplex = simplex, algor = algor,
-          qflv = surface(x1 = simplex$coords[nrow(simplex$coords), 2],
-                         x2 = simplex$coords[nrow(simplex$coords), 1],
-                         noise = noise))
-      }
-    }
-  ))
-  return(simplex)
-}
-
-#' Adds simplex movements to a response surface contour
+#' The function complements the contour plot produced by using
+#' \code{\link{cntr}} function. Given a contour plot and a simplex
+#' (an object of class \code{smplx}) the functions adds the simplex
+#' movements to the contour plot to illustrate the optimization process
+#' and the path that was followed.
 #'
-#' @description The function complements the
-#' @param p       asdsdf
-#' @param simplex simplex
+#' @param p       contour plot produced by using \code{\link{cntr}} function
+#' @param simplex simplex object generally produced automathically by using
+#'                \code{\link{exampleOptimization}}
+#' @return a \code{\link[ggplot2]{ggplot}} object with the optimization
+#'   path over the contour plot provided.
 #' @seealso \code{\link{cntr}} \code{\link{exampleOptimization}}
 #' @examples
 #' simplex <- exampleOptimization(surface = exampleSurfaceR2,
 #'                                centroid = c(7, 340),
 #'                                stepsize = c(1.2, 15))
-#' (p <- cntr(surface = exampleSurfaceR2))
+#' p <- cntr(surface = exampleSurfaceR2)
 #' p <- addSimplex2Surface(p = p, simplex = simplex)
 #' print(p)
 #' @importFrom  ggplot2 geom_segment aes
+#' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
+#' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 addSimplex2Surface <- function (p, simplex) {
-  # \code{\link[ggplot2]{ggplot} produced by \code{\link{cntr}} by
-  # adding the movements made for a simplex object (generally produced by \code{\link{exampleOptimization}})
-  # a \code{\link[ggplot2]{ggplot} object produced by \code{\link{cntr}}
   V.pos <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))
   x <- xend <- y <- yend <- vector()
   for (ii in 1:length(simplex$families)) {
@@ -154,9 +187,11 @@ addSimplex2Surface <- function (p, simplex) {
       }
     }
   }
-  p <- p + geom_segment(data = data.frame(x = x, xend = xend, y = y, yend = yend),
-                          aes(x = x, xend = xend, y = y, yend = yend)) +
-          geom_point(data = data.frame(x = simplex$coords[, 2], y = simplex$coords[, 1]),
+  p <- p + geom_segment(data = data.frame(x = x, xend = xend,
+                                          y = y, yend = yend),
+                        aes(x = x, xend = xend, y = y, yend = yend)) +
+          geom_point(data = data.frame(x = simplex$coords[, 2],
+                                       y = simplex$coords[, 1]),
                     aes(x = x, y = y), shape = 21, size = 3, fill = 'white')
   return(p)
 }

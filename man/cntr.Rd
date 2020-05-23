@@ -15,18 +15,24 @@ cntr(surface, length = 150, noise = 0, x1lim = c(278, 365), x2lim = c(0, 14))
 \item{noise}{absolute noise to be included in the results}
 
 \item{x1lim}{limits for the first variable (temperature in
-\code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}})}
+\code{\link{exampleSurfaceR2}} and
+\code{\link{exampleSurfaceR2.2pks}})}
 
 \item{x2lim}{limits for the second variable (pH in
-\code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}})}
+\code{\link{exampleSurfaceR2}} and \
+code{\link{exampleSurfaceR2.2pks}})}
 }
 \description{
 Plots a \code{\link[ggplot2]{ggplot}} with the contour of the
-  bivariated example response surfaces included in the package.
+bivariated example response surfaces included in the package.
 }
 \examples{
-p <- cntr(surface = exampleSurfaceR2, length = 200)
-print(p)
+  p <- cntr(surface = exampleSurfaceR2, length = 200)
+  print(p)
+}
+\references{
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+  Springer-Verlag New York, 2016.
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

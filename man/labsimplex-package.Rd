@@ -3,21 +3,24 @@
 \docType{package}
 \name{labsimplex-package}
 \alias{labsimplex-package}
-\title{labsimplex: Implementation of simplex optimization algorithms for
-laboratory applications.}
+\title{\code{labsimplex}: Simplex Optimization Algorithms for Laboratory and
+Processes Applications}
 \description{
-The labsimplex package provides tools to optimize a process by using the
-simplex algorithms fixed-size reported by Spendley et al. (1962)
-and variable-size reported by Nelder and Mead (1965).
+The labsimplex package provides the Implementation of the simplex
+optimization algorithms firstly proposed by Spendley et al. (1962)
+<doi:10.1080/00401706.1962.10490033> and later modified by Nelder
+and Mead (1965) <doi:10.1093/comjnl/7.4.308> for laboratory and
+processes applications. Tools for simplexes' graphical representation
+and some example surface responses are provided.
 }
 \details{
-The package uses a list-like \code{'smplx'} class object to store the
+The package uses list objects of class \code{'smplx'} to store the
 simplex information including all the vertices coordinates and experimental
 responses.
 }
 \section{labsimplex functions}{
 
-The labsimplex functions allow generate a new \code{'smplx'} class object,
+The labsimplex functions can generate a new \code{'smplx'} class object,
 assing responses to the vertices to generate the next one and to visualize
 different spatial representation of the \emph{n}-dimensional simplex in 2D
 or 3D proyections. Detailed information can be found by typing

@@ -7,41 +7,32 @@
 plotSimplexResponse(x, ...)
 }
 \arguments{
-\item{x}{\code{smplx} class object containig the coordinates of
-the vertices and their response values.}
+\item{x}{object with class \code{smplx} containig the coordinates of
+the vertices and their responses.}
 
-\item{...}{other graphical parameters used in plot()}
+\item{...}{other graphical parameters used in \code{\link[graphics]{plot}}}
 }
 \value{
 Plot of response against vertex number.
 }
 \description{
-The function generates a plot for a \code{smplx} class object whose vertices
-must have a response value assigned. The response is plotted
-against the vertex number. The only vertex allowed to not having response
-assigned is the last one.
+The function generates a plot for an object with class \code{smplx}
+if it's vertices have a response assigned. The response is plotted
+against the vertex number.
 }
 \details{
 If the simplex object being ploted was obtained using a variable size
 algorithm, some experimental points could be disregarded and will be
 shown with a red mark indicating that the vertex was not used in
 new vertices calculations. Those points are also ignored by the line that
-links the data in the scaterplot and pretends to show a tendency to
-better values as more vertices are evaluated.
+links the data in the scaterplot.
 }
 \examples{
-set.seed(1)
-# Generate a simplex and add some responses to the vertices
-simplex <- labsimplex(N = 3)
-generateVertex(simplex, qflv = rnorm(4), algor = 'variable',
-  overwrite = TRUE)
-generateVertex(simplex, qflv = 2.75, algor = 'variable', overwrite = TRUE)
-generateVertex(simplex, qflv = 0.8,  algor = 'variable', overwrite = TRUE)
-generateVertex(simplex, qflv = 2.94, algor = 'variable', overwrite = TRUE)
-generateVertex(simplex, qflv = 3.14, algor = 'variable', overwrite = TRUE)
-
-# Plot the response versus the vertex function
-plotSimplexResponse(simplex)
+  simplex <- exampleOptimization(surface = exampleSurfaceR3,
+                                 centroid = c(350, 11, 0.7),
+                                 stepsize = c(10, 0.5, 0.1),
+                                 experiments = 18, algor = 'variable')
+  plotSimplexResponse(simplex)
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

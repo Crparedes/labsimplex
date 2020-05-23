@@ -1,54 +1,61 @@
 #' Generates the new vertex of a simplex
 #'
 #' Gives the coordinates for the new vertex that must be performed
-#' based on the response values for vertices on the current simplex
+#' based on the responses for the vertices on the current simplex
 #' and considering the optimization criteria.
 #'
 #' When minimization is the criteria, the algorithm will tend to approach zero.
 #' If negative responses are possible and the most negative value is desired,
 #' a very large negative number must be provided in \code{crit} parameter.
 #'
-#' @param  simplex   \code{'smplx'} type object containig simplex information
-#' @param  qflv      value of the response for the last vertex
-#'                   (or last vertices if it is the first simplex).
+#' @param  simplex   object of class \code{smplx} with the simplex
+#'                   information. See \code{\link{labsimplex}}
+#' @param  qflv      response for the vertex (or vertices) without responses
 #' @param  crit      optimization criteria indicating if the goal is maximize
-#'                   (\code{"max"}) or minimize (\code{"min"}) the response.
+#'                   (\code{'max'}) or minimize (\code{'min'}) the response.
 #'                   It can also be a numeric value to which the
-#'                   response is supposed to approach.
+#'                   response is supposed to approach
 #' @param  algor     algorithm to be followed in the vertex generation.
-#'                   \code{"fixed"} for a fixed-size simplex following
-#'                   Spendley (1962) algorithm or \code{"variable"} for a
+#'                   \code{'fixed'} for a fixed-size simplex following
+#'                   Spendley (1962) algorithm or \code{'variable'} for a
 #'                   variable-size simplex following Nelder and Mead (1965)
 #'                   algorithm
 #' @param  overwrite logical argument. If \code{TRUE} the output simplex will
 #'                   replace the provided one in the \code{simplex} parameter.
-#'                   Defauklt \code{overwrite = TRUE}
-#'
-#' @return A 'smplx' type object with the new simplex information
+#'                   Default \code{overwrite = FALSE}
+#' @return An object of class \code{smplx} with the new simplex information
 #'        including the conditions for the new experiment to be permormed.
 #' @examples
-#' simplex3D <- labsimplex(N = 3)
-#' simplex3D <- generateVertex(simplex = simplex3D, qflv = rnorm(4))
-#' \dontrun{
-#' ## Optional form:
-#' ## After obtaining the response for the last vertex generated:
-#' NV <- rnorm(1)
-#' generateVertex(simplex = simplex3D, qflv = NV, overwrite = TRUE)
-#' }
+#'   simplex <- labsimplex(N = 3, centroid = c(320, 7, 0.4),
+#'                         stepsize = c(35, 2, 0.3))
+#'   ## The experiments must be performed and the responses passed to qflv.
+#'   ## Here we get the responses by using an example response surface
+#'   ## included in the package:
+#'   ##
+#'   ## Initially, the response must be provided for all the vertexes
+#'   response <- exampleSurfaceR3(x1 = simplex$coords[, 1],
+#'                                x2 = simplex$coords[, 2],
+#'                                x3 = simplex$coords[, 3])
+#'   simplex <- generateVertex(simplex = simplex, qflv = response)
+#'
+#'   ## After this, the last vertex is the only one that must be evaluated
+#'   response <- exampleSurfaceR3(x1 = simplex$coords[nrow(simplex$coords), 1],
+#'                                x2 = simplex$coords[nrow(simplex$coords), 2],
+#'                                x3 = simplex$coords[nrow(simplex$coords), 3])
+#'   simplex <- generateVertex(simplex = simplex, qflv = response)
+#'
+#'   ## Alternatively the simplex object can overwrite the older one:
+#'   generateVertex(simplex = simplex, qflv = response, overwrite = TRUE)
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export
 
 generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
-                      overwrite = FALSE){
-
+                           overwrite = FALSE){
   name <- deparse(substitute(simplex))
-
   # Error handling
   checkMain(simplex)
-  if (!missing(qflv)){
-    simplex <- AssignQF(simplex = simplex, qflv = qflv)
-  }
+  if (!missing(qflv)) simplex <- AssignQF(simplex = simplex, qflv = qflv)
   if (algor != "fixed" && algor != "variable") {
     stop("Algorithm must be set to 'fixed' or 'variable'")
   }
@@ -197,13 +204,14 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
       paste0("Vertex.", nrow(simplex$coords))
   }
 
-  if (simplex$P.eval) rang[(length(rang) - 1)] <- rang[(length(rang) - simplex$dim)] - 1
+  if (simplex$P.eval) {
+    rang[(length(rang) - 1)] <- rang[(length(rang) - simplex$dim)] - 1
+  }
 
-  AcVertexes <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))[(rang + 1)]
+  AcVertexes <- as.numeric(gsub("Vertex.", "",
+                                row.names(simplex$coords)))[(rang + 1)]
 
   simplex$families[[(length(simplex$families) + 1)]] <- AcVertexes
-
-
 
   cat("New vertex to be evaluated: \n")
   print(simplex$coords[nrow(simplex$coords), ])

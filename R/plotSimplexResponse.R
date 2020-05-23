@@ -1,34 +1,25 @@
 #' Plots the response versus the vertex number of a simplex optimization.
 #'
-#' The function generates a plot for a \code{smplx} class object whose vertices
-#' must have a response value assigned. The response is plotted
-#' against the vertex number. The only vertex allowed to not having response
-#' assigned is the last one.
+#' The function generates a plot for an object with class \code{smplx}
+#' if it's vertices have a response assigned. The response is plotted
+#' against the vertex number.
 #'
 #' If the simplex object being ploted was obtained using a variable size
 #' algorithm, some experimental points could be disregarded and will be
 #' shown with a red mark indicating that the vertex was not used in
 #' new vertices calculations. Those points are also ignored by the line that
-#' links the data in the scaterplot and pretends to show a tendency to
-#' better values as more vertices are evaluated.
+#' links the data in the scaterplot.
 #'
-#' @param  x \code{smplx} class object containig the coordinates of
-#'                 the vertices and their response values.
-#' @param  ...     other graphical parameters used in plot()
+#' @param  x   object with class \code{smplx} containig the coordinates of
+#'             the vertices and their responses.
+#' @param  ... other graphical parameters used in \code{\link[graphics]{plot}}
 #' @return Plot of response against vertex number.
 #' @examples
-#' set.seed(1)
-#' # Generate a simplex and add some responses to the vertices
-#' simplex <- labsimplex(N = 3)
-#' generateVertex(simplex, qflv = rnorm(4), algor = 'variable',
-#'   overwrite = TRUE)
-#' generateVertex(simplex, qflv = 2.75, algor = 'variable', overwrite = TRUE)
-#' generateVertex(simplex, qflv = 0.8,  algor = 'variable', overwrite = TRUE)
-#' generateVertex(simplex, qflv = 2.94, algor = 'variable', overwrite = TRUE)
-#' generateVertex(simplex, qflv = 3.14, algor = 'variable', overwrite = TRUE)
-#'
-#' # Plot the response versus the vertex function
-#' plotSimplexResponse(simplex)
+#'   simplex <- exampleOptimization(surface = exampleSurfaceR3,
+#'                                  centroid = c(350, 11, 0.7),
+#'                                  stepsize = c(10, 0.5, 0.1),
+#'                                  experiments = 18, algor = 'variable')
+#'   plotSimplexResponse(simplex)
 #' @importFrom graphics lines points plot segments title
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
@@ -36,16 +27,15 @@
 
 
 plotSimplexResponse <- function(x, ...){
-
   # Error handling
   checkMain(simplex = x)
   if (length(x$qual.fun) < (nrow(x$coords) - 1)) {
     if (all(x$vertex.nat == 'S')) {
-      stop("All starting vertices must have response values assigned
-           before ploting the responses")
+      stop("All starting vertices must have response values assigned",
+           " before ploting the responses")
     } else {
-      stop("Only the last generated vertex is allowed to not having a
-           response assigned")
+      stop("Only the last vertex generated is allowed to not have a",
+           " response assigned")
     }
   }
 
@@ -66,6 +56,5 @@ plotSimplexResponse <- function(x, ...){
   } else {
     lines(VertexNumber, x$qual.fun, col = 4)
   }
-
 }
 

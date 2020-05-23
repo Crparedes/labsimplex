@@ -31,9 +31,9 @@
 #'   simplex <- exampleOptimization(surface = exampleSurfaceR3,
 #'                                  centroid = c(350, 11, 0.7),
 #'                                  stepsize = c(10, 0.5, 0.1),
-#'                                  experiments = 15)
-#'   plotSimplex3D(simplex = simplex)
-#' @seealso \code{\list{plot.smplx}}
+#'                                  experiments = 18)
+#'   plotSimplex3D(simplex = simplex, angle = 80)
+#' @seealso \code{\link{plot.smplx}}
 #' @importFrom graphics lines par plot segments title
 #' @import scatterplot3d
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
@@ -90,13 +90,6 @@ plotSimplex3D <- function(simplex, sel.dim = NULL, all.ver = TRUE,
                      s$xyz.convert(simplex$coord[, var.plt[1]],
                      simplex$coord[, var.plt[2]],
                      simplex$coord[, var.plt[3]])$y)
-  #if (all.lin) {
-  #  for (ii in 1:(nrow(simplex$coords) - simplex$dim)) {
-  #    segments(x0 = vertex.xy[ii, 1], x1 = vertex.xy[(ii + 1):(ii + 3), 1],
-  #             y0 = vertex.xy[ii, 2], y1 = vertex.xy[(ii + 1):(ii + 3), 2],
-  #             col = "grey", lwd = 0.7)
-  #  }
-  #}
   if (all.lin) {
     V.pos <- as.numeric(gsub("Vertex.", "", row.names(simplex$coords)))
     #if (!is.null(nrow(x$families))) {
@@ -105,11 +98,8 @@ plotSimplex3D <- function(simplex, sel.dim = NULL, all.ver = TRUE,
         for (kk in (jj + 1):length(simplex$families[[ii]])) {
           jj. <- which(simplex$families[[ii]][jj] == V.pos)
           kk. <- which(simplex$families[[ii]][kk] == V.pos)
-          lines(vertex.xy[c(jj., kk.),  var.plt[1]],
-                vertex.xy[c(jj., kk.),  var.plt[2]], col = "grey")
-          #segments(x0 = vertex.xy[ii, 1], x1 = vertex.xy[(ii + 1):(ii + 3), 1],
-          #         y0 = vertex.xy[ii, 2], y1 = vertex.xy[(ii + 1):(ii + 3), 2],
-          #         col = "grey", lwd = 0.7)
+          lines(vertex.xy[c(jj., kk.),  1],
+                vertex.xy[c(jj., kk.),  2], col = "grey")
         }
       }
     }

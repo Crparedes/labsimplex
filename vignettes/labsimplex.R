@@ -89,6 +89,6 @@ print(FrF2Set)
 simplexExport(ExpSet)
 
 ## ----import--------------------------------------------------------------
-simplexImport('ExpSet.smplx', name = 'importedSimplex')
+simplexImport('ExpSet', name = 'importedSimplex')
 print(importedSimplex)
 

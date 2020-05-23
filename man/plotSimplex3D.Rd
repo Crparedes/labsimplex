@@ -53,11 +53,11 @@ than 3, the plot produced is a proyection of the selected variables.
   simplex <- exampleOptimization(surface = exampleSurfaceR3,
                                  centroid = c(350, 11, 0.7),
                                  stepsize = c(10, 0.5, 0.1),
-                                 experiments = 15)
-  plotSimplex3D(simplex = simplex)
+                                 experiments = 18)
+  plotSimplex3D(simplex = simplex, angle = 80)
 }
 \seealso{
-\code{\list{plot.smplx}}
+\code{\link{plot.smplx}}
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

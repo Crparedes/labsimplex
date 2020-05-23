@@ -2,12 +2,13 @@
 % Please edit documentation in R/adjustVertex.R
 \name{adjustVertex}
 \alias{adjustVertex}
-\title{Modify given coordinates of given vertices of a simplex}
+\title{Modify the coordinates of given vertices of a simplex}
 \usage{
 adjustVertex(simplex, newcoords, overwrite = FALSE)
 }
 \arguments{
-\item{simplex}{\code{'smplx'} type object containig simplex information}
+\item{simplex}{object of class \code{smplx} with the simplex
+information. See \code{\link{labsimplex}}}
 
 \item{newcoords}{List with elements named like the vertices to be modified.
 Each element must have a vector with the actual (ordered)
@@ -16,15 +17,15 @@ to indicate coordinates that were unchanged.}
 
 \item{overwrite}{logical argument. If \code{TRUE} the output simplex will
 replace the provided one in the \code{simplex} parameter.
-Defauklt \code{overwrite = TRUE}}
+Default \code{overwrite = FALSE}}
 }
 \value{
-A 'smplx' type object with the modified simplex information.
+An object of class \code{smplx} with the modified simplex information.
 }
 \description{
-Changes the coordinates of generated vertices when slightly differences
-were impossible to avoid at the moment of setting the experiment
-(e.g. small differences in mass components when preparing a mixture).
+Changes the coordinates of previously generated vertices when slightly
+differences were impossible to avoid at the moment of setting the experiment
+variables (e.g. small differences in mass components when preparing a mixture).
 }
 \examples{
 simplex <- labsimplex(N = 3, start = c(7, 25, 0.15),

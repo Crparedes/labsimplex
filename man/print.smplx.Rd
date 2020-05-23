@@ -2,12 +2,12 @@
 % Please edit documentation in R/print.smplx.R
 \name{print.smplx}
 \alias{print.smplx}
-\title{Prints given simplex (a \code{smplx} class object)}
+\title{S3 method \code{print} for simplex objects}
 \usage{
 \method{print}{smplx}(x, extended = FALSE, conventions = TRUE, ...)
 }
 \arguments{
-\item{x}{simplex object to be printed}
+\item{x}{simplex (object of class to be printed}
 
 \item{extended}{logical, if \code{TRUE}, the object is printed as a
 list containing all hiden elements}
@@ -15,10 +15,10 @@ list containing all hiden elements}
 \item{conventions}{logical, if \code{TRUE} (default), the conventions
 used are printed}
 
-\item{...}{other arguments passed to print}
+\item{...}{more parameters passed to \code{\link[base]{print}}}
 }
 \description{
-Prints given simplex information.
+Prints simplex information.
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

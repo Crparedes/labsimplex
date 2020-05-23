@@ -13,7 +13,7 @@
 
 <meta name="author" content="Cristhian Paredes and Jesús Ágreda" />
 
-<meta name="date" content="2020-05-22" />
+<meta name="date" content="2020-05-23" />
 
 <title>labsimplex package</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">labsimplex package</h1>
 <h4 class="author">Cristhian Paredes and Jesús Ágreda</h4>
-<h4 class="date">2020-05-22</h4>
+<h4 class="date">2020-05-23</h4>
 
 
 <div id="TOC">
@@ -558,7 +558,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>In some cases, each experiment could take up to several days being performed. The optimization information must be safely stored in the case that the R session is finished without saving the workspace image. Using scripts with the complete process may be a good alternative but for those wanting a more secure way or those who use a simplex algorithm as a never-ending evolutive optimization, the <code>simplexExport()</code> function will create a plain text file with <code>.smplx</code> extension. This file contains all the simplex information. The file must not be edited by hand since it may produce misoperation of some package functions and in the worst case, the information may get lost.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">simplexExport</span>(ExpSet)</span></code></pre></div>
 <p>The <code>simplexImport()</code> function creates a simplex object using the information contained into a <code>.smplx</code> file. The file extension must be included and the name of the created object may be specified or automatically created.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">simplexImport</span>(<span class="st">&#39;ExpSet.smplx&#39;</span>, <span class="dt">name =</span> <span class="st">&#39;importedSimplex&#39;</span>)</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">simplexImport</span>(<span class="st">&#39;ExpSet&#39;</span>, <span class="dt">name =</span> <span class="st">&#39;importedSimplex&#39;</span>)</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="kw">print</span>(importedSimplex)</span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; </span></span>
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; Current simplex:</span></span>

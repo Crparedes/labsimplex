@@ -1,13 +1,13 @@
-#' Makes a two dimentional plot of a simplex object.
+#' Draws a two dimentional plot of the vertexes in a simplex
 #'
-#' The function generates a 2D plot for a \code{smplx} class object having
-#' dimensionality of at least 2. When dimensionality is higher than 2, the
-#' function plots a 2D proyection of selected dimensions.
+#' The function generates a 2D plot of the vertexes in a simplex optimization
+#' when simplex dimensionality is at least 2. When dimensionality is higher
+#' than 2, the plot produced is a proyection of the selected variables.
 #'
-#' For 3D representations of simplex with dimensionality higher than 2 use
-#' \code{\link{plotSimplex3D}}
+#' For 3D representations of simplexes with dimensionality higher than 2 you
+#' can use \code{\link{plotSimplex3D}}.
 #'
-#' @param  x \code{smplx} class object containing the vertices coordinates.
+#' @param  x       object of class \code{smplx}.
 #' @param  sel.dim numeric or char vector for variables to be considered when
 #'                 simplex dimensionality is higher than 2. If \code{numeric}
 #'                 form it must contain dimensions ordinal number. If
@@ -18,33 +18,23 @@
 #'                 only last simplex.
 #' @param  expand  logical. Should the plot scales be expanded?
 #' @param  exp.fac expansion factor used when \code{expand = TRUE}.
-#' @param  ...     other graphical parameters used in plot()
-#' @return 2D proyection of the simplex coordinates
+#' @param  ...     other graphical parameters used in
+#'                 \code{\link[graphics]{plot}}
+#' @return 2D proyection of the simplex coordinates.
+#' @seealso \code{\link{plotSimplex3D}}
 #' @examples
-#'   plot(x = labsimplex(N = 2))
-#'   plot(x = labsimplex(N = 2), expand = FALSE)
+#'   plot(x = labsimplex(N = 2, centroid = c(7, 340), stepsize = c(1.2, 15)))
 #'
-#'   plot(x = labsimplex(N = 8))
-#'   plot(x = labsimplex(N = 8), sel.dim = c(3, 4))
+#'   ## Several options are posible when visualizing higher order simplexes
+#'   plot(x = labsimplex(N = 3))
+#'   plot(x = labsimplex(N = 3), sel.dim = c(2, 3))
 #'
-#'   ## Simulation of the real proccess where a simplex is made and evaluated
-#'   set.seed(1)
-#'   simplex2D <- labsimplex(N = 2)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(3), overwrite = TRUE)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(x = simplex2D)
-#'   generateVertex(simplex = simplex2D, qflv = rnorm(1), overwrite = TRUE)
-#'   plot(x = simplex2D)
+#'   ## Simplex movements can be visualized after some experiments has been
+#'   ## performed
+#'   simplex <- exampleOptimization(surface = exampleSurfaceR2,
+#'                                  centroid = c(7, 340),
+#'                                  stepsize = c(1.2, 15), experiments = 16)
+#'   plot(x = simplex)
 #' @importFrom graphics lines par plot segments title
 #' @importFrom grDevices dev.off pdf
 #' @method plot smplx
@@ -64,8 +54,8 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
   }
   if (!missing(sel.dim)) {
     if (length(sel.dim) != 2) {
-      stop("Only 2 coordinates can be plotted. Length of sdim vector differs
-           from 2: ", length(sel.dim))
+      stop("Only 2 coordinates can be plotted. Length of sel.dim vector ",
+           "differs from 2: ", length(sel.dim))
       }
   } else {
     var.plt <- 1:2
@@ -73,8 +63,8 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
 
   if (x$dim > 2) {
     if (missing(sel.dim)) {
-      message("No selected dimensions for ploting. Default is the first two
-              ones.")
+      message("No selected dimensions for ploting. Default is the first two",
+              "ones.")
     } else {
       if (is.numeric(sel.dim)) {
         var.plt <- sel.dim

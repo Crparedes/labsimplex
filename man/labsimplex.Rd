@@ -2,21 +2,22 @@
 % Please edit documentation in R/labsimplex.R
 \name{labsimplex}
 \alias{labsimplex}
-\title{Generates simplex object with coordinates of starting vertices.}
+\title{Generates a simplex object}
 \usage{
 labsimplex(N, start = NULL, centroid = NULL, stepsize = NULL,
   usrdef = NULL, var.name = NULL)
 }
 \arguments{
-\item{N}{number of dimentions (variables) in the space}
+\item{N}{dimensionality of the simplex (i.e. number of variables)}
 
-\item{start}{numeric vector of size \code{N} with initial coordinates
-for the first vertex}
+\item{start}{numeric vector of size \code{N} with coordinates of the
+first vertex}
 
-\item{centroid}{coordinates of centroid for initial simplex}
+\item{centroid}{numeric vector of size \code{N} with coordinates of the
+centroid}
 
-\item{stepsize}{numeric vector of size \code{N} with the step size for each
-coordinate}
+\item{stepsize}{numeric vector of size \code{N} with the step-sizes for
+each coordinate}
 
 \item{usrdef}{\code{(N+1)xN} matrix containig in (N+1) rows the N
 coordinates for each vertex}
@@ -24,43 +25,45 @@ coordinates for each vertex}
 \item{var.name}{vector containing the names for the variables}
 }
 \value{
-A \code{smplx} type object with the brand new simplex information.
+An object of class \code{smplx} with the information of the new
+  simplex.
 }
 \description{
-Generates a \code{smplx} class object containing the coordinates
-of the N+1 vertices of a simplex in a N-dimensional space.
-Addionally can check if faces for given coordinates of a used defined
-simplex are in different hyperplanes.
-}
-\details{
-The only non-optional parameter is \code{N} that relates the simplex
-dimensionality. All other parameters allows tunning the properties of
-generated simplex or define one using defined coordinates. Once the simplex
+The simplex (an list with class \code{smplx}) contains the coordinates
+of the N+1 vertices that define a simplex in a N-dimensional space. By
+default the function produces a regular simplex centered at the origin.
+The coordinates of the regular simplex are transformed to the real
+variables space by using the information of the start or centroid and
+step-size. The only non-optional parameter is \code{N} that relates the
+simplex dimensionality. Once the simplex
 is genereated, the experiments under the conditions indicated for each
 variable at each vertex must be carried and the response obtained.
 Those responses are assigned to the \code{smplx} object at the moment of
 generating the new vertex (see \code{\link{generateVertex}}).
-
-If the initial simplex is generated using the function, it will be the
-result of modifications made to a regular simplex centered at the origin.
-This regular simplex coordinates are generated following the general
-algorithm for the cartesian coordinates for regular n-dimensional simplex.
+}
+\details{
+The regular simplex coordinates are generated following the general
+algorithm for the cartesian coordinates of a regular n-dimensional simplex.
 The algorithm considerates that all vertices must be equal distanced from
 simplex centroid and all angles subtended between any two vertices and the
-centroid of a simplex are equal (with a value of arccos(-1/N)).
+centroid of a simplex are equal (with a value of arccos(-1/N)).\cr
+If the vertexes coordinates are manually given in \code{usr.def}
+parameter, the function checks if the faces produced belong to different
+hyperplanes. This avoids the generation of a degenerated simplex.
 }
 \examples{
-  labsimplex(N = 3)
-  labsimplex(N = 3, centroid = c(66, 1, 12), stepsize = c(10, 0.1, 2),
-             var.name = c('potential', 'pH', 'T'))
-
-  labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 1, 0),
-                                   c(-0.5, -0.7, 1), c(-0.5, -0.4, -0.6)))
-\dontrun{
-## A user defined coordinates may define faces that rely on same hyperplane:
-  labsimplex(N = 3, usrdef = rbind(c(2, 0, 0), c(-0.5, 0, 0), c(0, 0, 0),
-                                   c(-0.5, -0.4, -0.6)))
-}
+  simplex <- labsimplex(N = 3)
+  simplex <- labsimplex(N = 3, centroid = c(350, 7, 0.4),
+                        stepsize = c(35, 2, 0.3),
+                        var.name = c('temperature', 'pH', 'concentration'))
+  simplex <- labsimplex(N = 3, usrdef = rbind(c(390, 8, 0.2), c(330, 8, 0.2),
+                                   c(330, 6, 0.6), c(330, 6, 0.1)))
+  \dontrun{
+    ## User defined coordinates may define a degenerated simplex:
+    simplex <- labsimplex(N = 3,
+                          usrdef = rbind(c(390, 8, 0.3), c(340, 8, 0.3),
+                                         c(355, 8, 0.3), c(340, 5, 0.1)))
+  }
 }
 \references{
 Nelder, J. A., and R. Mead. 1965. “A Simplex Method for Function

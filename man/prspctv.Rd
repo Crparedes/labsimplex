@@ -17,10 +17,12 @@ prspctv(surface, length = 45, noise = 0, x1lim = c(278, 365),
 \item{noise}{absolute noise to be included in the results}
 
 \item{x1lim}{limits for the first variable (temperature in
-\code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}})}
+\code{\link{exampleSurfaceR2}} and
+\code{\link{exampleSurfaceR2.2pks}})}
 
 \item{x2lim}{limits for the second variable (pH in
-\code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}})}
+\code{\link{exampleSurfaceR2}} and \
+code{\link{exampleSurfaceR2.2pks}})}
 
 \item{par}{list with graphical parameters (\code{\link[graphics]{par}}).}
 
@@ -49,13 +51,13 @@ prspctv(surface, length = 45, noise = 0, x1lim = c(278, 365),
 }
 \description{
 Plots a \code{\link[graphics]{persp}} plot of the bivariated
-  example response surfaces included in the package.
+example response surfaces included in the package.
 }
 \examples{
-prspctv(surface = exampleSurfaceR2.2pks)
-prspctv(surface = exampleSurfaceR2.2pks, theta = 35, phi = 25,
-        expand = 0.75, xlab = 'Temperature (K)', ylab = 'pH',
-        zlab = 'Yield (\%)')
+  prspctv(surface = exampleSurfaceR2.2pks)
+  prspctv(surface = exampleSurfaceR2.2pks, theta = 35, phi = 25,
+          expand = 0.75, xlab = 'Temperature (K)', ylab = 'pH',
+          zlab = 'Yield (\%)')
 }
 \author{
 Cristhian Paredes, \email{craparedesca@unal.edu.co}

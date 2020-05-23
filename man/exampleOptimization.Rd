@@ -2,25 +2,27 @@
 % Please edit documentation in R/exampleOptim.R
 \name{exampleOptimization}
 \alias{exampleOptimization}
-\title{Performs a complete simplex optimization}
+\title{Performs a complete simplex optimization over a response surface}
 \usage{
-exampleOptimization(surface, simplex = NULL, centroid = c(7, 3.4),
+exampleOptimization(surface, simplex = NULL, centroid = c(7, 340),
   stepsize = c(0.6, 10), algor = "fixed", experiments = 17, noise = 0)
 }
 \arguments{
 \item{surface}{example response surface to be used. See
 \code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}}.}
 
-\item{simplex}{\code{'smplx'} type object containig simplex information}
+\item{simplex}{object of class \code{smplx} with the simplex
+information. See \code{\link{labsimplex}}}
 
-\item{centroid}{coordinates of centroid for initial simplex}
+\item{centroid}{numeric vector of size \code{N} with coordinates of the
+centroid}
 
-\item{stepsize}{numeric vector of size \code{N} with the step size for each
-coordinate}
+\item{stepsize}{numeric vector of size \code{N} with the step-sizes for
+each coordinate}
 
 \item{algor}{algorithm to be followed in the vertex generation.
-\code{"fixed"} for a fixed-size simplex following
-Spendley (1962) algorithm or \code{"variable"} for a
+\code{'fixed'} for a fixed-size simplex following
+Spendley (1962) algorithm or \code{'variable'} for a
 variable-size simplex following Nelder and Mead (1965)
 algorithm}
 
@@ -28,6 +30,18 @@ algorithm}
 
 \item{noise}{absolute noise to be included in the results}
 }
+\value{
+An object with class \code{smplx} with the simplex optimization
+  data.
+}
 \description{
-The function plots a perspective 3D plot for the example response surfaces included in the package
+The function uses the information in a simplex or creates a
+new one by using the defined centroid and step-size to perform a simplex
+optimization using the responses produced in the example response
+surfaces included in the package.
+}
+\author{
+Cristhian Paredes, \email{craparedesca@unal.edu.co}
+
+Jesús Ágreda, \email{jagreda@unal.edu.co}
 }

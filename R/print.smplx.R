@@ -1,14 +1,13 @@
-#' Prints given simplex (a \code{smplx} class object)
+#' S3 method \code{print} for simplex objects
 #'
-#' Prints given simplex information.
+#' Prints simplex information.
 #'
-#' @param x           simplex object to be printed
+#' @param x           simplex (object of class to be printed
 #' @param extended    logical, if \code{TRUE}, the object is printed as a
 #'                    list containing all hiden elements
 #' @param conventions logical, if \code{TRUE} (default), the conventions
 #'                    used are printed
-#' @param ...         other arguments passed to print
-#'
+#' @param ...         more parameters passed to \code{\link[base]{print}}
 #' @method print smplx
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
@@ -20,9 +19,7 @@ print.smplx <- function(x, extended = FALSE, conventions = TRUE, ...){
     class(x) <- "list"
     print(x)
   } else {
-    if (is.null(x$coords)) {
-      x$coords <- matrix()
-    }
+    if (is.null(x$coords)) x$coords <- matrix()
 
     NvertexSim <- x$dim + 1
     NvertexTot <- nrow(x$coords)

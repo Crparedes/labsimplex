@@ -1,21 +1,23 @@
-#' Exports the information contained on a \code{smplx} class object.
+#' Exports the information contained in an object of class \code{smplx}.
 #'
-#' Creates a \code{.smplx} file (text file) that stores the information
-#' contained in the simplex (a \code{smplx} class object, see
-#' \code{\link{labsimplex}}). It allows to continue with the optimization
-#' proccess after experiment described by a vertex has been carried and
-#' a quality function value has been obtained.
+#' Creates a text file with extension \code{.smplx} that contains the complete
+#' information contained in a simplex (an object with class \code{smplx},
+#' see \code{\link{labsimplex}}). This file allows the continuation of an
+#' optimization proccess when the experiments take too long and multiple
+#' \code{R} sessions are required. The file produced is also useful to share
+#' the information of the optimization process. The exportd simplex can be later
+#' imported with \code{\link{simplexImport}}.
 #'
-#' @param  simplex  \code{smplx} class object containing the simplex to be
-#'                   stored.
+#' @param  simplex  object of class \code{smplx} containing the simplex to be
+#'                  exported
 #' @param  filename string with the name (without extention) of the file that
 #'                  will be created. If not provided, the name of the simplex
 #'                  object will be used.
 #' @param  direc    directory in which the file will be saved. If not provided,
 #'                  the current directory will be used.
-#' @return A \code{.smplx} file containing all the information required to
-#'         continue with the optimization process once all vertex experiments
-#'         have been carried.
+#' @return Generates a \code{.smplx} file containing all the information
+#'         required to continue with the optimization process after the
+#'         experiments have been carried.
 #' @seealso \code{\link{simplexImport}}
 #' @examples
 #' \dontrun{
@@ -24,13 +26,12 @@
 #' }
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
+#' @importFrom utils capture.output
 #' @export
 
-simplexExport <- function(simplex, filename = NULL, direc = NULL){
+simplexExport <- function(simplex, filename = NULL, direc = NULL) {
   checkMain(simplex = simplex)
-  if (missing(direc)) {
-    direc <- getwd()
-  }
+  if (missing(direc)) direc <- getwd()
 
   ID <- deparse(substitute(simplex))
   # To avoid anomalous behavior when simplex is generated inside the function
@@ -41,9 +42,7 @@ simplexExport <- function(simplex, filename = NULL, direc = NULL){
     }
   }
 
-  if (missing(filename)){
-    filename <- ID
-  }
+  if (missing(filename)) filename <- ID
 
   class(simplex) <- "list"
   op.ms <- "\n IMPORTANT: \n\n This file contains all the information required
