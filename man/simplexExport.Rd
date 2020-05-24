@@ -12,10 +12,10 @@ exported}
 
 \item{filename}{string with the name (without extention) of the file that
 will be created. If not provided, the name of the simplex
-object will be used.}
+object is used.}
 
 \item{direc}{directory in which the file will be saved. If not provided,
-the current directory will be used.}
+the current working directory is used.}
 }
 \value{
 Generates a \code{.smplx} file containing all the information
@@ -28,8 +28,8 @@ information contained in a simplex (an object with class \code{smplx},
 see \code{\link{labsimplex}}). This file allows the continuation of an
 optimization proccess when the experiments take too long and multiple
 \code{R} sessions are required. The file produced is also useful to share
-the information of the optimization process. The exportd simplex can be later
-imported with \code{\link{simplexImport}}.
+the information of the optimization process. The exported simplex can be
+later imported with \code{\link{simplexImport}}.
 }
 \examples{
 \dontrun{

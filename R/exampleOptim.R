@@ -8,6 +8,10 @@
 #' @inheritParams prspctv
 #' @inheritParams labsimplex
 #' @inheritParams generateVertex
+#' @param surface example response surface to be used. See
+#'                \code{\link{exampleSurfaceR2}},
+#'                \code{\link{exampleSurfaceR3}} and
+#'                \code{\link{exampleSurfaceR2.2pks}}
 #' @param experiments number of vertexes to evaluate
 #' @return An object with class \code{smplx} with the simplex optimization
 #'   data.
@@ -59,10 +63,10 @@ exampleOptimization <- function (surface, simplex = NULL,
 
 #' 3D perspective plot of example response surfaces
 #'
-#' Plots a \code{\link[graphics]{persp}} plot of the bivariated
+#' Plots a \code{\link[graphics]{persp}} plot of the bivariate
 #' example response surfaces included in the package.
 #'
-#' @param surface example response surface to be used. See
+#' @param surface example response surface to use. See
 #'   \code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}}.
 #' @param length  number of levels to use in each explanatory variables
 #' @param noise   absolute noise to be included in the results
@@ -71,8 +75,8 @@ exampleOptimization <- function (surface, simplex = NULL,
 #'                \code{\link{exampleSurfaceR2}} and
 #'                \code{\link{exampleSurfaceR2.2pks}})
 #' @param x2lim   limits for the second variable (pH in
-#'                \code{\link{exampleSurfaceR2}} and \
-#'                code{\link{exampleSurfaceR2.2pks}})
+#'                \code{\link{exampleSurfaceR2}} and
+#'                \code{\link{exampleSurfaceR2.2pks}})
 #' @inheritParams graphics::persp
 #' @examples
 #'   prspctv(surface = exampleSurfaceR2.2pks)
@@ -106,7 +110,7 @@ prspctv <- function (surface, length = 45, noise = 0, x1lim = c(278, 365),
 #' Contour plot of example response surfaces
 #'
 #' Plots a \code{\link[ggplot2]{ggplot}} with the contour of the
-#' bivariated example response surfaces included in the package.
+#' bivariate example response surfaces included in the package.
 #'
 #' @inheritParams prspctv
 #' @examples
@@ -151,13 +155,13 @@ cntr <- function (surface, length = 150, noise = 0, x1lim = c(278, 365),
 #'
 #' The function complements the contour plot produced by using
 #' \code{\link{cntr}} function. Given a contour plot and a simplex
-#' (an object of class \code{smplx}) the functions adds the simplex
+#' (an object of class \code{smplx}) the function adds the simplex
 #' movements to the contour plot to illustrate the optimization process
 #' and the path that was followed.
 #'
 #' @param p       contour plot produced by using \code{\link{cntr}} function
-#' @param simplex simplex object generally produced automathically by using
-#'                \code{\link{exampleOptimization}}
+#' @param simplex simplex object of class \code{smplx}. Usually produced
+#'                using \code{\link{exampleOptimization}}
 #' @return a \code{\link[ggplot2]{ggplot}} object with the optimization
 #'   path over the contour plot provided.
 #' @seealso \code{\link{cntr}} \code{\link{exampleOptimization}}

@@ -4,27 +4,48 @@
 \name{labsimplex-package}
 \alias{labsimplex-package}
 \title{\code{labsimplex}: Simplex Optimization Algorithms for Laboratory and
-Processes Applications}
+Manufacturing Processes}
 \description{
-The labsimplex package provides the Implementation of the simplex
+The \code{labsimplex} package implements the simplex
 optimization algorithms firstly proposed by Spendley et al. (1962)
 <doi:10.1080/00401706.1962.10490033> and later modified by Nelder
 and Mead (1965) <doi:10.1093/comjnl/7.4.308> for laboratory and
-processes applications. Tools for simplexes' graphical representation
-and some example surface responses are provided.
+manufacturing processes. The package also provides tools for
+graphical representation of the simplexes and some example response
+surfaces that are useful for illustrating the optimization process.
 }
 \details{
-The package uses list objects of class \code{'smplx'} to store the
-simplex information including all the vertices coordinates and experimental
-responses.
+A simplex is a geometric element defined as the simpler polytope possible
+in an \emph{n}-dimensional space. If the space has \emph{n} dimensions,
+the simplexes there will have \emph{n+1} corners called vertexes.
+The simplexes in two and three-dimensional spaces are the well-known
+triangle and tetrahedron, respectively.\cr
+In the simplex optimization algorithm, the experimental variables are
+represented by the dimensions in the abstract space. Each vertex in the
+simplex represents an experiment, then the coordinates of the vertex
+represent the values for the variables in that experimental setting. The
+experiments must be performed and a response must be assigned to each
+vertex. In the optimization process, one of the vertexes is discarded in
+favor of a new one that must be evaluated. In the first simplex, the vertex
+with the worst response is discarded. The second worst vertex in this
+simplex is discarded in the following simplex and the procedure is repeated
+until the optimum is reached or a response good enough is obtained. The
+process of discarding a vertex and generating a new one is known as a
+movement of the simplex.\cr
+In this document, the words vertex and experiment are used
+interchangeably. The same applies to dimensions and experimental
+variables. \cr
 }
-\section{labsimplex functions}{
+\section{\code{labsimplex} functions}{
 
-The labsimplex functions can generate a new \code{'smplx'} class object,
-assing responses to the vertices to generate the next one and to visualize
-different spatial representation of the \emph{n}-dimensional simplex in 2D
-or 3D proyections. Detailed information can be found by typing
-\code{vignette('labsimplex')}.
+This package uses list objects of class \code{'smplx'} to store the
+simplex information, including all the coordinates of the
+vertexes and their responses.\cr
+The \code{labsimplex} functions can generate a new \code{'smplx'} class
+object, assing responses to the vertices to generate the next one and to
+visualize different spatial representations of the \emph{n}-dimensional
+simplex in 2D or 3D projections. Detailed information can be found by
+typing \code{vignette('labsimplex')}.
 }
 
 \references{

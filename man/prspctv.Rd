@@ -9,7 +9,7 @@ prspctv(surface, length = 45, noise = 0, x1lim = c(278, 365),
   ticktype = "detailed", ...)
 }
 \arguments{
-\item{surface}{example response surface to be used. See
+\item{surface}{example response surface to use. See
 \code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}}.}
 
 \item{length}{number of levels to use in each explanatory variables}
@@ -21,8 +21,8 @@ prspctv(surface, length = 45, noise = 0, x1lim = c(278, 365),
 \code{\link{exampleSurfaceR2.2pks}})}
 
 \item{x2lim}{limits for the second variable (pH in
-\code{\link{exampleSurfaceR2}} and \
-code{\link{exampleSurfaceR2.2pks}})}
+\code{\link{exampleSurfaceR2}} and
+\code{\link{exampleSurfaceR2.2pks}})}
 
 \item{par}{list with graphical parameters (\code{\link[graphics]{par}}).}
 
@@ -50,7 +50,7 @@ code{\link{exampleSurfaceR2.2pks}})}
 \item{...}{additional \link[graphics]{graphical parameters} (see \code{\link[graphics]{par}}).}
 }
 \description{
-Plots a \code{\link[graphics]{persp}} plot of the bivariated
+Plots a \code{\link[graphics]{persp}} plot of the bivariate
 example response surfaces included in the package.
 }
 \examples{

@@ -1,7 +1,7 @@
-#' Generates the new vertex of a simplex
+#' Generates the new vertex of a simplex optimization
 #'
 #' Gives the coordinates for the new vertex that must be performed
-#' based on the responses for the vertices on the current simplex
+#' based on the responses for the vertexes on the current simplex
 #' and considering the optimization criteria.
 #'
 #' When minimization is the criteria, the algorithm will tend to approach zero.
@@ -10,18 +10,16 @@
 #'
 #' @param  simplex   object of class \code{smplx} with the simplex
 #'                   information. See \code{\link{labsimplex}}
-#' @param  qflv      response for the vertex (or vertices) without responses
+#' @param  qflv      response for the vertex (or vertexes) without responses
 #' @param  crit      optimization criteria indicating if the goal is maximize
 #'                   (\code{'max'}) or minimize (\code{'min'}) the response.
 #'                   It can also be a numeric value to which the
 #'                   response is supposed to approach
 #' @param  algor     algorithm to be followed in the vertex generation.
-#'                   \code{'fixed'} for a fixed-size simplex following
-#'                   Spendley (1962) algorithm or \code{'variable'} for a
-#'                   variable-size simplex following Nelder and Mead (1965)
-#'                   algorithm
-#' @param  overwrite logical argument. If \code{TRUE} the output simplex will
-#'                   replace the provided one in the \code{simplex} parameter.
+#'                   \code{'fixed'} for a fixed step-size simplex
+#'                   or \code{'variable'} for a variable step-size simplex
+#' @param  overwrite logical argument. If \code{TRUE}, the output simplex will
+#'                   replace the one provided in the \code{simplex} parameter.
 #'                   Default \code{overwrite = FALSE}
 #' @return An object of class \code{smplx} with the new simplex information
 #'        including the conditions for the new experiment to be permormed.

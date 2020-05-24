@@ -1,18 +1,18 @@
 #' Imports the information contained in a \code{.smplx} file.
 #'
 #' The function reads and (optionally) loads into the environment the simplex
-#' (object of class \code{smplx}) contained in a \code{.smplx} file previously
-#' created using \code{\link{simplexExport}}.
+#' (object of class \code{smplx}) contained in a \code{.smplx} file that was
+#' previously created using \code{\link{simplexExport}}.
 #'
 #' @param  filename  string with the name of the file (without extension) to
 #'                   be imported. This file must be generated using
 #'                   \code{\link{simplexExport}}. The path must be included if
-#'                   the file is not in the current directory.
+#'                   the file is not in the current working directory.
 #' @param  aut.load  logical. Should the imported simplex object be directly
 #'                   loaded on the Environment? Default to TRUE.
 #' @param  name      name for the simplex object to be created if
 #'                   \code{auth.ld = FALSE}. When not provided, the ID in the
-#'                   file will be used.
+#'                   file is used.
 #' @return A \code{smplx} class object with the complete information of the
 #'         simplex
 #' @seealso \code{\link{simplexImport}}

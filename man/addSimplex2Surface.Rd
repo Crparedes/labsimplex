@@ -9,8 +9,8 @@ addSimplex2Surface(p, simplex)
 \arguments{
 \item{p}{contour plot produced by using \code{\link{cntr}} function}
 
-\item{simplex}{simplex object generally produced automathically by using
-\code{\link{exampleOptimization}}}
+\item{simplex}{simplex object of class \code{smplx}. Usually produced
+using \code{\link{exampleOptimization}}}
 }
 \value{
 a \code{\link[ggplot2]{ggplot}} object with the optimization
@@ -19,7 +19,7 @@ a \code{\link[ggplot2]{ggplot}} object with the optimization
 \description{
 The function complements the contour plot produced by using
 \code{\link{cntr}} function. Given a contour plot and a simplex
-(an object of class \code{smplx}) the functions adds the simplex
+(an object of class \code{smplx}) the function adds the simplex
 movements to the contour plot to illustrate the optimization process
 and the path that was followed.
 }

@@ -17,15 +17,14 @@ Plot of response against vertex number.
 }
 \description{
 The function generates a plot for an object with class \code{smplx}
-if it's vertices have a response assigned. The response is plotted
+if the vertexes has responses assigned. The response is plotted
 against the vertex number.
 }
 \details{
 If the simplex object being ploted was obtained using a variable size
 algorithm, some experimental points could be disregarded and will be
-shown with a red mark indicating that the vertex was not used in
-new vertices calculations. Those points are also ignored by the line that
-links the data in the scaterplot.
+shown with a red mark indicating that the vertex was not used in the
+obtention of new vertexes.
 }
 \examples{
   simplex <- exampleOptimization(surface = exampleSurfaceR3,

@@ -2,20 +2,22 @@
 #'
 #' The function generates a 3D plot of the vertexes in a simplex optimization
 #' when simplex dimensionality is at least 3. When dimensionality is higher
-#' than 3, the plot produced is a proyection of the selected variables.
+#' than 3, the plot produced is a projection of the selected variables.
 #'
-#' @param  sel.dim numeric or char vector for the variables to be considered
-#'                 when simplex dimensionality is higher than 3. If it is in
-#'                 \code{numeric} format, must contain the ordinal number of
-#'                 the variables. If the format is in \code{char} vector,
-#'                 must contain variable names.
+#' @param  sel.dim \code{numeric} or \code{char} vector for variables to be
+#'                 considered when simplex dimensionality is higher than 3.
+#'                 By default, the first three are chosen. If the vector is
+#'                 \code{numeric}, it must contain the ordinal numbers
+#'                 corresponding to the desired variables. If the vector is of
+#'                 class \code{char}, it must contain the names of such
+#'                 dimensions.
 #' @param  main    title for the plot.
 #' @param  angle   angle for perspective between x and y axis.
 #' @param  ...     other arguments passed to
 #'                 \code{\link[scatterplot3d]{scatterplot3d}}
 #' @inheritParams generateVertex
 #' @inheritParams plot.smplx
-#' @return 3D proyection of the simplex coordinates.
+#' @return 3D plot of the simplex coordinates.
 #' @examples
 #'   plotSimplex3D(simplex = labsimplex(N = 3, centroid = c(350, 11, 0.7),
 #'                                      stepsize = c(10, 0.5, 0.1),

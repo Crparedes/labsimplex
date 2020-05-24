@@ -2,25 +2,31 @@
 #'
 #' The function generates a 2D plot of the vertexes in a simplex optimization
 #' when simplex dimensionality is at least 2. When dimensionality is higher
-#' than 2, the plot produced is a proyection of the selected variables.
+#' than 2, the plot produced is a projection of the selected variables.
 #'
 #' For 3D representations of simplexes with dimensionality higher than 2 you
 #' can use \code{\link{plotSimplex3D}}.
 #'
 #' @param  x       object of class \code{smplx}.
-#' @param  sel.dim numeric or char vector for variables to be considered when
-#'                 simplex dimensionality is higher than 2. If \code{numeric}
-#'                 form it must contain dimensions ordinal number. If
-#'                 \code{char}, it must contain desired dimensions names.
-#' @param  all.ver logical. Should all vertex be plotted? If \code{FALSE}
-#'                 draws only vertices corresponding to current simplex.
-#' @param  all.lin logical. Should all lines be drawn? If \code{FALSE} draws
-#'                 only last simplex.
-#' @param  expand  logical. Should the plot scales be expanded?
+#' @param  sel.dim \code{numeric} or \code{char} vector for variables to be
+#'                 considered when simplex dimensionality is higher than 2.
+#'                 By default, the first two are chosen. If the vector is
+#'                 \code{numeric}, it must contain the ordinal numbers
+#'                 corresponding to the desired variables. If the vector is of
+#'                 class \code{char}, it must contain the names of such
+#'                 dimensions.
+#' @param  all.ver logical default to \code{TRUE}. Should all vertexes be
+#'                 plotted? If \code{FALSE}, the function draws only the
+#'                 vertexes of the current simplex.
+#' @param  all.lin logical default to \code{TRUE}. Should all lines be drawn?
+#'                 If \code{FALSE}, the function draws only the lines of the
+#'                 last simplex.
+#' @param  expand  logical default to \code{TRUE}. Should the plot scales be
+#'                 expanded?
 #' @param  exp.fac expansion factor used when \code{expand = TRUE}.
 #' @param  ...     other graphical parameters used in
 #'                 \code{\link[graphics]{plot}}
-#' @return 2D proyection of the simplex coordinates.
+#' @return 2D plot of the simplex coordinates.
 #' @seealso \code{\link{plotSimplex3D}}
 #' @examples
 #'   plot(x = labsimplex(N = 2, centroid = c(7, 340), stepsize = c(1.2, 15)))

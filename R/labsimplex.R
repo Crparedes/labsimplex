@@ -1,24 +1,24 @@
 #' Generates a simplex object
 #'
-#' The simplex (an list with class \code{smplx}) contains the coordinates
-#' of the N+1 vertices that define a simplex in a N-dimensional space. By
-#' default the function produces a regular simplex centered at the origin.
-#' The coordinates of the regular simplex are transformed to the real
+#' The simplex (a list with class \code{smplx}) contains the coordinates
+#' of the N+1 vertices that define a simplex in an \emph{n}-dimensional space.
+#' By default, the function produces a regular simplex centered at the origin.
+#' The coordinates of the regular simplex are transformed into the real
 #' variables space by using the information of the start or centroid and
 #' step-size. The only non-optional parameter is \code{N} that relates the
 #' simplex dimensionality. Once the simplex
-#' is genereated, the experiments under the conditions indicated for each
+#' is generated, the experiments under the conditions indicated for each
 #' variable at each vertex must be carried and the response obtained.
 #' Those responses are assigned to the \code{smplx} object at the moment of
 #' generating the new vertex (see \code{\link{generateVertex}}).
 #'
 #' The regular simplex coordinates are generated following the general
 #' algorithm for the cartesian coordinates of a regular n-dimensional simplex.
-#' The algorithm considerates that all vertices must be equal distanced from
-#' simplex centroid and all angles subtended between any two vertices and the
-#' centroid of a simplex are equal (with a value of arccos(-1/N)).\cr
-#' If the vertexes coordinates are manually given in \code{usr.def}
-#' parameter, the function checks if the faces produced belong to different
+#' This algorithm considers that all vertices must be equally distanced from
+#' simplex centroid and all angles subtended between any two vertexes and the
+#' centroid of a simplex are equal to \emph{arccos(-1/n)}.\cr
+#' If the vertexes coordinates are manually given (in \code{usr.def}
+#' parameter), the function checks if the faces produced belong to different
 #' hyperplanes. This avoids the generation of a degenerated simplex.
 #'
 #' @param  N         dimensionality of the simplex (i.e. number of variables)

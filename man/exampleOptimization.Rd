@@ -9,7 +9,9 @@ exampleOptimization(surface, simplex = NULL, centroid = c(7, 340),
 }
 \arguments{
 \item{surface}{example response surface to be used. See
-\code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}}.}
+\code{\link{exampleSurfaceR2}},
+\code{\link{exampleSurfaceR3}} and
+\code{\link{exampleSurfaceR2.2pks}}}
 
 \item{simplex}{object of class \code{smplx} with the simplex
 information. See \code{\link{labsimplex}}}
@@ -21,10 +23,8 @@ centroid}
 each coordinate}
 
 \item{algor}{algorithm to be followed in the vertex generation.
-\code{'fixed'} for a fixed-size simplex following
-Spendley (1962) algorithm or \code{'variable'} for a
-variable-size simplex following Nelder and Mead (1965)
-algorithm}
+\code{'fixed'} for a fixed step-size simplex
+or \code{'variable'} for a variable step-size simplex}
 
 \item{experiments}{number of vertexes to evaluate}
 

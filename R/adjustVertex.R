@@ -1,21 +1,24 @@
-#' Modify the coordinates of given vertices of a simplex
+#' Modify the coordinates of given vertexes of a simplex
 #'
-#' Changes the coordinates of previously generated vertices when slightly
+#' Changes the coordinates of previously generated vertexes when slight
 #' differences were impossible to avoid at the moment of setting the experiment
-#' variables (e.g. small differences in mass components when preparing a mixture).
+#' variables (e.g. small differences in mass components when preparing a
+#' mixture). This function allows the correction of the vertexes of a simplex
+#' in order to produce movements of the simplex based on the actual
+#' coordinates.
 #'
-#' @param  newcoords List with elements named like the vertices to be modified.
+#' @param  newcoords List with elements named like the vertexes to be modified.
 #'                   Each element must have a vector with the actual (ordered)
-#'                   coordinates used in the experiment. \code{NA} may be used
-#'                   to indicate coordinates that were unchanged.
+#'                   coordinates used in the experiment. \code{NA} values may
+#'                   be used to indicate unchanged coordinates
 #' @inheritParams generateVertex
 #'
 #' @return An object of class \code{smplx} with the modified simplex information.
 #' @examples
 #' simplex <- labsimplex(N = 3, start = c(7, 25, 0.15),
 #'                       stepsize = c(0.2, 5, 0.02))
-#' adjustVertex(simplex = simplex, newcoords = list(Vertex.1 = c(7, NA, NA),
-#'                                                  Vertex.3 = c(7.2, NA, NA)),
+#' adjustVertex(simplex = simplex, newcoords = list(Vertex.1 = c(7.1, NA, NA),
+#'                                                  Vertex.3 = c(6.9, NA, 0.155)),
 #'              overwrite = TRUE)
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}

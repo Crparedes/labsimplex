@@ -11,17 +11,21 @@ plotSimplex3D(simplex, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
 \item{simplex}{object of class \code{smplx} with the simplex
 information. See \code{\link{labsimplex}}}
 
-\item{sel.dim}{numeric or char vector for the variables to be considered
-when simplex dimensionality is higher than 3. If it is in
-\code{numeric} format, must contain the ordinal number of
-the variables. If the format is in \code{char} vector,
-must contain variable names.}
+\item{sel.dim}{\code{numeric} or \code{char} vector for variables to be
+considered when simplex dimensionality is higher than 3.
+By default, the first three are chosen. If the vector is
+\code{numeric}, it must contain the ordinal numbers
+corresponding to the desired variables. If the vector is of
+class \code{char}, it must contain the names of such
+dimensions.}
 
-\item{all.ver}{logical. Should all vertex be plotted? If \code{FALSE}
-draws only vertices corresponding to current simplex.}
+\item{all.ver}{logical default to \code{TRUE}. Should all vertexes be
+plotted? If \code{FALSE}, the function draws only the
+vertexes of the current simplex.}
 
-\item{all.lin}{logical. Should all lines be drawn? If \code{FALSE} draws
-only last simplex.}
+\item{all.lin}{logical default to \code{TRUE}. Should all lines be drawn?
+If \code{FALSE}, the function draws only the lines of the
+last simplex.}
 
 \item{main}{title for the plot.}
 
@@ -31,12 +35,12 @@ only last simplex.}
 \code{\link[scatterplot3d]{scatterplot3d}}}
 }
 \value{
-3D proyection of the simplex coordinates.
+3D plot of the simplex coordinates.
 }
 \description{
 The function generates a 3D plot of the vertexes in a simplex optimization
 when simplex dimensionality is at least 3. When dimensionality is higher
-than 3, the plot produced is a proyection of the selected variables.
+than 3, the plot produced is a projection of the selected variables.
 }
 \examples{
   plotSimplex3D(simplex = labsimplex(N = 3, centroid = c(350, 11, 0.7),
