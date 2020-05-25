@@ -1,11 +1,11 @@
 #' Generates a simplex object
 #'
 #' The simplex (a list with class \code{smplx}) contains the coordinates
-#' of the N+1 vertices that define a simplex in an \emph{n}-dimensional space.
+#' of the n+1 vertices that define a simplex in an \emph{n}-dimensional space.
 #' By default, the function produces a regular simplex centered at the origin.
 #' The coordinates of the regular simplex are transformed into the real
 #' variables space by using the information of the start or centroid and
-#' step-size. The only non-optional parameter is \code{N} that relates the
+#' step-size. The only non-optional parameter is \code{n} that relates the
 #' simplex dimensionality. Once the simplex
 #' is generated, the experiments under the conditions indicated for each
 #' variable at each vertex must be carried and the response obtained.
@@ -21,28 +21,28 @@
 #' parameter), the function checks if the faces produced belong to different
 #' hyperplanes. This avoids the generation of a degenerated simplex.
 #'
-#' @param  N         dimensionality of the simplex (i.e. number of variables)
-#' @param  start     numeric vector of size \code{N} with coordinates of the
+#' @param  n         dimensionality of the simplex (i.e. number of variables)
+#' @param  start     numeric vector of size \code{n} with coordinates of the
 #'                   first vertex
-#' @param  centroid  numeric vector of size \code{N} with coordinates of the
+#' @param  centroid  numeric vector of size \code{n} with coordinates of the
 #'                   centroid
-#' @param  stepsize  numeric vector of size \code{N} with the step-sizes for
+#' @param  stepsize  numeric vector of size \code{n} with the step-sizes for
 #'                   each coordinate
-#' @param  usrdef    \code{(N+1)xN} matrix containig in (N+1) rows the N
+#' @param  usrdef    \code{(n+1)xn} matrix containig in (n+1) rows the n
 #'                   coordinates for each vertex
 #' @param  var.name  vector containing the names for the variables
 #' @return  An object of class \code{smplx} with the information of the new
 #'   simplex.
 #' @examples
-#'   simplex <- labsimplex(N = 3)
-#'   simplex <- labsimplex(N = 3, centroid = c(350, 7, 0.4),
+#'   simplex <- labsimplex(n = 3)
+#'   simplex <- labsimplex(n = 3, centroid = c(350, 7, 0.4),
 #'                         stepsize = c(35, 2, 0.3),
 #'                         var.name = c('temperature', 'pH', 'concentration'))
-#'   simplex <- labsimplex(N = 3, usrdef = rbind(c(390, 8, 0.2), c(330, 8, 0.2),
+#'   simplex <- labsimplex(n = 3, usrdef = rbind(c(390, 8, 0.2), c(330, 8, 0.2),
 #'                                    c(330, 6, 0.6), c(330, 6, 0.1)))
 #'   \dontrun{
 #'     ## User defined coordinates may define a degenerated simplex:
-#'     simplex <- labsimplex(N = 3,
+#'     simplex <- labsimplex(n = 3,
 #'                           usrdef = rbind(c(390, 8, 0.3), c(340, 8, 0.3),
 #'                                          c(355, 8, 0.3), c(340, 5, 0.1)))
 #'   }
@@ -54,10 +54,10 @@
 #' Application of Simplex Designs in Optimization and Evolutionary Operation.”
 #' Technometrics 4 (4): 441–61.
 #' @export
-labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
+labsimplex <- function(n, start = NULL, centroid = NULL, stepsize = NULL,
                        usrdef = NULL, var.name = NULL){
 
-  main.list <- list(dim = N, coords = NULL, centroid = NULL,
+  main.list <- list(dim = n, coords = NULL, centroid = NULL,
                     qual.fun = NULL, vertex.label = NULL, tim.ret = NULL,
                     vertex.nat = NULL, P.eval = FALSE)
   class(main.list) <- 'smplx'
@@ -75,15 +75,10 @@ labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
       stop("Parameter usrdef must be a N+1 x N matrix containig in each row",
             " the N coordinates for each vertex.")
     }
-    # If both provided, usrdef and N must match. If not provided,
-    # N is defined using usrdef
-    if (!missing(N)) {
-      if (ncol(usrdef) != N) {
-        stop("Number of coordinates in user defined matrix differs from",
-             " dimensionality: ", N, " and ", ncol(usrdef), ".")
-      }
-    } else {
-      N <- ncol(usrdef)
+
+    if (ncol(usrdef) != n) {
+      stop("Number of coordinates in user defined matrix differs from",
+           " dimensionality: ", n, " and ", ncol(usrdef), ".")
     }
     # Checking if points define a simplex
     if (abs(det(cbind(usrdef, rep(1, nrow(usrdef))))) < 1e-9) {
@@ -99,17 +94,17 @@ labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
     }
   }
   # Possible errors when N is provided
-  if (!missing(N)) {
+  if (!missing(n)) {
     # If provided, stepsize must have appropiated format
     if (!missing(stepsize)) {
       if (length(stepsize) == 1) {
         message("Vector for stepsize is length 1, the same step size will be",
                 " used in all dimensions.")
-        stepsize <- rep(stepsize, N)
+        stepsize <- rep(stepsize, n)
       } else {
-        if (length(stepsize) != N){
+        if (length(stepsize) != n){
           stop("Vector stepsize is expected to be of length 1 or equal to the",
-               " dimensionality: ", N)
+               " dimensionality: ", n)
         }
       }
     }
@@ -118,11 +113,11 @@ labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
       if (length(centroid) == 1) {
         message("Vector for centroid is length 1, the same center will be used",
                 " in all dimensions.")
-        centroid <- rep(centroid, N)
+        centroid <- rep(centroid, n)
       } else {
-        if (length(centroid) != N) {
+        if (length(centroid) != n) {
           stop("Vector centroid is expected to be of length 1 or equal to the",
-               " dimensionality: ", N)
+               " dimensionality: ", n)
         }
       }
     }
@@ -131,35 +126,35 @@ labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
       if (length(start) == 1) {
         message("Vector for start is length 1, the same starting point will be",
                 " used in all dimensions.")
-        start <- rep(start, N)
+        start <- rep(start, n)
       } else {
-        if (length(start) != N) {
+        if (length(start) != n) {
           stop("Vector start is expected to be of length 1 or equal to the",
-               "dimensionality: ", N)
+               "dimensionality: ", n)
         }
       }
     }
   }
   # If provided the variable names, there must be a value for each dimension
   if (!missing(var.name)) {
-    if (length(var.name) != N) {
+    if (length(var.name) != n) {
       stop("Vector containing names for variables does not coincide in length",
            " with dimensionality")
     }
   }
 
   # Start of functions --------------------------------------------------------
-  main.list$dim <- N
+  main.list$dim <- n
   main.list$lsimplex <- 1
   # Set vertex coordinates
   if (!missing(usrdef)) {
     V <- t(usrdef)
   } else {
-    V <- matrix(0, nrow = N, ncol = N + 1)
-    for (nc in 1:N) {
+    V <- matrix(0, nrow = n, ncol = n + 1)
+    for (nc in 1:n) {
       V[nc, nc] <- sqrt(1 - sum(V[1:(nc - 1), nc] ** 2))
-      for (nc1 in (nc + 1):(N + 1)) {
-        V[nc, nc1] <- - (sum(V[1:nc, nc] * V[1:nc, nc1]) + 1 / N) / V[nc, nc]
+      for (nc1 in (nc + 1):(n + 1)) {
+        V[nc, nc1] <- - (sum(V[1:nc, nc] * V[1:nc, nc1]) + 1 / n) / V[nc, nc]
       }
     }
   }
@@ -179,7 +174,7 @@ labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
   if (!missing(start)) coords <- sweep(coords, 2, - (start - coords[1, ]))
 
   if (!missing(centroid)) {
-    coords <- sweep(coords, 2, - (centroid - (colSums(coords) / (N + 1))))
+    coords <- sweep(coords, 2, - (centroid - (colSums(coords) / (n + 1))))
   }
 
   main.list$coords            <- coords
@@ -188,10 +183,10 @@ labsimplex <- function(N, start = NULL, centroid = NULL, stepsize = NULL,
   main.list$vertex.nat        <- rep("S", nrow(coords))
   main.list$vertex.his        <- rep("1.", nrow(coords))
 
-  main.list$families <- list(1:(N + 1))
+  main.list$families <- list(1:(n + 1))
 
-  main.list$centroid <- colSums(main.list$coords) / (N + 1)
-  main.list$tim.ret  <- rep(1, (N+1))
+  main.list$centroid <- colSums(main.list$coords) / (n + 1)
+  main.list$tim.ret  <- rep(1, (n + 1))
 
   return(main.list)
 }

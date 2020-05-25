@@ -34,11 +34,11 @@ print.smplx <- function(x, extended = FALSE, conventions = TRUE, ...){
     nat <- shape(x = x$vertex.nat, simplex = x)
     row.names(x$coords) <- paste0(row.names(x$coords), ":")
 
-    cat("\nCurrent simplex:\n")
-    print(data.frame(x$coords[NvertexTot:FvertexAct, ], . = "|",
-                     Response = QF[NvertexTot:FvertexAct],
-                     Label = lab[NvertexTot:FvertexAct],
-                     Nature = nat[NvertexTot:FvertexAct]))
+    cat("Current simplex:\n")
+    print(data.frame(x$coords[FvertexAct:NvertexTot, ], . = "|",
+                     Response = QF[FvertexAct:NvertexTot],
+                     Label = lab[FvertexAct:NvertexTot],
+                     Nature = nat[FvertexAct:NvertexTot]))
 
     if (FvertexAct > 1) {
       cat("\nHistorical Vertices:\n")

@@ -1,19 +1,19 @@
 # No need for documentations since these options are not exported to users
 #----FUNCTIONS USED IN GENERATING NEW VERTICES---------------------------------
   #rf for remanent face and wv for wastebracket vertex
-  reflect <- function(rf, wv){
+  reflect <- function(rf, wv) {
     return((colSums(rf) / nrow(rf)) + ((colSums(rf) / nrow(rf)) - wv))
   }
 
-  expandV <- function(rf, wv){
+  expandV <- function(rf, wv) {
     return((colSums(rf) / nrow(rf)) + 2 * ((colSums(rf) / nrow(rf)) - wv))
   }
 
-  contrRS <- function(rf, wv){
+  contrRS <- function(rf, wv) {
     return((colSums(rf) / nrow(rf)) + 0.5 * ((colSums(rf) / nrow(rf)) - wv))
   }
 
-  contrWS <- function(rf, wv){
+  contrWS <- function(rf, wv) {
     return((colSums(rf) / nrow(rf)) - 0.5 * ((colSums(rf) / nrow(rf)) - wv))
   }
 

@@ -16,10 +16,10 @@ exampleOptimization(surface, simplex = NULL, centroid = c(7, 340),
 \item{simplex}{object of class \code{smplx} with the simplex
 information. See \code{\link{labsimplex}}}
 
-\item{centroid}{numeric vector of size \code{N} with coordinates of the
+\item{centroid}{numeric vector of size \code{n} with coordinates of the
 centroid}
 
-\item{stepsize}{numeric vector of size \code{N} with the step-sizes for
+\item{stepsize}{numeric vector of size \code{n} with the step-sizes for
 each coordinate}
 
 \item{algor}{algorithm to be followed in the vertex generation.

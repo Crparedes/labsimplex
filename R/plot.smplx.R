@@ -29,11 +29,11 @@
 #' @return 2D plot of the simplex coordinates.
 #' @seealso \code{\link{plotSimplex3D}}
 #' @examples
-#'   plot(x = labsimplex(N = 2, centroid = c(7, 340), stepsize = c(1.2, 15)))
+#'   plot(x = labsimplex(n = 2, centroid = c(7, 340), stepsize = c(1.2, 15)))
 #'
 #'   ## Several options are posible when visualizing higher order simplexes
-#'   plot(x = labsimplex(N = 3))
-#'   plot(x = labsimplex(N = 3), sel.dim = c(2, 3))
+#'   plot(x = labsimplex(n = 3))
+#'   plot(x = labsimplex(n = 3), sel.dim = c(2, 3))
 #'
 #'   ## Simplex movements can be visualized after some experiments has been
 #'   ## performed
@@ -49,10 +49,8 @@
 #' @export
 # S3 method for smplx class object
 
-plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
-                          all.lin = TRUE, expand = TRUE,
-                          exp.fac = 1.5, ...){
-
+plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
+                       expand = TRUE, exp.fac = 1.5, ...){
   # Error handling
   checkMain(simplex = x)
   if (x$dim < 2){
@@ -130,18 +128,16 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE,
 
   if (all.lin) {
     V.pos <- as.numeric(gsub("Vertex.", "", row.names(x$coords)))
-    #if (!is.null(nrow(x$families))) {
-      for (ii in 1:length(x$families)) {
-        for (jj in 1:(length(x$families[[ii]]) - 1)) {
-          for (kk in (jj + 1):length(x$families[[ii]])) {
-            jj. <- which(x$families[[ii]][jj] == V.pos)
-            kk. <- which(x$families[[ii]][kk] == V.pos)
-            lines(x$coords[c(jj., kk.),  var.plt[1]],
-                  x$coords[c(jj., kk.),  var.plt[2]], col = "grey")
-          }
+    for (ii in 1:length(x$families)) {
+      for (jj in 1:(length(x$families[[ii]]) - 1)) {
+        for (kk in (jj + 1):length(x$families[[ii]])) {
+          jj. <- which(x$families[[ii]][jj] == V.pos)
+          kk. <- which(x$families[[ii]][kk] == V.pos)
+          lines(x$coords[c(jj., kk.),  var.plt[1]],
+                x$coords[c(jj., kk.),  var.plt[2]], col = "grey")
         }
       }
-    #}
+    }
   }
   for (ii in (nrow(x$coords) - x$dim):nrow(x$coords)){
     for (jj in ii:nrow(x$coords)){

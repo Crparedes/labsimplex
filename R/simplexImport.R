@@ -18,7 +18,7 @@
 #' @seealso \code{\link{simplexImport}}
 #' @examples
 #' \dontrun{
-#'   simplexExport(labsimplex(N = 4), name = "simplex4D")
+#'   simplexExport(labsimplex(n = 4), name = "simplex4D")
 #'   simplexImport("simplex4D.smplx")
 #'   # Other way:
 #'   simplex4D <- simplexImport("simplex4D.smplx", aut.load = FALSE)
@@ -33,16 +33,16 @@ simplexImport <- function(filename, aut.load = TRUE, name = NULL){
   fnd <- function(word) return(which(inlist == word))
   if (missing(name)) name <- inlist[grep("ID", inlist)][[1]][2]
 
-  N <- as.numeric(inlist[fnd("$dim") + 1][[1]][2])
+  n <- as.numeric(inlist[fnd("$dim") + 1][[1]][2])
   lsimplex <- as.numeric(inlist[fnd("$lsimplex") + 1][[1]][2])
 
-  coords <- matrix(ncol = N)
+  coords <- matrix(ncol = n)
   rnames <- vector()
   coord0 <- fnd("$coords") + 2
   coord1 <- fnd("$centroid") - 2
 
   for (ii in coord0:coord1) {
-    coords <- rbind(coords, inlist[[ii]][2:(N+1)])
+    coords <- rbind(coords, inlist[[ii]][2:(n + 1)])
     rnames <- c(rnames, inlist[[ii]][1])
   }
   coords <- apply(coords[-1, ], 2, as.numeric)
@@ -57,7 +57,7 @@ simplexImport <- function(filename, aut.load = TRUE, name = NULL){
                              length(inlist[fnd("$qual.fun") + 1][[1]])])
   }
 
-  simplex <- labsimplex(N = N)
+  simplex <- labsimplex(n = n)
 
   simplex$coords   <- coords
   simplex$qual.fun <- qual.fun

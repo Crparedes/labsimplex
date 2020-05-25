@@ -14,7 +14,7 @@
 #' the simplexes there will have \emph{n+1} corners called vertexes.
 #' The simplexes in two and three-dimensional spaces are the well-known
 #' triangle and tetrahedron, respectively.\cr
-#' In the simplex optimization algorithm, the experimental variables are
+#' In the simplex optimization algorithms, the experimental variables are
 #' represented by the dimensions in the abstract space. Each vertex in the
 #' simplex represents an experiment, then the coordinates of the vertex
 #' represent the values for the variables in that experimental setting. The

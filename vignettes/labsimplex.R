@@ -9,21 +9,25 @@ knitr::opts_chunk$set(
 require(labsimplex)
 require(ggplot2)
 
-## ----Nprov---------------------------------------------------------------
-ExpSet <- labsimplex(N = 3)
-print(ExpSet)
+## ----surfaces1, echo = TRUE, eval = FALSE--------------------------------
+#  prspctv(surface = exampleSurfaceR2, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
+#          ltheta = -120, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
+#  cntr(surface = exampleSurfaceR2, length = 200)
 
-## ----Startprov-----------------------------------------------------------
-ExpSet <- labsimplex(N = 3, start = c(7, 25, 0.15), stepsize = c(0.2, 5, 0.02), 
-                     var.name = c('pH', 'Temp', 'Conc'))
-ExpSet <- labsimplex(N = 3, centroid = c(6.85, 25, 0.15), stepsize = c(0.2, 5, 0.02), 
-                     var.name = c('pH', 'Temp', 'Conc'))
-print(ExpSet)
+## ----surfaces1, echo = FALSE---------------------------------------------
+prspctv(surface = exampleSurfaceR2, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
+        ltheta = -120, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
+cntr(surface = exampleSurfaceR2, length = 200)
+
+## ----Nprov---------------------------------------------------------------
+simplex <- labsimplex(n = 2, centroid = c(7, 340), stepsize = c(1.2, 10),
+                      var.name = c('pH', 'Temperature'))
+print(simplex)
 
 ## ----usrdef--------------------------------------------------------------
-ExpMtrx <- rbind(c(7.1, 25, 0.15), c(6.9, 28, 0.15), c(6.9, 23, 0.16), c(6.9, 23, 0.14))
-ManSet <- labsimplex(N = 3, usrdef = ExpMtrx, var.name = c('pH', 'Temp', 'Conc'))
-print(ManSet)
+coords <- rbind(c(7.1, 325), c(6.5, 350), c(6.5, 300))
+simplexManual <- labsimplex(n = 2, usrdef = coords, var.name = c('pH', 'Temperature'))
+print(simplexManual, conventions = FALSE)
 
 ## ----frf2----------------------------------------------------------------
 suppressMessages(library(FrF2))
@@ -35,9 +39,9 @@ screening <- FrF2(resolution = 3, nfactors = 3,
 print(screening)
 
 ## ----frf2-2--------------------------------------------------------------
-FrF2Set <- labsimplex(N = 3, usrdef = matrix(as.numeric(as.matrix(screening)), ncol = 3),
-                      var.name = dimnames(screening)[[2]])
-print(FrF2Set)
+#FrF2Set <- labsimplex(n = 3, usrdef = matrix(as.numeric(as.matrix(screening)), ncol = 3),
+#                      var.name = dimnames(screening)[[2]])
+#print(FrF2Set)
 
 ## ----changing------------------------------------------------------------
 #adjustVertex(simplex = ManSet, newcoords = list(Vertex.1 = c(7.15, NA, NA), 
@@ -86,9 +90,9 @@ print(FrF2Set)
 #                       length = 100, noise = 14)
 
 ## ----export--------------------------------------------------------------
-simplexExport(ExpSet)
+#simplexExport(ExpSet)
 
 ## ----import--------------------------------------------------------------
-simplexImport('ExpSet', name = 'importedSimplex')
-print(importedSimplex)
+#simplexImport('ExpSet', name = 'importedSimplex')
+#print(importedSimplex)
 

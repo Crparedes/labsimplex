@@ -19,14 +19,14 @@
 #' @inheritParams plot.smplx
 #' @return 3D plot of the simplex coordinates.
 #' @examples
-#'   plotSimplex3D(simplex = labsimplex(N = 3, centroid = c(350, 11, 0.7),
+#'   plotSimplex3D(simplex = labsimplex(n = 3, centroid = c(350, 11, 0.7),
 #'                                      stepsize = c(10, 0.5, 0.1),
 #'                                      var.name = c('temperature', 'pH',
 #'                                                   'concentration')))
 #'
 #'   ## Several options are posible when visualizing higher order simplexes
-#'   plotSimplex3D(simplex = labsimplex(N = 8))
-#'   plotSimplex3D(simplex = labsimplex(N = 8), sel.dim = c(4, 6, 8))
+#'   plotSimplex3D(simplex = labsimplex(n = 8))
+#'   plotSimplex3D(simplex = labsimplex(n = 8), sel.dim = c(4, 6, 8))
 #'
 #'   ## Simplex movements can be visualized after some experiments has been
 #'   ## performed

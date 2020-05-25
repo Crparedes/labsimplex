@@ -47,11 +47,11 @@ For 3D representations of simplexes with dimensionality higher than 2 you
 can use \code{\link{plotSimplex3D}}.
 }
 \examples{
-  plot(x = labsimplex(N = 2, centroid = c(7, 340), stepsize = c(1.2, 15)))
+  plot(x = labsimplex(n = 2, centroid = c(7, 340), stepsize = c(1.2, 15)))
 
   ## Several options are posible when visualizing higher order simplexes
-  plot(x = labsimplex(N = 3))
-  plot(x = labsimplex(N = 3), sel.dim = c(2, 3))
+  plot(x = labsimplex(n = 3))
+  plot(x = labsimplex(n = 3), sel.dim = c(2, 3))
 
   ## Simplex movements can be visualized after some experiments has been
   ## performed

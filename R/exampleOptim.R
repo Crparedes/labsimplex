@@ -25,17 +25,17 @@ exampleOptimization <- function (surface, simplex = NULL,
                                  stepsize = c(0.6, 10), algor = 'fixed',
                                  experiments = 17, noise = 0) {
   newSmplx <- FALSE
-  n = 0
-  N <- length(centroid)
+  n1 = 0
+  n <- length(centroid)
   if (missing(simplex)) {
     newSmplx <- TRUE
-    simplex <- labsimplex(N = N, centroid = centroid, stepsize = stepsize)
-    n = 2 + 1
+    simplex <- labsimplex(n = n, centroid = centroid, stepsize = stepsize)
+    n1 = 2 + 1
   }
   invisible(capture.output(
-    for (ii in 1:(experiments - n)){
+    for (ii in 1:(experiments - n1)){
       if (ii == 1 && newSmplx) {
-        if (N == 2) {
+        if (n == 2) {
           res <- surface(x1 = simplex$coords[, 2], x2 = simplex$coords[, 1],
                          noise = noise)
         } else {
@@ -44,7 +44,7 @@ exampleOptimization <- function (surface, simplex = NULL,
         }
         simplex <- generateVertex(simplex = simplex, algor = algor, qflv = res)
       } else {
-        if (N == 2) {
+        if (n == 2) {
           res <- surface(x1 = simplex$coords[nrow(simplex$coords), 2],
                          x2 = simplex$coords[nrow(simplex$coords), 1],
                          noise = noise)
@@ -67,7 +67,8 @@ exampleOptimization <- function (surface, simplex = NULL,
 #' example response surfaces included in the package.
 #'
 #' @param surface example response surface to use. See
-#'   \code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}}.
+#'                \code{\link{exampleSurfaceR2}} and
+#'                \code{\link{exampleSurfaceR2.2pks}}.
 #' @param length  number of levels to use in each explanatory variables
 #' @param noise   absolute noise to be included in the results
 #' @param par     list with graphical parameters (\code{\link[graphics]{par}}).

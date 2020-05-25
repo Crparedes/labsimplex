@@ -1,6 +1,6 @@
 #' Multivariate functions that define hypothetical response surfaces.
 #'
-#' The functions in this section simulate the yield of chemical
+#' The functions in this section simulate the yield of hypothetical chemical
 #' reactions as a function of temperature, pH, and concentration (the latter
 #' only for \code{exampleSurfaceR3()}). Those functions are useful to
 #' illustrate most concepts of the simplex optimization algorithms

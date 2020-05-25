@@ -24,7 +24,7 @@
 #' @return An object of class \code{smplx} with the new simplex information
 #'        including the conditions for the new experiment to be permormed.
 #' @examples
-#'   simplex <- labsimplex(N = 3, centroid = c(320, 7, 0.4),
+#'   simplex <- labsimplex(n = 3, centroid = c(320, 7, 0.4),
 #'                         stepsize = c(35, 2, 0.3))
 #'   ## The experiments must be performed and the responses passed to qflv.
 #'   ## Here we get the responses by using an example response surface

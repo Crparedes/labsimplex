@@ -15,7 +15,7 @@
 #'
 #' @return An object of class \code{smplx} with the modified simplex information.
 #' @examples
-#' simplex <- labsimplex(N = 3, start = c(7, 25, 0.15),
+#' simplex <- labsimplex(n = 3, start = c(7, 25, 0.15),
 #'                       stepsize = c(0.2, 5, 0.02))
 #' adjustVertex(simplex = simplex, newcoords = list(Vertex.1 = c(7.1, NA, NA),
 #'                                                  Vertex.3 = c(6.9, NA, 0.155)),

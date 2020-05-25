@@ -36,7 +36,7 @@ Only used in \code{exampleSurfaceR3()}.}
   surface with one maximum at pH 10, 300 K and a concentration of 0.5.
 }
 \description{
-The functions in this section simulate the yield of chemical
+The functions in this section simulate the yield of hypothetical chemical
 reactions as a function of temperature, pH, and concentration (the latter
 only for \code{exampleSurfaceR3()}). Those functions are useful to
 illustrate most concepts of the simplex optimization algorithms

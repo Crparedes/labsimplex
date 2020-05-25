@@ -30,7 +30,7 @@ previously created using \code{\link{simplexExport}}.
 }
 \examples{
 \dontrun{
-  simplexExport(labsimplex(N = 4), name = "simplex4D")
+  simplexExport(labsimplex(n = 4), name = "simplex4D")
   simplexImport("simplex4D.smplx")
   # Other way:
   simplex4D <- simplexImport("simplex4D.smplx", aut.load = FALSE)

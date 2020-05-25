@@ -10,7 +10,8 @@ prspctv(surface, length = 45, noise = 0, x1lim = c(278, 365),
 }
 \arguments{
 \item{surface}{example response surface to use. See
-\code{\link{exampleSurfaceR2}} and \code{\link{exampleSurfaceR2.2pks}}.}
+\code{\link{exampleSurfaceR2}} and
+\code{\link{exampleSurfaceR2.2pks}}.}
 
 \item{length}{number of levels to use in each explanatory variables}
 
