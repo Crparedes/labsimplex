@@ -21,7 +21,7 @@
 #' @seealso \code{\link{simplexImport}}
 #' @examples
 #' \dontrun{
-#'   simplex <- labsimplex(n = 5, qual.fun = rnorm(6, 2, 1))
+#'   simplex <- labsimplex(n = 5)
 #'   simplexExport(simplex = simplex)
 #' }
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
@@ -49,9 +49,12 @@ simplexExport <- function(simplex, filename = NULL, direc = NULL) {
             to continue with the optimization process.
             DO NOT EDIT BY HAND!
             \n\n\n"
+  ow <- options()$width
+  options(width = 10000)
   capture.output(cat(op.ms), file = paste0(direc, "/", filename, ".smplx"))
   capture.output(cat(paste0("ID: ", ID, "\n\n")),
                  file = paste0(direc, "/", filename, ".smplx"), append = TRUE)
   capture.output(simplex, file = paste0(direc, "/", filename, ".smplx"),
                  append = TRUE)
+  options(width = ow)
 }
