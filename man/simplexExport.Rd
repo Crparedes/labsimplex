@@ -33,7 +33,7 @@ later imported with \code{\link{simplexImport}}.
 }
 \examples{
 \dontrun{
-  simplex <- labsimplex(n = 5, qual.fun = rnorm(6, 2, 1))
+  simplex <- labsimplex(n = 5)
   simplexExport(simplex = simplex)
 }
 }

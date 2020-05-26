@@ -29,12 +29,12 @@ require(ggplot2)
 ```
 ----------------------------------------------
 
-The R package `labsimplex` implements the simplex optimization algorithms firstly proposed by @Spendley1962 and later modified by @Nelder1965 for the improvement of laboratory and manufacturing processes. This package provides tools for visualizing the coordinates of the experimental variables and the evolution in the response as a function of the number of experiments. The `labsimplex` package is not intended for linear programming applications. For this purpuse, we encourage you to check the `optimsimplex` package also available at CRAN [@Bihorel]. 
+The R package `labsimplex` implements the simplex optimization algorithms firstly proposed by @Spendley1962 and later modified by @Nelder1965 for the improvement of laboratory and manufacturing processes. This package provides tools for visualizing the coordinates of the experimental variables and the evolution in the response as a function of the number of experiments. The `labsimplex` package is not intended for linear programming applications. For this purpose, we encourage you to check the `optimsimplex` package also available at CRAN [@Bihorel]. 
 
 ## Introduction
 A simplex is a geometric element defined as the simpler polytope possible in an *n*-dimensional space. If the space has *n* dimensions, the simplexes there will have *n+1* corners called vertexes. The simplexes in two and three-dimensional spaces are the well-known triangle and tetrahedron, respectively.
 
-In the simplex optimization algorithms, the experimental variables are represented by the dimensions in the abstract space. Each vertex in the simplex represents an experiment, then the coordinates of the vertex represent the values for the variables in that experimental setting. The experiments must be performed and a response must be assigned to each vertex. In the optimization process, one of the vertexes is discarded in favor of a new one that must be evaluated. In the first simplex, the vertex with the worst response is discarded. The second worst vertex in this simplex is discarded in the following simplex and the procedure is repeated until the optimum is reached or a response good enough is obtained. The process of discarding a vertex and generating a new one is known as a movement of the simplex. 
+In the simplex optimization algorithms, the experimental variables are represented by the dimensions in the abstract space. Each vertex in the simplex represents an experiment and the coordinates of the vertex represent the values for the variables in that experimental setting. The experiments must be performed and a response must be assigned to each vertex. In the optimization process, one of the vertexes is discarded in favor of a new one that must be evaluated. In the first simplex, the vertex with the worst response is discarded. The second worst vertex in this simplex is discarded in the following simplex and the procedure is repeated until the optimum is reached or a response good enough is obtained. Discarding a vertex and generating a new one is known as a movement of the simplex. 
 
 #### Fixed step-size simplex algorithm (PENDING)
 The fixed step-size simplex algorithm introduced by @Spendley1962 is based on the idea that getting away from the zone that yields the worst results will provide a close up to the optimal zone.  
@@ -45,7 +45,7 @@ The fixed step-size simplex algorithm introduced by @Spendley1962 is based on th
 (PENDING)
 
 ## Installation
-The last realesed version of the package `labsimplex` can be installed from CRAN by running:
+The last released version of the package `labsimplex` can be installed from CRAN by running:
 ``` r
 install.packages("labsimplex")
 ``` 
@@ -55,20 +55,20 @@ devtools::install_github("Crparedes/labsimplex")
 ``` 
 
 ## Using the package
-The first step is to define the quantitative response that is intended to improve and the variables to optimize. The initial values for those variables and a convenient step-size for each variable must be defined. One of the advantages of the simplex algorithm over many desing of experiments strategies is that the inclusion of more variables to study does not significantly increase the number of experiments to perform. This fact usually makes unnecessary the process of screening the variables The optimization using `labsimplex` package involves the following steps that will be further discussed in next sections:
+The first step is to define the quantitative response that is intended to improve and the variables to optimize. The initial values for those variables and a convenient step-size for each variable must be defined. One of the advantages of the simplex algorithm over many Design of Experiments strategies is that the inclusion of more variables to study does not significantly increase the number of experiments to perform. This fact usually makes unnecessary the process of screening the variables The optimization using `labsimplex` package involves the following steps that will be further discussed in the next sections:
 
 1. Generate the initial simplex.
-2. Export the simplex to a external file to ensure the information will not be lost if the R session is restarted.
+2. Export the simplex to an external file to ensure the information will not be lost if the R session is restarted.
 3. Perform the experiments described by the vertexes (or vertex) and assing response values.
 4. Import the file created in the second step.
 5. Generate the new vertex to be evaluated.
 6. Repeat steps 2 to 5 until the desired response is obtained
 
-If the experiments do not take long, the response may be obtained quickly and the process could be optimized in a single R session. In this case, the second and fourth steps that include exporting and importing information may be unnecessary. The simplex coordinates may be plotted in any stage of the process to have an idea of the path of the simplex in its way to the optimum region.
+If the experiments do not take long, the response may be obtained quickly and the process can be optimized in a single R session. In this case, the second and fourth steps that include exporting and importing information may be unnecessary. The simplex coordinates may be plotted in any stage of the process to have an idea of the path of the simplex in it's way to the optimum region.
 
 ## A worked example: Optimizing the yield of a chemical reaction
-The package includes the functions `exampleSurfaceR2()`, `exampleSurfaceR2.2pks()` and `exampleSurfaceR3()` that model the yield of hypothetical chemical reactions that are affected by pH, temperature and concentration (the latter only for `exampleSurfaceR3()`). Those functions produce response surfaces that can be used to simulate the obtention of a result when the reactions are performed under the conditions given by the simplex algorithm. The main functions of the package are illustrated in this section using the reaction modelled by `exampleSurfaceR2()`. The shape and the contours of this function are shown below:
-```{r surfaces1, echo = TRUE, fig.cap = 'Graphical representation of the response surface `exampleSurfaceR2()`', fig.show = "hold"}
+The package includes the functions `exampleSurfaceR2()`, `exampleSurfaceR2.2pks()` and `exampleSurfaceR3()` that model the yield of hypothetical chemical reactions that are affected by pH, temperature and concentration (the latter only for `exampleSurfaceR3()`). Those functions produce response surfaces that can be used to simulate the obtention of a result when the reactions are performed under the conditions given by the simplex algorithm. The main functions of the package are illustrated in this section using the reaction modeled by `exampleSurfaceR2()`. The shape and contours of this function are shown in Figure 1.
+```{r surfaces1, echo = TRUE, fig.cap = 'Response surface `exampleSurfaceR2()` in 3D perspective (left) and contour plot (right).', fig.show = "hold"}
 prspctv(surface = exampleSurfaceR2, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
         ltheta = -120, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
 (cont.surf <- cntr(surface = exampleSurfaceR2, length = 200))
@@ -81,22 +81,21 @@ simplexR2 <- labsimplex(n = 2, centroid = c(7, 340), stepsize = c(1.2, 10),
                         var.name = c('pH', 'Temperature'))
 print(simplexR2)
 ```
-When calling `print(simplex)` the output consists of three main sections. The first one contains the vertexes information of the current simplex, the second section (not shown here) has the information of *historical* vertexes that were previously evaluated and discarded and the third section shows the conventions used in the tables. The conventions printing may be disabled using `print(..., conventions = FALSE)`. The information of each vertex has an identificator (Vertex.##), the coordinates for each of its *n* variables, the response, the label (best, next to the worst, worst or wastebasket or disregarded vertex) and its nature (vertex of the initial simplex or generated as a reflection, expansion or contraction of the previous simplex).
+When calling `print(simplex)` the output consists of three main sections. The first one contains the information of the vertexesin the current simplex. The second section (not shown here) has information on historical vertexes that were previously evaluated and discarded. The third section shows the conventions used in the tables. The conventions printing may be disabled using `print(..., conventions = FALSE)`. The information of each vertex has an identifier (Vertex.##), the coordinates for each of its *n* variables, the response, the label (best, next to the worst, worst or wastebasket or disregarded vertex), and its nature (vertex of the initial simplex or generated as a reflection, expansion or contraction of the previous simplex).
 
 ##### Explicit definition of the initial simplex
-It is possible to manually define the coordinates of the vertexes in the initial simplex. Those coordinates are provided in the `usrdef` parameter as a (*n+1 x n*) matrix, with each row representing a vertex and each column, a variable. When defining the vertex coordinates, other parameters regarding spatial or size references are incompatible. 
+It is possible to manually define the coordinates of the vertexes in the initial simplex. Those coordinates are provided in the `usrdef` parameter as an (*n+1 x n*) matrix, with each row representing a vertex and each column, a variable. When defining the vertex coordinates, other parameters regarding spatial or size references are incompatible. 
 ```{r usrdef}
 coords <- rbind(c(7.1, 325), c(6.5, 350), c(6.5, 300))
 simplexR2Manual <- labsimplex(n = 2, usrdef = coords, var.name = c('pH', 'Temperature'))
 print(simplexR2Manual, conventions = FALSE)
 ```
-
 Setting the simplex coordinates explicitly will fail if the vertexes are linearly dependent. This scenario is known as *cohypoplanarity* and produces a *degenerate* simplex that is not capable of freely explore the experimental space [@WaltersSimplex]. The probability of defining a degenerate simplex grows up with the dimensionality of the space. If the simplex introduced by the user is correct, the function returns a message `Provided points define a simplex`.
 
 ###### Two-level fractional factorial desings in the generation of the initial simplex 
-It is common to perform a two-level fractional factorial design to screen the variables that affect a process. As mentioned in the introduction, this is often unnecesary in the simplex optimization strategies as long as the inclusion of more variables do not significantly increases the number of experiments to perform. However, in most cases, those experiments may be used to produce the initial vertex with the advantage that if the experiments has already been performed, the responses are already available. In some cases, low resolution two-level fractional factorial designs are capable of studying *n* variables in *n+1* experiments and those experiments define a well behaved (i.e. non degenerate) simplex. At this point, the algorithm is ready to propose a new vertex that may be closer to the optimum zone.
+It is common to perform a two-level fractional factorial design to screen the variables that affect a process. As mentioned in the introduction, this is often unnecessary in the simplex optimization strategies as long as the inclusion of more variables does not significantly increase the number of experiments to perform. However, in most cases, those experiments may be used to produce the initial vertex with the advantage that if the experiments have already been performed, the responses are already available. In some cases, low resolution two-level fractional factorial designs are capable of studying *n* variables in *n+1* experiments and those experiments define a well behaved (i.e. non-degenerate) simplex. At this point, the algorithm is ready to propose a new vertex that may be closer to the optimum zone.
 
-For example, suppose the use of a two-level fractional factorial design of resolution III was used to study a chemical reaction affected by pH, temperature and concentration. The R package `FrF2` [@GrompingFrF2] creates and analyzes fractional factorial two-level designs and is used in this section to study the described system. The low and high levels for the pH, the temperature and the concentration will be 6.8 and 7.2, 330 and 350 K and 0.4 and 0.6 (arbitrary units) respectively.
+For example, suppose the use of a two-level fractional factorial design of resolution III was used to study a chemical reaction affected by pH, temperature, and concentration. The R package `FrF2` [@GrompingFrF2] creates and analyzes fractional factorial two-level designs and is used in this section to study the described system. The low and high levels for the pH, the temperature and the concentration will be 6.8 and 7.2, 330, and 350 K and 0.4 and 0.6 (arbitrary units) respectively.
 ```{r frf2, message = FALSE}
 if (!require(FrF2)) {
   install.packages("FrF2")
@@ -113,104 +112,143 @@ simplexR3 <- labsimplex(n = 3, usrdef = matrix(as.numeric(as.matrix(screening)),
                         var.name = dimnames(screening)[[2]])
 print(simplexR3, conventions = FALSE)
 ```
-If the number of experiments is greater than the number of variables plus one, some points are not neccesary and again we have the risk of choosing a degenerate simplex. The `labsimplex()` function checks if the simplex has been correctly defined.
+If the number of experiments is greater than the number of variables plus one, some points are not necessary and again we have the risk of choosing a degenerate simplex. The `labsimplex()` function checks if the simplex has been correctly defined.
 
 ### Modifying vertex coordinates
-In some cases, it is very hard to set an exact particular value for a variable in an experimental setting. Most of the times the little variations will not play an important effect on the experiment outcome. However, if it is desired to take into account the differences between the algorithm-proposed vertex and the actual experiment performed, the `modifyVertex()` function allows changing as many coordinates as desired before generating a new vertex.
+In some cases, it is very hard to set an exact particular value for a variable in an experimental setting. Most of the time the little variations will not play an important effect on the experiment outcome. However, if it is desired to take into account the differences between the algorithm-proposed vertex and the actual experiment performed, the `modifyVertex()` function allows changing as many coordinates as desired before generating a new vertex.
 
-In the first simplex created, suppose we want to change the pH of the first vertex to 7.9 and the temperature of the second vertex to 342 K. The changes are given in a list containing numeric vectors of length *n*. The manes of the list elements refer to the vertexes that are to be modified and must contain the new coordinates in the respective position. Other positions has `NA` values meaning that no changes are required.
+In the first simplex created, suppose we want to change the pH of the first vertex to 7.9 and the temperature of the second vertex to 342 K. The changes are given in a list containing numeric vectors of length *n*. The manes of the list elements refer to the vertexes that are to be modified and must contain the new coordinates in the respective position. Other positions have `NA` values meaning that no changes are required.
 ```{r changing}
 adjustVertex(simplex = simplexR2, newcoords = list(Vertex.1 = c(7.95, NA), Vertex.2 = c(NA, 342)),
              overwrite = TRUE)
 print(simplexR2, conventions = FALSE)
 ```
-Observe that the parameter `overwrite = TRUE` makes the output of the function to replace (*overwrite*) the object given in `simplex = simplexR2`. This enhances code readability by removing the neccesity of explicetly redefine the `simplexR2` object.
+Observe that the parameter `overwrite = TRUE` makes the output of the function to replace (*overwrite*) the object given in `simplex = simplexR2`. This enhances code readability by removing the requirement of explicitly redefining the `simplexR2` object.
 
 ### Graphical representation of the simplex
-The simplex may be visualized in two and three-dimensional plots using `plot()` and `plotSimplex3D()` functions. The suitability of one function over the other depends on the simplex dimensionality. `plot()` requires a simplex with at least two variables while `plotSimplex3D()` requires the number of variables to be at least three. If the simplex dimensionality is higher than the required by the functions, the variables to plot may be selected and the graphical representation produced will vary according to the variables selected. In this casse, some vertexes may not appear for some combinations of variables. If no variables are indicated, by default the functions will plot the first two or three variables, respectively.
+The simplex may be visualized in two and three-dimensional plots using `plot()` and `plotSimplex3D()` functions. The suitability of one function over the other depends on the simplex dimensionality. `plot()` requires a simplex with at least two variables while `plotSimplex3D()` requires the number of variables to be at least three. If the simplex dimensionality is higher than the required by the functions, the variables to plot may be selected and the graphical representation produced will vary according to the variables selected. In this case, some vertexes may not appear for some combinations of variables. If no variables are indicated, by default the functions will plot the first two or three variables, respectively.
 
-When an optimization is running over one of the example surfaces provided in the package, the function `addSimplex2Surface()` allows the visualization of the simplex optimization path over the contour surface. Both approaches are shown below for the `simplexR2` object but the latter will be used for the rest of the document.
-```{r plot1SimplexR2, fig.cap = 'Graphical representation of a two-variables initial simplex', fig.show = "hold"}
+When the optimization is running over one of the example surfaces provided in the package, the function `addSimplex2Surface()` allows the visualization of the simplex optimization path over the contour surface. Both approaches are shown in Figure 2 `simplexR2` object previously created. The latter approach will be used for the rest of the document.
+```{r plot1SimplexR2, fig.cap = 'Initial two-variables simplex isolated in the space (left) and over the response surface that describes the system (right).', fig.show = "hold"}
 plot(simplexR2)
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2))
 ```
 
 ### Generating new vertexes
-To generate a new vertex, it is necessary to provide the responses of the previous vertexes, the optimization criteria and the algorithm to follow (fixed-size or variable-size). This means that it is necessary to perform the experiments proposed in the initial simplex. In this document, the responses are obtained acording to the response surface shown in Figure 1. The function to use is `generateVertex()``
+To generate a new vertex, it is necessary to provide the responses of the previous vertexes, the optimization criteria and the algorithm to follow (fixed-size or variable-size). This means that it is necessary to perform the experiments proposed in the initial simplex. In this document, the responses are obtained according to the response surface shown in Figure 1. The function to use is `generateVertex()`.
 ```{r responses}
 (responses <- exampleSurfaceR2(x1 = simplexR2$coords[, 2], x2 = simplexR2$coords[, 1]))
-generateVertex(simplex = simplexR2, qflv = responses, crit = 'max', algor = 'fixed', overwrite = TRUE)
+generateVertex(simplex = simplexR2, qflv = responses, crit = 'max', 
+               algor = 'fixed', overwrite = TRUE)
 print(simplexR2, conventions = FALSE)
 ```
+Observe that the parameter `overwrite = TRUE` can be also be used here to replace the old simplex by the new one without explicitly using the `<-` function. The experiment described by the new vertex must be performed and the process is repeated until the optimum is reached. The simplex first reflection and the simplex complete path to the optimum are shown in Figure 3.
+```{r plot2SimplexR2, fig.cap = 'First movement (left) and complete path (right) of a fixed step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"}
+(addSimplex2Surface(p = cont.surf, simplex = simplexR2))
+simplexR2 <- exampleOptimization(surface = exampleSurfaceR2, simplex = simplexR2)
+(addSimplex2Surface(p = cont.surf, simplex = simplexR2))
+```
+When the algorithm reaches the optimum zone in the fixed-size simplex algorithm, the simplex starts to *spin* around the vertex that had the better response. Eventually the previously evaluated vertexes begin to being proposed again by the algorithm. 
 
-In the previous example, suppose that vertices 1 to 4 had responses of 65, 72, 54 and 78 respectively. Here, the fixed-size simplex algorithm is used and the purpose of the optimization is to maximize the response. Those are the default settings at the `generateVertex()` function. The response of the vertices for the initial simplex vertices must be supplied in ascendant order (vertex.1, vertex.2, ...). After this, to generate a new vertex, just the response of the last generated vertex will be needed. 
-
-The function output is a simplex object containing all the information of the previous one adding the new vertex coordinates. Replotting the new simplex will show the result of the movement. 
-```{r genV1, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center', fig.cap = 'Movement of the simplex after first reflection'}
-#generateVertex(simplex = ExpSet, qflv = c(65, 72, 54, 78), overwrite = TRUE)
-#plotSimplex3D(ExpSet)
+In the variable size algorithm, the simplex will contract into the optimal point indefinitely until variations became so small that it is practically impossible (or simply inconvenient from a practical point of view) to experimentally differentiate two vertices. The Figure 4 shows the complete path of the simplex to the optimal zone.
+```{r plot3SimplexR2, fig.cap = 'Complete path of a variable step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"}
+simplexR2Var <- exampleOptimization(surface = exampleSurfaceR2, algor = 'variable', 
+                                    centroid = c(7, 340), stepsize = c(1.2, 10))
+(addSimplex2Surface(p = cont.surf, simplex = simplexR2Var))
 ```
 
-The `generateVertex()` function can be used just for visualizing the coordinates of the new vertex to be evaluated. Since the new vertex coordinates integrate now one of the points of the new simplex, the recommended action is to save the function output to an object that could be completely new in the environment or to overwrite the original one. Usually, while looking for a clean environment and considering that the new simplex object contains all the information of the previous one, overwriting the original object is the best option. This is easily achieved by using `overwrite = TRUE` in the function parameters.
-
-The optimization criteria, the `crit` parameter, can be set to search for a maximum `'max'` (default), a minimum `'min'` or to a numerical value. The simplex will move in the direction in which the response value grows, decreases or approaches to the given numerical value, respectively.
-
-The simplex optimization algorithm is flexible and the simplex can change between fixed-size and variable-size alternatives at any time. This is done by using `algor = 'fixed'` (default) and `algor = 'variable'` in the `generateVertex()` function. The next vertex to be evaluated is generated according to the selected algorithm.
-
-### Repeat until satisfied
-The simplex optimization may proceed until a maximum is achieved or satisfactory response is reached. The former will depend on the algorithm that is being followed and the later may represent a very time-saving strategy as the simplex optimization algorithm may lose some power near the optimum zone. Some other methods may lead to richer system information in that zone (e.g. response surface experimental designs).
-
 The response value can be plotted against the vertex number using the function `plotSimplexResponse()`.
+```{r plot4SimplexR2, fig.cap = 'Responses vs. vertex number for fixed (right) and a variable (left) step-size simplex optimizationover the response surface `exampleSurfaceR2()`', fig.show = "hold"}
+plotSimplexResponse(simplexR2)
+plotSimplexResponse(simplexR2Var)
+```
 
-When the optimum zone in the fixed-size simplex algorithm is reached, the simplex will start to *spin* around the vertex that had a better response. This may be easy to notice in low dimension simplex by looking at the graphical representation of the simplex. The simplex had found the optimal zone but there is no warranty that the best vertex sits at the best possible coordinates since the optimal point may lay between the vertices of the spinning simplices. This would be a good moment for changing to the variable-size option.
+### Exporting and importing complete simplex
+When the experiments take a long time, the information of the optimization can be safely stored in an external file by using the `simplexExport()` function. This function creates a plain text file with a `.smplx` extension that contains all the simplex information. The file must not be edited by hand since it may produce misoperation of some package functions and in the worst case, it can cause the loss of the information 
+```{r export}
+simplexExport(simplex = simplexR3)
+```
+The `simplexImport()` function imports the simplex information contained into a `.smplx` file. This function should be used when the experimenter is ready to provide responses to the vertexes that do not have it.
+```{r import}
+print(simplexR3, conventions = FALSE)
+rm(simplexR3)
+exists('simplexR3')
+# We have exported and removed the 'simplexR3' object. Now it will be imported
+simplexImport(filename = 'simplexR3')
+print(simplexR3, conventions = FALSE)
+```
 
-In the variable size algorithm, the simplex will contract into the optimal point indefinitely until variations became so small that it is practically impossible (or simply inconvenient from a practical point of view) to experimentally differentiate two vertices. The constant contracting simplex may indicate the optimal point of the space but the obtained responses may lack information about how robust is the experiment in that zone. A highly focused (studying a small range for the variables) surface response methodology could be of great utility in obtaining the predicted optimal point plus giving information about the robustness of the system in that zone.
 
-## Response surface studied
-The response surface below is 
+## Noisy response surfaces
+The response surfaces that describe systems in the real world may significantly differ from that shown in Figure 1. It is impossible to obtain a result without uncertainty when measuring a response in a real system. Those systems may be better represented by noisy response surfaces that are studied in  this section. It is vitally necessary to assess the proper variability of the system to determine whether an experiment is better than others in a statistically significant way. A suitable and economic approach to estimate the system variability is to repeat the best and the worst vertexes in the initial simplex [@WaltersSimplex]. If the system is too noisy and this noise is not known, the simplex optimization algorithm (and virtually neither any other strategy) may not be capable of improving the process.
 
-```{r plotsWOnoise, echo = FALSE}
-#  prspctv(length = 45, noise = 0)
-#  print(cntr(length = 350, noise = 0))
+The Figure 6 shows different noisy scenarios for the simplex optimization over the response surface `exampleSurfaceR2()`. 
+```{r plotsW2noise, echo = TRUE, results = 'hide', message = FALSE, warning = FALSE, fig.cap = '3D perspective (left), simplex path over the contour plot (center) and response against vertex number (right) for fixed step-size simplex optimization over the response surface `exampleSurfaceR2()` at low noise (top), medium noise (middle) and high noise (bottom).', fig.show = "hold", out.width = "31%"}
+noises <- c(3, 8, 18)
+seeds <- c(0, 13, 13)
+for (ii in 1:3) {
+  prspctv(length = 45, noise = noises[ii], surface = exampleSurfaceR2, 
+          par = list(mar = c(1.2, 1, 0, 0)), ltheta = -120, shade = 0.2, expand = 0.6, 
+          xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)', ticktype = "detailed")
+  set.seed(seeds[ii])
+  simplexNoisy <- exampleOptimization(surface = exampleSurfaceR2, noise = noises[ii],
+                                      centroid = c(7, 340), stepsize = c(1.2, 10))
+  cntr.ns <- cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii])
+  print(addSimplex2Surface(p = cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii]), 
+                           simplex = simplexNoisy))
+  plotSimplexResponse(simplexNoisy)
+}
+```
+If the noise is small compared to differences in the response of the experiments (Figure 6, top), the optimization path may not significantly differ from that obtained in Figure 3 for the response surface without noise. However, when the noise grows up, the optimization path followed may vary a little and the best vertex may stand a little displaced from the optimum of the system. In drastic scenarios, the simplex optimization algorithm is incapable of finding better conditions for the system under study.
+
+Figure 7 shows the same scenarios but using instead a variable step-size simplex optimization algorithm.
+```{r plotsW3noise, echo = TRUE, results = 'hide', message = FALSE, warning = FALSE, fig.cap = '3D perspective (left), simplex path over the contour plot (center) and response against vertex number (right) for variable step-size simplex optimization over the response surface `exampleSurfaceR2()` at low noise (top), medium noise (middle) and high noise (bottom).', fig.show = "hold", out.width = "31%"}
+noises <- c(3, 8, 18)
+seeds <- c(0, 65, 13)
+for (ii in 1:3) {
+  prspctv(length = 45, noise = noises[ii], surface = exampleSurfaceR2, 
+          par = list(mar = c(1.2, 1, 0, 0)), ltheta = -120, shade = 0.2, expand = 0.6, 
+          xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)', ticktype = "detailed")
+  set.seed(seeds[ii])
+  simplexNoisy <- exampleOptimization(surface = exampleSurfaceR2, noise = noises[ii],
+                                      centroid = c(7, 340), stepsize = c(1.2, 10), 
+                                      algor = 'variable')
+  cntr.ns <- cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii])
+  print(addSimplex2Surface(p = cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii]), 
+                           simplex = simplexNoisy))
+  plotSimplexResponse(simplexNoisy)
+}
 ```
 
 ## Finding the *nearest* local optima
-```{r LocalOptima, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
-#completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12)
-#completeOptimization(centroid = c(1.5, 310), stepsize = c(1.5, 15), experiments = 12)
-#completeOptimization(centroid = c(3, 290), stepsize = c(1.5, 15), experiments = 15)
-#completeOptimization(centroid = c(12, 335), stepsize = c(1.5, 15), experiments = 12)
-
-#completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 15, algor = 'variable')
-#completeOptimization(centroid = c(1.5, 310), stepsize = c(1.5, 15), experiments = 15, algor = 'variable')
-#completeOptimization(centroid = c(3, 290), stepsize = c(1.5, 15), experiments = 18, algor = 'variable')
-#completeOptimization(centroid = c(12, 335), stepsize = c(1.5, 15), experiments = 18, algor = 'variable')
+Now suppose the response surface that describes the yield of the chemical reaction presents a second local optimum that is relatively far from the global optimum reached in the previous systems. The response surface `exampleSurfaceR2.2pks()` has these characteristics and is shown in Figure 8. 
+```{r surfaces2, echo = TRUE, fig.cap = 'Response surface `exampleSurfaceR2.2pks()` in 3D perspective (left) and contour plot (right).', fig.show = "hold"}
+prspctv(surface = exampleSurfaceR2.2pks, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
+        ltheta = -120, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
+(cont.surf2 <- cntr(surface = exampleSurfaceR2.2pks, length = 200))
 ```
-
-## Noisy response surfaces
-```{r plotsW2noise, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
-#set.seed(10)
-#  prspctv(length = 45, noise = 2)
-#  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
-#                       length = 100, noise = 2)
-#  prspctv(length = 45, noise = 8)
-#  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
-#                       length = 100, noise = 8)
-#  prspctv(length = 45, noise = 14)
-#  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
-#                       length = 100, noise = 14)
-```
-
-### Exporting and importing simplex information
-In some cases, each experiment could take up to several days being performed. The optimization information must be safely stored in the case that the R session is finished without saving the workspace image. Using scripts with the complete process may be a good alternative but for those wanting a more secure way or those who use a simplex algorithm as a never-ending evolutive optimization, the `simplexExport()` function will create a plain text file with `.smplx` extension. This file contains all the simplex information. The file must not be edited by hand since it may produce misoperation of some package functions and in the worst case, the information may get lost. 
-
-```{r export}
-#simplexExport(ExpSet)
-```
-The `simplexImport()` function creates a simplex object using the information contained into a `.smplx` file. The file extension must be included and the name of the created object may be specified or automatically created.
-```{r import}
-#simplexImport('ExpSet', name = 'importedSimplex')
-#print(importedSimplex)
+Figure 9 shows the path of four simplex optimizations using the fixed and variable step-size algorithms and two different centroids to define the initial simplex. The region that the simplex optimization algorithm will find as the optimum is usually the closer one to the initial simplex but this is a trend rather than a rule.
+```{r LocalOptima, echo = TRUE, results = 'hide', message = FALSE, warning = FALSE, fig.cap = 'Complete paths of fixed (up) and variable (down) step-size simplex optimization using centroids that make the simplex to move towards the global maximun (left) and towarsd a local maximum (rigth).', fig.show = "hold"}
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(5.5, 315), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 13))
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(1.5, 310), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 13))
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(5.5, 315), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 17, algor = 'variable'))
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(1.5, 310), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 17, algor = 'variable'))
 ```
 
 # References

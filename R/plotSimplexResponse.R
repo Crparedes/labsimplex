@@ -1,8 +1,7 @@
 #' Plots the response versus the vertex number of a simplex optimization.
 #'
-#' The function generates a plot for an object with class \code{smplx}
-#' if the vertexes has responses assigned. The response is plotted
-#' against the vertex number.
+#' The function generates a \code{ggplot} object from an object with class
+#' \code{smplx}. The response is plotted against the vertex number.
 #'
 #' If the simplex object being ploted was obtained using a variable size
 #' algorithm, some experimental points could be disregarded and will be

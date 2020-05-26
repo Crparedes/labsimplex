@@ -53,7 +53,7 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
   name <- deparse(substitute(simplex))
   # Error handling
   checkMain(simplex)
-  if (!missing(qflv)) simplex <- AssignQF(simplex = simplex, qflv = qflv)
+  if (!missing(qflv)) simplex <- AssignQF(simplex = simplex, qflv = as.numeric(qflv))
   if (algor != "fixed" && algor != "variable") {
     stop("Algorithm must be set to 'fixed' or 'variable'")
   }

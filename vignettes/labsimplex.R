@@ -9,90 +9,133 @@ knitr::opts_chunk$set(
 require(labsimplex)
 require(ggplot2)
 
-## ----surfaces1, echo = TRUE, eval = FALSE--------------------------------
-#  prspctv(surface = exampleSurfaceR2, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
-#          ltheta = -120, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
-#  cntr(surface = exampleSurfaceR2, length = 200)
-
-## ----surfaces1, echo = FALSE---------------------------------------------
+## ----surfaces1, echo = TRUE, fig.cap = 'Response surface `exampleSurfaceR2()` in 3D perspective (left) and contour plot (right).', fig.show = "hold"----
 prspctv(surface = exampleSurfaceR2, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
         ltheta = -120, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
-cntr(surface = exampleSurfaceR2, length = 200)
+(cont.surf <- cntr(surface = exampleSurfaceR2, length = 200))
 
 ## ----Nprov---------------------------------------------------------------
-simplex <- labsimplex(n = 2, centroid = c(7, 340), stepsize = c(1.2, 10),
-                      var.name = c('pH', 'Temperature'))
-print(simplex)
+simplexR2 <- labsimplex(n = 2, centroid = c(7, 340), stepsize = c(1.2, 10),
+                        var.name = c('pH', 'Temperature'))
+print(simplexR2)
 
 ## ----usrdef--------------------------------------------------------------
 coords <- rbind(c(7.1, 325), c(6.5, 350), c(6.5, 300))
-simplexManual <- labsimplex(n = 2, usrdef = coords, var.name = c('pH', 'Temperature'))
-print(simplexManual, conventions = FALSE)
+simplexR2Manual <- labsimplex(n = 2, usrdef = coords, var.name = c('pH', 'Temperature'))
+print(simplexR2Manual, conventions = FALSE)
 
-## ----frf2----------------------------------------------------------------
-suppressMessages(library(FrF2))
+## ----frf2, message = FALSE-----------------------------------------------
+if (!require(FrF2)) {
+  install.packages("FrF2")
+  library(FrF2)
+}
 set.seed(1)
-screening <- FrF2(resolution = 3, nfactors = 3, 
-                  factor.names = list(pH = c(6.9, 7.1), 
-                                      Temp = c(23, 28), 
-                                      Conc = c(0.14, 0.16)))
-print(screening)
+(screening <- FrF2(resolution = 3, factor.names = list(pH = c(6.8, 7.2), Temp = c(330, 350),
+                                                      Conc = c(0.4, 0.6))))
+
 
 ## ----frf2-2--------------------------------------------------------------
-#FrF2Set <- labsimplex(n = 3, usrdef = matrix(as.numeric(as.matrix(screening)), ncol = 3),
-#                      var.name = dimnames(screening)[[2]])
-#print(FrF2Set)
+simplexR3 <- labsimplex(n = 3, usrdef = matrix(as.numeric(as.matrix(screening)), ncol = 3),
+                        var.name = dimnames(screening)[[2]])
+print(simplexR3, conventions = FALSE)
 
 ## ----changing------------------------------------------------------------
-#adjustVertex(simplex = ManSet, newcoords = list(Vertex.1 = c(7.15, NA, NA), 
-#                                                Vertex.2 = c(NA, 29, NA)),
-#             overwrite = TRUE)
-#print(ManSet)
+adjustVertex(simplex = simplexR2, newcoords = list(Vertex.1 = c(7.95, NA), Vertex.2 = c(NA, 342)),
+             overwrite = TRUE)
+print(simplexR2, conventions = FALSE)
 
-## ----plot3D, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center', fig.cap = 'Initial simplex representation in a 3D space'----
-#plotSimplex3D(ExpSet)
+## ----plot1SimplexR2, fig.cap = 'Initial two-variables simplex isolated in the space (left) and over the response surface that describes the system (right).', fig.show = "hold"----
+plot(simplexR2)
+(addSimplex2Surface(p = cont.surf, simplex = simplexR2))
 
-## ----plot2D, dpi = 300, fig.width = 12, fig.height = 5, out.width = '110%', fig.align = 'center', fig.cap = ' Two-dimensional proyections of simplex shown in Figure 1'----
-#par(mfrow = c(1, 3))
-#plot(ExpSet, sel.dim = c('pH', 'Temp'))
-#plot(ExpSet, sel.dim = c('pH', 'Conc'))
-#plot(ExpSet, sel.dim = c('Temp', 'Conc'))
+## ----responses-----------------------------------------------------------
+(responses <- exampleSurfaceR2(x1 = simplexR2$coords[, 2], x2 = simplexR2$coords[, 1]))
+generateVertex(simplex = simplexR2, qflv = responses, crit = 'max', 
+               algor = 'fixed', overwrite = TRUE)
+print(simplexR2, conventions = FALSE)
 
-## ----genV1, dpi = 300, fig.width = 7, fig.height = 7, fig.align = 'center', fig.cap = 'Movement of the simplex after first reflection'----
-#generateVertex(simplex = ExpSet, qflv = c(65, 72, 54, 78), overwrite = TRUE)
-#plotSimplex3D(ExpSet)
+## ----plot2SimplexR2, fig.cap = 'First movement (left) and complete path (right) of a fixed step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"----
+(addSimplex2Surface(p = cont.surf, simplex = simplexR2))
+simplexR2 <- exampleOptimization(surface = exampleSurfaceR2, simplex = simplexR2)
+(addSimplex2Surface(p = cont.surf, simplex = simplexR2))
 
-## ----plotsWOnoise, echo = FALSE------------------------------------------
-#  prspctv(length = 45, noise = 0)
-#  print(cntr(length = 350, noise = 0))
+## ----plot3SimplexR2, fig.cap = 'Complete path of a variable step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"----
+simplexR2Var <- exampleOptimization(surface = exampleSurfaceR2, algor = 'variable', 
+                                    centroid = c(7, 340), stepsize = c(1.2, 10))
+(addSimplex2Surface(p = cont.surf, simplex = simplexR2Var))
 
-## ----LocalOptima, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE----
-#completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12)
-#completeOptimization(centroid = c(1.5, 310), stepsize = c(1.5, 15), experiments = 12)
-#completeOptimization(centroid = c(3, 290), stepsize = c(1.5, 15), experiments = 15)
-#completeOptimization(centroid = c(12, 335), stepsize = c(1.5, 15), experiments = 12)
-
-#completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 15, algor = 'variable')
-#completeOptimization(centroid = c(1.5, 310), stepsize = c(1.5, 15), experiments = 15, algor = 'variable')
-#completeOptimization(centroid = c(3, 290), stepsize = c(1.5, 15), experiments = 18, algor = 'variable')
-#completeOptimization(centroid = c(12, 335), stepsize = c(1.5, 15), experiments = 18, algor = 'variable')
-
-## ----plotsW2noise, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE----
-#set.seed(10)
-#  prspctv(length = 45, noise = 2)
-#  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
-#                       length = 100, noise = 2)
-#  prspctv(length = 45, noise = 8)
-#  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
-#                       length = 100, noise = 8)
-#  prspctv(length = 45, noise = 14)
-#  completeOptimization(centroid = c(5.5, 315), stepsize = c(-1.5, 15), experiments = 12,
-#                       length = 100, noise = 14)
+## ----plot4SimplexR2, fig.cap = 'Responses vs. vertex number for fixed (right) and a variable (left) step-size simplex optimizationover the response surface `exampleSurfaceR2()`', fig.show = "hold"----
+plotSimplexResponse(simplexR2)
+plotSimplexResponse(simplexR2Var)
 
 ## ----export--------------------------------------------------------------
-#simplexExport(ExpSet)
+simplexExport(simplex = simplexR3)
 
 ## ----import--------------------------------------------------------------
-#simplexImport('ExpSet', name = 'importedSimplex')
-#print(importedSimplex)
+print(simplexR3, conventions = FALSE)
+rm(simplexR3)
+exists('simplexR3')
+# We have exported and removed the 'simplexR3' object. Now it will be imported
+simplexImport(filename = 'simplexR3')
+print(simplexR3, conventions = FALSE)
+
+## ----plotsW2noise, echo = TRUE, results = 'hide', message = FALSE, warning = FALSE, fig.cap = '3D perspective (left), simplex path over the contour plot (center) and response against vertex number (right) for fixed step-size simplex optimization over the response surface `exampleSurfaceR2()` at low noise (top), medium noise (middle) and high noise (bottom).', fig.show = "hold", out.width = "31%"----
+noises <- c(3, 8, 18)
+seeds <- c(0, 13, 13)
+for (ii in 1:3) {
+  prspctv(length = 45, noise = noises[ii], surface = exampleSurfaceR2, 
+          par = list(mar = c(1.2, 1, 0, 0)), ltheta = -120, shade = 0.2, expand = 0.6, 
+          xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)', ticktype = "detailed")
+  set.seed(seeds[ii])
+  simplexNoisy <- exampleOptimization(surface = exampleSurfaceR2, noise = noises[ii],
+                                      centroid = c(7, 340), stepsize = c(1.2, 10))
+  cntr.ns <- cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii])
+  print(addSimplex2Surface(p = cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii]), 
+                           simplex = simplexNoisy))
+  plotSimplexResponse(simplexNoisy)
+}
+
+## ----plotsW3noise, echo = TRUE, results = 'hide', message = FALSE, warning = FALSE, fig.cap = '3D perspective (left), simplex path over the contour plot (center) and response against vertex number (right) for variable step-size simplex optimization over the response surface `exampleSurfaceR2()` at low noise (top), medium noise (middle) and high noise (bottom).', fig.show = "hold", out.width = "31%"----
+noises <- c(3, 8, 18)
+seeds <- c(0, 65, 13)
+for (ii in 1:3) {
+  prspctv(length = 45, noise = noises[ii], surface = exampleSurfaceR2, 
+          par = list(mar = c(1.2, 1, 0, 0)), ltheta = -120, shade = 0.2, expand = 0.6, 
+          xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)', ticktype = "detailed")
+  set.seed(seeds[ii])
+  simplexNoisy <- exampleOptimization(surface = exampleSurfaceR2, noise = noises[ii],
+                                      centroid = c(7, 340), stepsize = c(1.2, 10), 
+                                      algor = 'variable')
+  cntr.ns <- cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii])
+  print(addSimplex2Surface(p = cntr(surface = exampleSurfaceR2, length = 200, noise = noises[ii]), 
+                           simplex = simplexNoisy))
+  plotSimplexResponse(simplexNoisy)
+}
+
+## ----surfaces2, echo = TRUE, fig.cap = 'Response surface `exampleSurfaceR2.2pks()` in 3D perspective (left) and contour plot (right).', fig.show = "hold"----
+prspctv(surface = exampleSurfaceR2.2pks, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
+        ltheta = -120, expand = 0.6, xlab = 'Temperature (K)', ylab = 'pH', zlab = 'Yield (%)')
+(cont.surf2 <- cntr(surface = exampleSurfaceR2.2pks, length = 200))
+
+## ----LocalOptima, echo = TRUE, results = 'hide', message = FALSE, warning = FALSE, fig.cap = 'Complete paths of fixed (up) and variable (down) step-size simplex optimization using centroids that make the simplex to move towards the global maximun (left) and towarsd a local maximum (rigth).', fig.show = "hold"----
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(5.5, 315), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 13))
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(1.5, 310), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 13))
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(5.5, 315), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 17, algor = 'variable'))
+addSimplex2Surface(p = cont.surf2, 
+                   simplex = exampleOptimization(surface = exampleSurfaceR2.2pks, 
+                                                 centroid = c(1.5, 310), 
+                                                 stepsize = c(-1.5, 15), 
+                                                 experiments = 17, algor = 'variable'))
 

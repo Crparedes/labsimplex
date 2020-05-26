@@ -16,7 +16,7 @@ the file is not in the current working directory.}
 loaded on the Environment? Default to TRUE.}
 
 \item{name}{name for the simplex object to be created if
-\code{auth.ld = FALSE}. When not provided, the ID in the
+\code{auth.ld = FALSE}. When not provided, the name of the
 file is used.}
 }
 \value{
@@ -30,8 +30,11 @@ previously created using \code{\link{simplexExport}}.
 }
 \examples{
 \dontrun{
-  simplexExport(labsimplex(n = 4), name = "simplex4D")
-  simplexImport("simplex4D.smplx")
+  simplexR2 <- exampleOptimization(surface = exampleSurfaceR2)
+  simplexExport(simplex = simplexR2)
+  simplexExport(generateVertex(labsimplex(8), rnorm(9)), filename = 'simplex4D')
+  simplexImport(filename = "simplex4D")
+  simplexImport(filename = "simplexR2")
   # Other way:
   simplex4D <- simplexImport("simplex4D.smplx", aut.load = FALSE)
 }

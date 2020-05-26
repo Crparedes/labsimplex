@@ -122,8 +122,6 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
            xlim = xexp, ylim = yexp, pch = 16,
            xlab = xlab, ylab = ylab, ...)
     }
-    #title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
-    #      ylab = dimnames(x$coords)[[2]][var.plt[2]], outer = TRUE, line = 3)
   }
 
   if (all.lin) {
