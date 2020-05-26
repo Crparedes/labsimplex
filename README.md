@@ -12,10 +12,10 @@ The development versión of labsimplex can be installed using
 `install_github()` function from `devtools` package:
 
 ``` r
-devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
+devtools::install_github(repo = 'crparedes/labsimplex', build_vignettes = TRUE)
 ```
 
-Coming soon the released version of labsimplex will be avilable from
+The released version of labsimplex is available from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -36,15 +36,14 @@ variable.
 
 ``` r
 library(labsimplex)
-yield <- labsimplex(N = 2, start = c(350, 5.5), var.name = c('Temp', 'pH'),
+yield <- labsimplex(n = 2, start = c(350, 5.5), var.name = c('Temp', 'pH'),
                     stepsize = c(10, 0.5))
 print(yield)
-#> 
 #> Current simplex:
 #>           Temp   pH . Response Label Nature
-#> Vertex.3:  340 5.25 |       NA    NA      S
-#> Vertex.2:  340 5.75 |       NA    NA      S
 #> Vertex.1:  350 5.50 |       NA    NA      S
+#> Vertex.2:  340 5.75 |       NA    NA      S
+#> Vertex.3:  340 5.25 |       NA    NA      S
 #> 
 #> Conventions:
 #>     Labels:                    Nature:
@@ -74,7 +73,7 @@ visualized again ploting the simplex.
 
 ``` r
 generateVertex(simplex = yield, qflv = c(57, 65, 54), overwrite = TRUE)
-#> New vertex to be evaluated:
+#> New vertex to be evaluated: 
 #> Temp   pH 
 #>  350    6
 plot(yield)

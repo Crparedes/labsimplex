@@ -51,7 +51,7 @@ install.packages("labsimplex")
 ``` 
 The development version of labsimplex can be installed from [GitHub](https://github.com/Crparedes/labsimplex "labsimplex GitHub Repository") using `install_github()` function from `devtools` package [@devtools]:
 ``` r
-devtools::install_github("Crparedes/labsimplex")
+devtools::install_github("Crparedes/labsimplex", build_vignettes = TRUE)
 ``` 
 
 ## Using the package

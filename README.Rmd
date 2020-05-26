@@ -20,9 +20,9 @@ This package implements the simplex algorithms (fixed and variable step-size) fo
 
 The development versión of labsimplex can be installed using `install_github()` function from `devtools` package:
 ``` r
-devtools:install_github(url = "git://github.com/Crparedes/labsimplex")
+devtools::install_github(repo = 'crparedes/labsimplex', build_vignettes = TRUE)
 ``` 
-Coming soon the released version of labsimplex will be avilable from [CRAN](https://CRAN.R-project.org) with:
+The released version of labsimplex is available from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("labsimplex")
@@ -35,7 +35,7 @@ This is a basic example which shows you how to start an optimization procces:
 Suppose there is a reaction taking place in water at determinate pH and temperature. Both variables have shown to have effect on the yiel of the reaction and the purposse is to maximize it. Ussually the reaction is made at 350 °C and pH 5.5. This will be the starting point. Rational changes can be made in steps of 10°C and 0.5 units of pH for each variable.
 ```{r example1}
 library(labsimplex)
-yield <- labsimplex(N = 2, start = c(350, 5.5), var.name = c('Temp', 'pH'),
+yield <- labsimplex(n = 2, start = c(350, 5.5), var.name = c('Temp', 'pH'),
                     stepsize = c(10, 0.5))
 print(yield)
 ```
