@@ -28,7 +28,7 @@ Default \code{overwrite = FALSE}}
 }
 \value{
 An object of class \code{smplx} with the new simplex information
-       including the conditions for the new experiment to be permormed.
+        including the conditions for the new experiment to be permormed.
 }
 \description{
 Gives the coordinates for the new vertex that must be performed

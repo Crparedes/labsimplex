@@ -101,11 +101,13 @@ prspctv <- function (surface, length = 45, noise = 0, x1lim = c(278, 365),
   z.facet.center <- (z[-1, -1] + z[-1, -ncol(z)] + z[-nrow(z), -1] +
                        z[-nrow(z), -ncol(z)]) / 4
   z.facet.range  <- cut(z.facet.center, 200)
-  old.par <- par(no.readonly = T)
+  opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
+
   if(!missing(par)) par(par)
   persp(x1, x2, z, col = colors[z.facet.range], ticktype = ticktype,
         theta = theta, phi = phi, lwd = 0.3, shade = shade, ...)
-  par(old.par)
+
 }
 
 #' Contour plot of example response surfaces

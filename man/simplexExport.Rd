@@ -32,10 +32,10 @@ the information of the optimization process. The exported simplex can be
 later imported with \code{\link{simplexImport}}.
 }
 \examples{
-\dontrun{
+  \donttest{
   simplex <- labsimplex(n = 5)
   simplexExport(simplex = simplex)
-}
+  }
 }
 \seealso{
 \code{\link{simplexImport}}

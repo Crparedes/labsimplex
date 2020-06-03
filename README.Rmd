@@ -19,12 +19,12 @@ This package implements the simplex algorithms (fixed and variable step-size) fo
 ## Installation
 
 The development versión of labsimplex can be installed using `install_github()` function from `devtools` package:
-``` r
+```{r,  eval = FALSE}
 devtools::install_github(repo = 'crparedes/labsimplex', build_vignettes = TRUE)
 ``` 
 The released version of labsimplex is available from [CRAN](https://CRAN.R-project.org) with:
 
-``` r
+```{r,  eval = FALSE}
 install.packages("labsimplex")
 ```
 
@@ -52,4 +52,4 @@ generateVertex(simplex = yield, qflv = c(57, 65, 54), overwrite = TRUE)
 plot(yield)
 ```
 
-For more information read the package manuals and vignette.
+For more information, read the package manual and vignette.

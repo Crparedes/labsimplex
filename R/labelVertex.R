@@ -7,9 +7,9 @@ LabelVertex <- function(simplex, crit, algor) {
   # criteria
 
   if (length(simplex$qual.fun) != nrow(simplex$coords)) {
-    stop("There must be a quality function value for each vertex:
-        Number of vertices: ", nrow(simplex$coords),
-        ", Number of quality function values: ", length(simplex$qual.fun))
+    stop("There must be a response for each vertex:\n",
+         "Number of vertexes: ", nrow(simplex$coords),
+         ", number of responses: ", length(simplex$qual.fun))
   }
 
   #-------------------------------

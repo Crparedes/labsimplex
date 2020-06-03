@@ -42,8 +42,13 @@ plotSimplexResponse <- function(x, ...){
     VertexNumber <- VertexNumber[-length(VertexNumber)]
     x$qual.fun   <- x$qual.fun[!is.na(x$qual.fun)]
   }
+  opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
-  plot(VertexNumber, x$qual.fun, ylab = 'Response', xlab = 'Vertex number')
+  par(mar = c(2.36, 2.9, 1, 1), mgp = c(1.7, 0.35, 0), las = 1,
+      tcl = -0.25, cex.axis = 1, cex.lab = 1)
+  plot(VertexNumber, x$qual.fun, ylab = 'Response', xlab = '')
+  title(xlab = 'Vertex number', mgp = c(1.2, 0.7, 0))
 
   if (any(x$vertex.label == 'D')) {
     Dis.pos <- which(x$vertex.label == 'D')

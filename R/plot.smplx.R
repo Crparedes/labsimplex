@@ -85,8 +85,12 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
     }
   }
 
-  #opar <- par(oma = par()$oma, mar = par()$mar)
-  #par(oma = c(5, 4, 0, 0) + 0.1, mar = c(0, 0, 1, 1) + 0.1)
+  opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
+
+  par(mar = c(2.36, 2.9, 1, 1), mgp = c(1.7, 0.35, 0), las = 1,
+      tcl = -0.25, cex.axis = 1, cex.lab = 1)
+
   xlab <- dimnames(x$coords)[[2]][var.plt[1]]
   ylab <- dimnames(x$coords)[[2]][var.plt[2]]
   if (all.ver) {
@@ -99,11 +103,11 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
                 par("usr")[4] + 0.5 * diff(par("usr")[3:4]) * exp.fac)
       dev.off()
       plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], xlim = xexp,
-           ylim = yexp, pch = 16, xlab = xlab, ylab = ylab, ...)
+           ylim = yexp, pch = 16, xlab = "", ylab = ylab, ...)
     } else {
       dev.off()
       plot(x$coord[, var.plt[1]], x$coord[, var.plt[2]], pch = 16,
-           xlab = xlab, ylab = ylab, ...)
+           xlab = "", ylab = ylab, ...)
     }
     #title(xlab = dimnames(x$coords)[[2]][var.plt[1]],
     #      ylab = dimnames(x$coords)[[2]][var.plt[2]],
@@ -111,7 +115,7 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
   } else {
     plot(x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[1]],
          x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]],
-         pch = 16, xlab = xlab, ylab = ylab, ...)
+         pch = 16, xlab = "", ylab = ylab, ...)
     if (expand) {
       xexp <- c(par("usr")[1] - 0.5 * diff(par("usr")[1:2]) * exp.fac,
                 par("usr")[2] + 0.5 * diff(par("usr")[1:2]) * exp.fac)
@@ -120,9 +124,10 @@ plot.smplx <- function(x, sel.dim = NULL, all.ver = TRUE, all.lin = TRUE,
       plot(x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[1]],
            x$coord[(nrow(x$coords) - x$dim):nrow(x$coords), var.plt[2]],
            xlim = xexp, ylim = yexp, pch = 16,
-           xlab = xlab, ylab = ylab, ...)
+           xlab = "", ylab = ylab, ...)
     }
   }
+  title(xlab = xlab, mgp = c(1.2, 0.7, 0))
 
   if (all.lin) {
     V.pos <- as.numeric(gsub("Vertex.", "", row.names(x$coords)))

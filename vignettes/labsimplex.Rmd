@@ -24,8 +24,8 @@ knitr::opts_chunk$set(
 )
 # Render html vignetes by using devtools::document(roclets = "vignette")
 # Render also pdf vignetes by using rmarkdown::render("vignettes/labsimplex.Rmd", "all")
-require(labsimplex)
-require(ggplot2)
+library(labsimplex)
+library(ggplot2)
 ```
 ----------------------------------------------
 
@@ -36,21 +36,15 @@ A simplex is a geometric element defined as the simpler polytope possible in an 
 
 In the simplex optimization algorithms, the experimental variables are represented by the dimensions in the abstract space. Each vertex in the simplex represents an experiment and the coordinates of the vertex represent the values for the variables in that experimental setting. The experiments must be performed and a response must be assigned to each vertex. In the optimization process, one of the vertexes is discarded in favor of a new one that must be evaluated. In the first simplex, the vertex with the worst response is discarded. The second worst vertex in this simplex is discarded in the following simplex and the procedure is repeated until the optimum is reached or a response good enough is obtained. Discarding a vertex and generating a new one is known as a movement of the simplex. 
 
-#### Fixed step-size simplex algorithm (PENDING)
 The fixed step-size simplex algorithm introduced by @Spendley1962 is based on the idea that getting away from the zone that yields the worst results will provide a close up to the optimal zone.  
-
-(PENDING)
-
-#### Variable step-size simplex algorithm (modified simplex algorithm) (PENDING)
-(PENDING)
 
 ## Installation
 The last released version of the package `labsimplex` can be installed from CRAN by running:
-``` r
+``` {r,  eval = FALSE}
 install.packages("labsimplex")
 ``` 
 The development version of labsimplex can be installed from [GitHub](https://github.com/Crparedes/labsimplex "labsimplex GitHub Repository") using `install_github()` function from `devtools` package [@devtools]:
-``` r
+``` {r,  eval = FALSE}
 devtools::install_github("Crparedes/labsimplex", build_vignettes = TRUE)
 ``` 
 
@@ -97,13 +91,10 @@ It is common to perform a two-level fractional factorial design to screen the va
 
 For example, suppose the use of a two-level fractional factorial design of resolution III was used to study a chemical reaction affected by pH, temperature, and concentration. The R package `FrF2` [@GrompingFrF2] creates and analyzes fractional factorial two-level designs and is used in this section to study the described system. The low and high levels for the pH, the temperature and the concentration will be 6.8 and 7.2, 330, and 350 K and 0.4 and 0.6 (arbitrary units) respectively.
 ```{r frf2, message = FALSE}
-if (!require(FrF2)) {
-  install.packages("FrF2")
-  library(FrF2)
-}
+if (!require(FrF2)) message('Please install FrF2 package')
 set.seed(1)
-(screening <- FrF2(resolution = 3, factor.names = list(pH = c(6.8, 7.2), Temp = c(330, 350),
-                                                      Conc = c(0.4, 0.6))))
+(screening <- FrF2(resolution = 3, 
+                   factor.names = list(pH = c(6.8, 7.2), Temp = c(330, 350), Conc = c(0.4, 0.6))))
 
 ```
 The variable coordinates and the names can be passed to the labsimplex function after minor transformations:
@@ -136,14 +127,14 @@ plot(simplexR2)
 
 ### Generating new vertexes
 To generate a new vertex, it is necessary to provide the responses of the previous vertexes, the optimization criteria and the algorithm to follow (fixed-size or variable-size). This means that it is necessary to perform the experiments proposed in the initial simplex. In this document, the responses are obtained according to the response surface shown in Figure 1. The function to use is `generateVertex()`.
-```{r responses}
+```{r responses, message = FALSE}
 (responses <- exampleSurfaceR2(x1 = simplexR2$coords[, 2], x2 = simplexR2$coords[, 1]))
 generateVertex(simplex = simplexR2, qflv = responses, crit = 'max', 
                algor = 'fixed', overwrite = TRUE)
 print(simplexR2, conventions = FALSE)
 ```
 Observe that the parameter `overwrite = TRUE` can be also be used here to replace the old simplex by the new one without explicitly using the `<-` function. The experiment described by the new vertex must be performed and the process is repeated until the optimum is reached. The simplex first reflection and the simplex complete path to the optimum are shown in Figure 3.
-```{r plot2SimplexR2, fig.cap = 'First movement (left) and complete path (right) of a fixed step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"}
+```{r plot2SimplexR2, message = FALSE, fig.cap = 'First movement (left) and complete path (right) of a fixed step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"}
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2))
 simplexR2 <- exampleOptimization(surface = exampleSurfaceR2, simplex = simplexR2)
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2))
@@ -151,14 +142,14 @@ simplexR2 <- exampleOptimization(surface = exampleSurfaceR2, simplex = simplexR2
 When the algorithm reaches the optimum zone in the fixed-size simplex algorithm, the simplex starts to *spin* around the vertex that had the better response. Eventually the previously evaluated vertexes begin to being proposed again by the algorithm. 
 
 In the variable size algorithm, the simplex will contract into the optimal point indefinitely until variations became so small that it is practically impossible (or simply inconvenient from a practical point of view) to experimentally differentiate two vertices. The Figure 4 shows the complete path of the simplex to the optimal zone.
-```{r plot3SimplexR2, fig.cap = 'Complete path of a variable step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"}
+```{r plot3SimplexR2, message = FALSE, fig.cap = 'Complete path of a variable step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"}
 simplexR2Var <- exampleOptimization(surface = exampleSurfaceR2, algor = 'variable', 
                                     centroid = c(7, 340), stepsize = c(1.2, 10))
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2Var))
 ```
 
 The response value can be plotted against the vertex number using the function `plotSimplexResponse()`.
-```{r plot4SimplexR2, fig.cap = 'Responses vs. vertex number for fixed (right) and a variable (left) step-size simplex optimizationover the response surface `exampleSurfaceR2()`', fig.show = "hold"}
+```{r plot4SimplexR2, message = FALSE, fig.cap = 'Responses vs. vertex number for fixed (right) and a variable (left) step-size simplex optimizationover the response surface `exampleSurfaceR2()`', fig.show = "hold"}
 plotSimplexResponse(simplexR2)
 plotSimplexResponse(simplexR2Var)
 ```

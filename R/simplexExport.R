@@ -20,10 +20,10 @@
 #'         experiments have been carried.
 #' @seealso \code{\link{simplexImport}}
 #' @examples
-#' \dontrun{
+#'   \donttest{
 #'   simplex <- labsimplex(n = 5)
 #'   simplexExport(simplex = simplex)
-#' }
+#'   }
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @importFrom utils capture.output
@@ -50,11 +50,13 @@ simplexExport <- function(simplex, filename = NULL, direc = NULL) {
             DO NOT EDIT BY HAND!
             \n\n\n"
   ow <- options()$width
+  on.exit(options(width = ow))
   options(width = 10000)
+
   capture.output(cat(op.ms), file = paste0(direc, "/", filename, ".smplx"))
   capture.output(cat(paste0("ID: ", ID, "\n\n")),
                  file = paste0(direc, "/", filename, ".smplx"), append = TRUE)
   capture.output(simplex, file = paste0(direc, "/", filename, ".smplx"),
                  append = TRUE)
-  options(width = ow)
+
 }

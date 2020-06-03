@@ -22,7 +22,7 @@
 #'                   replace the one provided in the \code{simplex} parameter.
 #'                   Default \code{overwrite = FALSE}
 #' @return An object of class \code{smplx} with the new simplex information
-#'        including the conditions for the new experiment to be permormed.
+#'         including the conditions for the new experiment to be permormed.
 #' @examples
 #'   simplex <- labsimplex(n = 3, centroid = c(320, 7, 0.4),
 #'                         stepsize = c(35, 2, 0.3))
@@ -211,12 +211,12 @@ generateVertex <- function(simplex, qflv = NULL, crit = "max", algor = "fixed",
 
   simplex$families[[(length(simplex$families) + 1)]] <- AcVertexes
 
-  cat("New vertex to be evaluated: \n")
+  message("New vertex to be evaluated: \n")
   print(simplex$coords[nrow(simplex$coords), ])
   if (overwrite) {
     assign(name, simplex, envir = parent.frame())
   } else {
-    cat("\n")
+    message("\n")
     return(simplex)
   }
 }

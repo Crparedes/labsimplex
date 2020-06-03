@@ -17,15 +17,12 @@
 #'         simplex
 #' @seealso \code{\link{simplexImport}}
 #' @examples
-#' \dontrun{
+#'   \donttest{
 #'   simplexR2 <- exampleOptimization(surface = exampleSurfaceR2)
 #'   simplexExport(simplex = simplexR2)
-#'   simplexExport(generateVertex(labsimplex(8), rnorm(9)), filename = 'simplex4D')
-#'   simplexImport(filename = "simplex4D")
+#'   rm(simplexR2)
 #'   simplexImport(filename = "simplexR2")
-#'   # Other way:
-#'   simplex4D <- simplexImport("simplex4D.smplx", aut.load = FALSE)
-#' }
+#'   }
 #' @author Cristhian Paredes, \email{craparedesca@@unal.edu.co}
 #' @author Jesús Ágreda, \email{jagreda@@unal.edu.co}
 #' @export

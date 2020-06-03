@@ -81,4 +81,4 @@ plot(yield)
 
 <img src="man/figures/README-example3-1.png" width="75%" />
 
-For more information read the package manuals and vignette.
+For more information, read the package manual and vignette.

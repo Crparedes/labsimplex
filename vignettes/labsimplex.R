@@ -6,8 +6,14 @@ knitr::opts_chunk$set(
 )
 # Render html vignetes by using devtools::document(roclets = "vignette")
 # Render also pdf vignetes by using rmarkdown::render("vignettes/labsimplex.Rmd", "all")
-require(labsimplex)
-require(ggplot2)
+library(labsimplex)
+library(ggplot2)
+
+## ----  eval = FALSE------------------------------------------------------
+#  install.packages("labsimplex")
+
+## ----  eval = FALSE------------------------------------------------------
+#  devtools::install_github("Crparedes/labsimplex", build_vignettes = TRUE)
 
 ## ----surfaces1, echo = TRUE, fig.cap = 'Response surface `exampleSurfaceR2()` in 3D perspective (left) and contour plot (right).', fig.show = "hold"----
 prspctv(surface = exampleSurfaceR2, par = list(mar = c(0.5, 0.6, 0, 0)), phi = 30, theta = 30,
@@ -25,13 +31,10 @@ simplexR2Manual <- labsimplex(n = 2, usrdef = coords, var.name = c('pH', 'Temper
 print(simplexR2Manual, conventions = FALSE)
 
 ## ----frf2, message = FALSE-----------------------------------------------
-if (!require(FrF2)) {
-  install.packages("FrF2")
-  library(FrF2)
-}
+if (!require(FrF2)) message('Please install FrF2 package')
 set.seed(1)
-(screening <- FrF2(resolution = 3, factor.names = list(pH = c(6.8, 7.2), Temp = c(330, 350),
-                                                      Conc = c(0.4, 0.6))))
+(screening <- FrF2(resolution = 3, 
+                   factor.names = list(pH = c(6.8, 7.2), Temp = c(330, 350), Conc = c(0.4, 0.6))))
 
 
 ## ----frf2-2--------------------------------------------------------------
@@ -48,23 +51,23 @@ print(simplexR2, conventions = FALSE)
 plot(simplexR2)
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2))
 
-## ----responses-----------------------------------------------------------
+## ----responses, message = FALSE------------------------------------------
 (responses <- exampleSurfaceR2(x1 = simplexR2$coords[, 2], x2 = simplexR2$coords[, 1]))
 generateVertex(simplex = simplexR2, qflv = responses, crit = 'max', 
                algor = 'fixed', overwrite = TRUE)
 print(simplexR2, conventions = FALSE)
 
-## ----plot2SimplexR2, fig.cap = 'First movement (left) and complete path (right) of a fixed step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"----
+## ----plot2SimplexR2, message = FALSE, fig.cap = 'First movement (left) and complete path (right) of a fixed step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"----
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2))
 simplexR2 <- exampleOptimization(surface = exampleSurfaceR2, simplex = simplexR2)
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2))
 
-## ----plot3SimplexR2, fig.cap = 'Complete path of a variable step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"----
+## ----plot3SimplexR2, message = FALSE, fig.cap = 'Complete path of a variable step-size simplex optimazation over the response surface `exampleSurfaceR2()`.', fig.show = "hold"----
 simplexR2Var <- exampleOptimization(surface = exampleSurfaceR2, algor = 'variable', 
                                     centroid = c(7, 340), stepsize = c(1.2, 10))
 (addSimplex2Surface(p = cont.surf, simplex = simplexR2Var))
 
-## ----plot4SimplexR2, fig.cap = 'Responses vs. vertex number for fixed (right) and a variable (left) step-size simplex optimizationover the response surface `exampleSurfaceR2()`', fig.show = "hold"----
+## ----plot4SimplexR2, message = FALSE, fig.cap = 'Responses vs. vertex number for fixed (right) and a variable (left) step-size simplex optimizationover the response surface `exampleSurfaceR2()`', fig.show = "hold"----
 plotSimplexResponse(simplexR2)
 plotSimplexResponse(simplexR2Var)
 
