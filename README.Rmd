@@ -30,9 +30,9 @@ install.packages("labsimplex")
 
 ## Example
 
-This is a basic example which shows you how to start an optimization procces:
+This basic example shows how to start an optimization process:
 
-Suppose there is a reaction taking place in water at determinate pH and temperature. Both variables have shown to have effect on the yiel of the reaction and the purposse is to maximize it. Ussually the reaction is made at 350 °C and pH 5.5. This will be the starting point. Rational changes can be made in steps of 10°C and 0.5 units of pH for each variable.
+Suppose there is a reaction taking place in water at determinate pH and temperature. Both variables have shown to affect the yield of the reaction, and the purpose is to maximize it. Usually, the reaction is made at 350 °C and pH 5.5, which will be the starting point. Rational changes can be made in steps of 10°C and 0.5 units of pH for each variable, as presented below.
 ```{r example1}
 library(labsimplex)
 yield <- labsimplex(n = 2, start = c(350, 5.5), var.name = c('Temp', 'pH'),
@@ -40,7 +40,7 @@ yield <- labsimplex(n = 2, start = c(350, 5.5), var.name = c('Temp', 'pH'),
 print(yield)
 ```
 
-Is possible to plot the simplex object to visualize the coordinates of the vertexes:
+It is possible to plot the simplex object to visualize the coordinates of the vertexes:
 ```{r example2}
 plot(yield)
 ```
